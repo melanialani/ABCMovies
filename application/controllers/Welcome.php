@@ -5,7 +5,7 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
-		$this->masterFilm();
+		$this->masterReview();
 	}
 	
 	public function masterUser(){
@@ -49,7 +49,7 @@ class Welcome extends CI_Controller {
 					$data['conf'] = $this->upload->display_errors();
 				}
 			} else {
-				echo "<br/><br/><h4>All fields required</h4><br/><br/>";
+				$data['conf'] = "All fields required";
 			}
 		} 
 		else if ($this->input->post('update') == TRUE){
@@ -74,16 +74,14 @@ class Welcome extends CI_Controller {
 					$data['conf'] = $this->upload->display_errors();
 				}
 			} else {
-				echo "<br/><br/><h4>KODE MASKAPAI TIDAK BOLEH KOSONG</h4><br/><br/>";
-				$data['kdMaskapai'] = ""; $data['nmMaskapai'] = ""; $data['alamatMaskapai'] = ""; $data['kontakMaskapai'] = ""; $data['conf'] = "";
+				$data['conf'] = "Username is required";
 			}
 		}
 		else { // jika form pertama kali di load -> set nilai default
-			$data['username'] = ""; $data['password'] = ""; $data['email'] = ""; $data['name'] = ""; $data['birthdate'] = ""; $data['conf'] = "";
+			$data = NULL; $data['conf'] = "";
 		}
 		
 		$data['b_url'] = base_url();
-		$data['conf'] = "";
 		$data['users'] = $this->User->getAllUser();
 		
 		//$this->load->view('navigation'); 
@@ -129,7 +127,7 @@ class Welcome extends CI_Controller {
 					$data['conf'] = "Insert berhasil";
 				else $data['conf'] = "Insert gagal";
 			} else {
-				echo "<br/><br/><h4>Field Title, Summary, & Status are required</h4><br/><br/>";
+				$data['conf'] = "Field Title, Summary, & Status are required";
 			}
 		} 
 		else if ($this->input->post('update') == TRUE){
@@ -145,7 +143,7 @@ class Welcome extends CI_Controller {
 					$data['conf'] = "Update berhasil";
 				else $data['conf'] = "Update gagal";
 			} else {
-				echo "<br/><br/><h4>Field ID is required</h4><br/><br/>";
+				$data['conf'] = "Field ID is required";
 			}
 		}
 		else if ($this->input->post('delete') == TRUE){ 
@@ -157,18 +155,84 @@ class Welcome extends CI_Controller {
 					$data['conf'] = "Delete berhasil";
 				else $data['conf'] = "Delete gagal";
 			} else {
-				echo "<br/><br/><h4>Field ID is required</h4><br/><br/>";
+				$data['conf'] = "Field ID is required";
 			}
 		}
 		else { // jika form pertama kali di load -> set nilai default
-			$data=NULL;
+			$data = NULL; $data['conf'] = "";
 		}
 		
 		$data['b_url'] = base_url();
-		$data['conf'] = "";
 		$data['movies'] = $this->Film->getAllFilm();
 		
 		//$this->load->view('navigation'); 
 		$this->load->view('crud/film', $data);
+	}
+
+	public function masterReview(){
+		$this->load->model('Review');
+		$this->load->model('Film');
+		$this->load->model('User');
+		
+		// fetch data from form
+		$data['id'] = $this->input->post('id', TRUE);
+		$data['film_id'] = $this->input->post('film_id', TRUE);
+		$data['username'] = $this->input->post('username', TRUE);
+		$data['rating'] = $this->input->post('rating', TRUE);
+		$data['review'] = $this->input->post('review', TRUE);
+		$data['tanggal'] = date("Y-m-d", strtotime($this->input->post('tanggal', TRUE)));
+		
+		if ($this->input->post('insert') == TRUE){
+			// other rules for form validation
+			$this->form_validation->set_rules('film_id','ID Film','required');
+			$this->form_validation->set_rules('username','Username','required');
+			$this->form_validation->set_rules('rating','Rating','required');
+			
+			if ($this->form_validation->run() == TRUE){
+				if ($this->Review->insertReview($data['film_id'],$data['username'],$data['rating'],$data['review'])) 
+					$data['conf'] = "Insert berhasil";
+				else $data['conf'] = "Insert gagal";
+			} else {
+				$data['conf'] = "Fields ID Film, Username, & Rating are required";
+			}
+		} 
+		else if ($this->input->post('update') == TRUE){
+			// other rules for form validation
+			$this->form_validation->set_rules('id','ID','required');
+			$this->form_validation->set_rules('film_id','ID Film','required');
+			$this->form_validation->set_rules('username','Username','required');
+			$this->form_validation->set_rules('rating','Rating','required');
+			
+			if ($this->form_validation->run() == TRUE){
+				if ($this->Review->updateReview($data['id'],$data['film_id'],$data['username'],$data['rating'],$data['review'])) 
+					$data['conf'] = "Update berhasil";
+				else $data['conf'] = "Update gagal";
+			} else {
+				$data['conf'] = "ID, ID Film, Username, & Rating are required";
+			}
+		}
+		else if ($this->input->post('delete') == TRUE){ 
+			// other rules for form validation
+			$this->form_validation->set_rules('id','ID','required');
+			
+			if ($this->form_validation->run() == TRUE){
+				if ($this->Review->deleteReview($data['id'])) 
+					$data['conf'] = "Delete berhasil";
+				else $data['conf'] = "Delete gagal";
+			} else {
+				$data['conf'] = "ID is required";
+			}
+		}
+		else { // jika form pertama kali di load -> set nilai default
+			$data = NULL; $data['conf'] = "";
+		}
+		
+		$data['b_url'] = base_url();
+		$data['users'] = $this->User->getAllUser();
+		$data['movies'] = $this->Film->getAllFilm();
+		$data['reviews'] = $this->Review->getAllReview();
+		
+		//$this->load->view('navigation'); 
+		$this->load->view('crud/review', $data);
 	}
 }

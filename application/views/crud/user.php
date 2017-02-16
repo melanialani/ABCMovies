@@ -20,7 +20,7 @@
 	echo "<br/> <b>Status:</b> " . $conf . "<br/><br/><br/>";
 	
 	//print_r($users);
-	echo "<table cellspacing='10px' cellpadding='10px' border='1' align='center'>
+	echo "<table cellpadding='10px' border='1' align='center'>
 			<tr>
 				<td><b>Username</b></td>
 				<td><b>Password</b></td>

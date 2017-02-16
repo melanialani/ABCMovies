@@ -63,7 +63,7 @@
         echo "<td>" . $movies[$i]['genre'] . "</td>";
         echo "<td>" . $movies[$i]['year'] . "</td>";
         echo "<td>" . date("Y-m-d", strtotime($movies[$i]['playing_date'])) . "</td>";
-        echo "<td>" . $movies[$i]['length'] . "minutes</td>";
+        echo "<td>" . $movies[$i]['length'] . " minutes </td>";
         echo "<td>" . $movies[$i]['director'] . "</td>";
         echo "<td>" . $movies[$i]['writer'] . "</td>";
         echo "<td>" . $movies[$i]['actors'] . "</td>";
