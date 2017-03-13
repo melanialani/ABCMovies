@@ -407,7 +407,6 @@ Class Admin extends Film {
 						$omdb = json_decode($json);
 						//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
 						
-						$getdata = NULL;
 						if ($omdb->Response == "True"){																					
 							$getdata['summary'] = $omdb->Plot;
 							$getdata['year'] = $omdb->Year;
@@ -419,6 +418,17 @@ Class Admin extends Film {
 							$getdata['imdb_id'] = $omdb->imdbID;
 							$getdata['imdb_rating'] = $omdb->imdbRating;
 							$getdata['metascore'] = $omdb->Metascore;
+						} else {
+							$getdata['summary'] = null;
+							$getdata['year'] =null;
+							$getdata['playing_date'] = null;
+							$getdata['director'] = null;
+							$getdata['writer'] = null;
+							$getdata['actors'] = null;
+							$getdata['poster'] = null;
+							$getdata['imdb_id'] = null;
+							$getdata['imdb_rating'] = null;
+							$getdata['metascore'] = null;
 						}
 						
 						$getdata['title'] = $ibacor->data[$i]->movie;
