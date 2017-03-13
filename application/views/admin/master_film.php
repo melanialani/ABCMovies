@@ -2,7 +2,7 @@
  <div class="container">
   <div class="row">
    <div class="span12">
-  		<a href="<?php echo site_url('film/insertFilm'); ?>" role="button"><span class="btn btn-info" style="width: 98%;">Insert New Film</span></a>
+  		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn btn-info" style="width: 98%;">Insert New Film</span></a>
 		
 		<br /><br />
 		
@@ -57,10 +57,11 @@
 				   				if ($movies[$i]['status'] == 0) echo "Coming Soon";
 				   				else if ($movies[$i]['status'] == 1) echo "Now Playing";
 				   				else if ($movies[$i]['status'] == 2) echo "Not playing anymore";
-				   				else if ($movies[$i]['status'] == 3) echo "Not visible";
+				   				else if ($movies[$i]['status'] == 3) echo "Unchecked Coming Soon";
+				   				else if ($movies[$i]['status'] == 4) echo "Unchecked Now Playing";
 				   			echo "</td>";
 					        echo "<th>";
-				   				echo form_open('film/masterFilm');
+				   				echo form_open('admin/masterFilm');
 				   					echo form_hidden('id', $movies[$i]['id']);
 				   					echo form_submit('detail','Detail','class="btn btn-primary"');
 				   					echo form_submit('update','Update','class="btn btn-primary"');

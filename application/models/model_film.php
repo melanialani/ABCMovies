@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Film extends CI_Model {
+Class Model_film extends CI_Model {
 
 	public function __construct(){
         parent::__construct();
@@ -55,10 +55,18 @@ Class Model_Film extends CI_Model {
 	}
 	
 	/**
-	 * Get all movies that needs admin's approval
+	 * Get all Coming Soon movies that needs admin's approval 
 	 */
-	public function getUncheckedMovies(){
+	public function getUncheckedComingSoonMovies(){
 		$this->db->where('status', 3);
+		return $this->db->get('film')->result_array();
+	}
+	
+	/**
+	 * Get all Now Playing movies that needs admin's approval 
+	 */
+	public function getUncheckedNowPlayingMovies(){
+		$this->db->where('status', 4);
 		return $this->db->get('film')->result_array();
 	}
 
@@ -87,15 +95,11 @@ Class Model_Film extends CI_Model {
 	* @param string $imdb_id
 	* @param double $imdb_rating
 	* @param int $metascore
-	* @param int $twitter_positif
-	* @param int $twitter_negatif
-	* @param double $rating
 	* @param int $status
 	* 
 	* @return
 	*/
-	public function insertFilm($title, $summary, $genre, $year, $playing_date, $length, $director, $writer, $actors, $poster, $trailer, $imdb_id, $imdb_rating, $metascore, 
-			$twitter_positif, $twitter_negatif, $rating, $status){
+	public function insertFilm($title, $summary, $genre, $year, $playing_date, $length, $director, $writer, $actors, $poster, $trailer, $imdb_id, $imdb_rating, $metascore, $status){
 		
         $myArr = array(
         	'title' 			=> $title,
@@ -112,9 +116,6 @@ Class Model_Film extends CI_Model {
 			'imdb_id' 			=> $imdb_id,
 			'imdb_rating' 		=> $imdb_rating,
 			'metascore' 		=> $metascore,
-			'twitter_positif' 	=> $twitter_positif,
-			'twitter_negatif' 	=> $twitter_negatif,
-			'rating' 			=> $rating,
 			'status' 			=> $status
         );
 
@@ -140,15 +141,11 @@ Class Model_Film extends CI_Model {
 	* @param string $imdb_id
 	* @param double $imdb_rating
 	* @param int $metascore
-	* @param int $twitter_positif
-	* @param int $twitter_negatif
-	* @param double $rating
 	* @param int $status
 	* 
 	* @return
 	*/
-	public function updateFilm($id, $title, $summary, $genre, $year, $playing_date, $length, $director, $writer, $actors, $poster, $trailer, $imdb_id, $imdb_rating, 
-			$metascore, $twitter_positif, $twitter_negatif, $rating, $status){
+	public function updateFilm($id, $title, $summary, $genre, $year, $playing_date, $length, $director, $writer, $actors, $poster, $trailer, $imdb_id, $imdb_rating, $metascore, $status){
 		
 		$myArr = array(
         	'title' 			=> $title,
@@ -165,9 +162,6 @@ Class Model_Film extends CI_Model {
 			'imdb_id' 			=> $imdb_id,
 			'imdb_rating' 		=> $imdb_rating,
 			'metascore' 		=> $metascore,
-			'twitter_positif' 	=> $twitter_positif,
-			'twitter_negatif' 	=> $twitter_negatif,
-			'rating' 			=> $rating,
 			'status' 			=> $status
         );
 	

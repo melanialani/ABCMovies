@@ -61,8 +61,8 @@
 					<?php
 					// if admin, show master film
 					if ($this->input->cookie('abcmovies') == 'admin@abcmovies.co.id'){
-						echo '<li><a href="'.site_url('film/masterFilm').'" style="color: white;">Master Film</a></li>';
-						echo '<li><a href="'.site_url('film/masterBanner').'" style="color: white;">Master Banner</a></li>';
+						echo '<li><a href="'.site_url('admin/masterFilm').'" style="color: white;">Master Film</a></li>';
+						echo '<li><a href="'.site_url('admin/masterBanner').'" style="color: white;">Master Banner</a></li>';
 					}
 					// show login-register or profile-logout
 					if ($this->input->cookie('abcmovies')){

@@ -4,7 +4,7 @@
 			<div class="span12">
 				<div class="row">
 					<div id="gallery" class="span3">
-						<img src="http://www.21cineplex.com/data/gallery/pictures/<?= $poster; ?>_452x647.jpg" style="width:100%"/>
+						<img src="<?= $poster; ?>" style="width:100%"/>
 					</div>
 					<div class="span9">
 						<h3><?= $title; ?></h3>
@@ -80,7 +80,7 @@
 										if ($this->input->cookie('abcmovies') == $reviews[$i]['email']){
 											$reviewAda = TRUE;
 											// if user has left a review, show update button
-											echo form_open('film/detailFilm');
+											echo form_open('film/detail');
 							   					echo form_hidden('id', $reviews[$i]['id']);
 							   					echo form_hidden('film_id', $id);
 							   					echo form_submit('update','Update Review','class="btn btn-primary pull-right"');
@@ -90,7 +90,7 @@
 									}
 									// if user hasn't left a review but has logged in, show insert review button
 									if (!$reviewAda && $this->input->cookie('abcmovies')){
-										echo form_open('film/detailFilm');
+										echo form_open('film/detail');
 							   				echo form_hidden('id', $id);
 							   				echo form_submit('insert','Insert Review','class="btn btn-primary pull-right"');
 							   			echo form_close();

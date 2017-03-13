@@ -5,7 +5,7 @@
 		<h1 align="center">Insert Film</h1><hr/>
 		<div class="span12">
 			<div class="thumbnail" style="padding-left: 30px; padding-top: 30px;">
-				<?php echo form_open('film/insertFilm', "role='form'"); ?>
+				<?php echo form_open('admin/insertFilm', "role='form'"); ?>
 					<table width="100%">
 						<tr>
 							<td width="12%" align="right"><b style="margin-right: 20px;">Title</b></td>
@@ -54,7 +54,7 @@
 					<table width="100%">
 						<tr>
 							<td width="12%" align="right"><b style="margin-right: 20px;">Poster</b></td>
-							<td><input type="text" id="poster" name="poster" placeholder="Cinema 21 Movie ID" class="form-control" style="width:95%"/></td>
+							<td><input type="text" id="poster" name="poster" placeholder="OMDB Poster URL" class="form-control" style="width:95%"/></td>
 						</tr>
 						<tr>
 							<td align="right"><b style="margin-right: 20px;">Trailer</b></td>
@@ -83,9 +83,10 @@
 					<!--Status: <input type="number" id="status" name="status" placeholder="1" max="3" min="0" required class="form-control"/-->
 					<fieldset><legend>Status Film</legend>
 						<input type="radio" name="status" value="0" class="form-control"> Coming Soon<br>
-					    <input type="radio" name="status" value="1" class="form-control" checked> Now Playing<br>
+					    <input type="radio" name="status" value="1" class="form-control"> Now Playing<br>
 					    <input type="radio" name="status" value="2" class="form-control"> Not playing anymore<br>
-					    <input type="radio" name="status" value="3" class="form-control"> Not visible
+					    <input type="radio" name="status" value="3" class="form-control" checked> Unchecked Coming Soon
+					    <input type="radio" name="status" value="4" class="form-control"> Unchecked Now Playing
 					</fieldset>
 					
 					<hr/>

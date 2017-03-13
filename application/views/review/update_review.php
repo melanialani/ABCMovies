@@ -4,7 +4,7 @@
 			<div class="span12">
 				<div class="row">
 					<div id="gallery" class="span3">
-						<img src="http://www.21cineplex.com/data/gallery/pictures/<?= $poster; ?>_452x647.jpg" style="width:100%"/>
+						<img src="<?= $poster; ?>" style="width:100%"/>
 					</div>
 					<div class="span9">
 						<h3><?= $title; ?></h3>

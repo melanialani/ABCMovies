@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Review extends CI_Model {
+Class Model_review extends CI_Model {
 
 	public function __construct(){
         parent::__construct();

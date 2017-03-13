@@ -6,7 +6,7 @@
 		<div class="span6">
 			<div class="thumbnail">
 				<h4 align="center" style="margin-left: 10px;">Insert banner baru</h4>
-				<?php echo form_open_multipart('film/masterBanner', "role='form'"); ?>
+				<?php echo form_open_multipart('admin/masterBanner', "role='form'"); ?>
 					<div class="form-group">
 						<table width="100%" cellpadding="5px">
 							<tr>
@@ -62,7 +62,7 @@
 					        	else echo "deactivated";
 					        echo "</td>";
 					        echo "<td>";
-				   				echo form_open('film/masterBanner');
+				   				echo form_open('admin/masterBanner');
 				   					echo form_hidden('id', $banners[$i]['id']);
 				   					echo form_submit('deactivate','Deactivate','class="btn btn-primary"');
 				   					echo form_submit('activate','Activate','class="btn btn-primary"');

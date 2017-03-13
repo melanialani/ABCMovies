@@ -5,7 +5,7 @@
 		<h1 align="center">Update Film</h1><hr/>
 		<div class="span12">
 			<div class="thumbnail" style="padding-left: 30px; padding-top: 30px;">
-				<?php echo form_open('film/updateFilm', "role='form'"); ?>
+				<?php echo form_open('admin/updateFilm', "role='form'"); ?>
 					<table width="100%">
 						<tr>
 							<td width="15%" align="right"><b style="margin-right: 20px;">ID</b></td>
@@ -59,11 +59,11 @@
 						<tr>
 							<td width="15%" align="right"><b style="margin-right: 20px;">Poster</b></td>
 							<td>
-								<img src="http://www.21cineplex.com/data/gallery/pictures/<?= $poster; ?>_100x147.jpg" style="width:10%"/><br/><br/>
+								<img src="<?= $poster; ?>" style="width:10%"/><br/><br/>
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><b style="margin-right: 20px;">Cinema21 Poster ID</b></td>
+							<td align="right"><b style="margin-right: 20px;">OMDB Poster URL</b></td>
 							<td><input type="text" id="poster" name="poster" value="<?= $poster; ?>" class="form-control" style="width:95%"/></td>
 						</tr>
 						<tr>
@@ -105,8 +105,10 @@
 						else echo '<input type="radio" name="status" value="1" class="form-control"> Now Playing<br>';
 						if ($status == 2) echo '<input type="radio" name="status" value="2" class="form-control" checked> Not playing anymore<br>';
 						else echo '<input type="radio" name="status" value="2" class="form-control"> Not playing anymore<br>';
-						if ($status == 3) echo '<input type="radio" name="status" value="3" class="form-control" checked> Not visible';
-						else echo '<input type="radio" name="status" value="3" class="form-control"> Not visible';
+						if ($status == 3) echo '<input type="radio" name="status" value="3" class="form-control" checked> Unchecked Coming Soon<br>';
+						else echo '<input type="radio" name="status" value="3" class="form-control"> Unchecked Coming Soon<br>';
+						if ($status == 4) echo '<input type="radio" name="status" value="3" class="form-control" checked> Unchecked Now Playing';
+						else echo '<input type="radio" name="status" value="3" class="form-control"> Unchecked Now Playing';
 						?>
 					</fieldset>
 					

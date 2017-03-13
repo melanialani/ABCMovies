@@ -5,7 +5,7 @@ Class User extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		
-		$this->load->model('Model_User');
+		$this->load->model('model_user');
 	}
 	
 	public function login(){
@@ -22,7 +22,7 @@ Class User extends CI_Controller {
 		// if button LOGIN is pressed
 		if ($this->input->post('login', TRUE)) {
 			// cek kesesuaian email dan password
-			$result = $this->Model_User->getAllUser();
+			$result = $this->model_user->getAllUser();
 			
 			for ($i = 0; $i < count($result); $i++){
 				if ($data['email'] == $result[$i]['email']) { // if email found
@@ -52,7 +52,7 @@ Class User extends CI_Controller {
 		} else { // load login page
 			// fetch user's name
 			if ($this->input->cookie('abcmovies')){
-				$user = $this->Model_User->getUser($this->input->cookie('abcmovies'));
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
 				$data['name'] = $user[0]['name'];
 			} else $data['name'] = null;
 			
@@ -82,7 +82,7 @@ Class User extends CI_Controller {
 				$ada = 0;
 				
 				// cek email sudah ada atau belum
-				$result = $this->Model_User->getAllUser();
+				$result = $this->model_user->getAllUser();
 				for ($i = 0; $i < count($result); $i++){
 					if ($data['email'] == $result[$i]['email']) { // if email found
 						$ada = 1;
@@ -93,7 +93,7 @@ Class User extends CI_Controller {
 				
 				// email belum ada
 				if (!$ada) { 
-					if ($this->Model_User->insertUser($data['email'],$data['password'],$data['name'],$data['birthdate'])) $oke = 1;
+					if ($this->model_user->insertUser($data['email'],$data['password'],$data['name'],$data['birthdate'])) $oke = 1;
 					else $data['message'] = "<div class='btn btn-danger' style='width:90%; margin-bottom:15px;'>Register gagal</div>"; 
 				}
 			} else $data['message'] = "<div class='btn btn-danger' style='width:90%; margin-bottom:15px;'>Password yang dimasukan tidak sama</div>";
@@ -109,7 +109,7 @@ Class User extends CI_Controller {
 		} else { // load page again
 			// fetch user's name
 			if ($this->input->cookie('abcmovies')){
-				$user = $this->Model_User->getUser($this->input->cookie('abcmovies'));
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
 				$data['name'] = $user[0]['name'];
 			} else $data['name'] = null;
 			
@@ -145,7 +145,7 @@ Class User extends CI_Controller {
 			} 
 			
 			// fetch user's profile
-			$user = $this->Model_User->getUser($this->input->cookie('abcmovies'));
+			$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
 			$data['name'] = $user[0]['name'];
 			$data['password'] = $user[0]['password'];
 			$data['birthdate'] = $user[0]['birthdate'];
@@ -171,12 +171,12 @@ Class User extends CI_Controller {
 				$data['birthdate'] = date("Y-m-d", strtotime($this->input->post('birthdate', TRUE)));
 				
 				// update user profile
-				if ($this->Model_User->updateUser($this->input->cookie('abcmovies'),$data['name'],$data['birthdate'])) 
+				if ($this->model_user->updateUser($this->input->cookie('abcmovies'),$data['name'],$data['birthdate'])) 
 					redirect('user/profile'); // update success, go back to user profile
 					
 			} else { // load page as usual
 				// fetch user's profile
-				$user = $this->Model_User->getUser($this->input->cookie('abcmovies'));
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
 				$data['name'] = $user[0]['name'];
 				$data['birthdate'] = $user[0]['birthdate'];
 				
@@ -204,7 +204,7 @@ Class User extends CI_Controller {
 				// cek password & re-password
 				if ($this->input->post('password', TRUE) == $this->input->post('repassword', TRUE)){
 					// update user profile
-					if ($this->Model_User->updateUserPassword($this->input->cookie('abcmovies'),$data['password']))
+					if ($this->model_user->updateUserPassword($this->input->cookie('abcmovies'),$data['password']))
 						$okay = TRUE;
 				} else $data['message'] = "<div class='btn btn-danger' style='width:90%; margin-bottom:15px;'>Password yang dimasukan tidak sama</div>";
 				
@@ -214,7 +214,7 @@ Class User extends CI_Controller {
 				redirect('user/profile'); 
 			} else {
 				// fetch user's profile
-				$user = $this->Model_User->getUser($this->input->cookie('abcmovies'));
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
 				$data['name'] = $user[0]['name'];
 				$data['password'] = $user[0]['password'];
 				
@@ -253,7 +253,7 @@ Class User extends CI_Controller {
 				if($this->upload->do_upload('profilePicture')){ // photo uploaded successfully
 					$temp = $this->upload->data();
 					
-					if ($this->Model_User->updateUserPicture($this->input->cookie('abcmovies'),$config['upload_path'].$temp['file_name'])) 
+					if ($this->model_user->updateUserPicture($this->input->cookie('abcmovies'),$config['upload_path'].$temp['file_name'])) 
 						$okay = TRUE;
 				} else {
 					$data['message'] = "<div class='btn btn-danger' style='width:90%; margin-bottom:15px;'>".$this->upload->display_errors()."</div>";
@@ -264,7 +264,7 @@ Class User extends CI_Controller {
 				redirect('user/profile'); // update success, go back to user profile
 			} else { // load page as usual
 				// fetch user's profile picture
-				$user = $this->Model_User->getUser($this->input->cookie('abcmovies'));
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
 				$data['name'] = $user[0]['name'];
 				$data['picture'] = $user[0]['picture'];
 				

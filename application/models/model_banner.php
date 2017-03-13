@@ -1,6 +1,6 @@
 <?php
 
-Class Model_Banner extends CI_Model {
+Class Model_banner extends CI_Model {
 
 	public function __construct(){
         parent::__construct();

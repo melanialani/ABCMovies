@@ -44,7 +44,7 @@
 							<div class="thumbnail">
 								'.form_open('film/index').'
 		   						'.form_hidden('id', $movies[$i]['id']).'
-								<img src="http://www.21cineplex.com/data/gallery/pictures/'.$movies[$i]['poster'].'_452x647.jpg" style="width:100%"/>
+								<img src="'.$movies[$i]['poster'].'" width="260" height="350" style="max-width: 260px; max-height: 350px;"/>
 								<div class="caption">
 									<h5>'.$movies[$i]['title'].'</h5>
 									<h4 style="text-align:center; margin-bottom: -30px;">'.form_submit('detail','Detail','class="btn btn-primary" style="width:100%;"').'</h4>
