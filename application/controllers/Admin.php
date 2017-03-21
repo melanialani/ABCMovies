@@ -300,7 +300,7 @@ Class Admin extends Film {
 				$moviesinDB = $this->model_film->getComingSoonMovies();
 				$alreadyinDB = FALSE;
 				for ($j=0; $j<sizeof($moviesinDB); $j++){
-					if ($moviesinDB[$j]['title'] == $getdata['title']){
+					if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
 						$alreadyinDB = TRUE;
 						break;
 					}
@@ -308,7 +308,7 @@ Class Admin extends Film {
 				if (!$alreadyinDB){ // check with unchecked coming soon movies
 					$moviesinDB = $this->model_film->getUncheckedComingSoonMovies();
 					for ($j=0; $j<sizeof($moviesinDB); $j++){
-						if ($moviesinDB[$j]['title'] == $getdata['title']){
+						if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
 							$alreadyinDB = TRUE;
 							break;
 						}
@@ -362,7 +362,7 @@ Class Admin extends Film {
 					$moviesinDB = $this->model_film->getOnGoingMovies();
 					$alreadyinDB = FALSE;
 					for ($j=0; $j<sizeof($moviesinDB); $j++){
-						if ($moviesinDB[$j]['title'] == $getdata['title']){
+						if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
 							$alreadyinDB = TRUE;
 							break;
 						}
@@ -370,7 +370,7 @@ Class Admin extends Film {
 					if (!$alreadyinDB){ // check with unchecked now playing movies
 						$moviesinDB = $this->model_film->getUncheckedNowPlayingMovies();						
 						for ($j=0; $j<sizeof($moviesinDB); $j++){
-							if ($moviesinDB[$j]['title'] == $getdata['title']){
+							if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
 								$alreadyinDB = TRUE;
 								break;
 							}
@@ -381,7 +381,7 @@ Class Admin extends Film {
 					if (!$alreadyinDB){ // check with coming soon movies										
 						$moviesinDB = $this->model_film->getUncheckedNowPlayingMovies();					
 						for ($j=0; $j<sizeof($moviesinDB); $j++){
-							if ($moviesinDB[$j]['title'] == $getdata['title']){
+							if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
 								$alreadyinDB = TRUE;
 								$isComingSoon = TRUE;
 								$isComingSoon_id = $moviesinDB[$j]['id'];
@@ -392,7 +392,7 @@ Class Admin extends Film {
 					if (!$alreadyinDB && !$isComingSoon){ // check with unchecked coming soon movies			
 						$moviesinDB = $this->model_film->getUncheckedNowPlayingMovies();						
 						for ($j=0; $j<sizeof($moviesinDB); $j++){		
-							if ($moviesinDB[$j]['title'] == $getdata['title']){			
+							if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){			
 								$alreadyinDB = TRUE;
 								$isComingSoon = TRUE;
 								$isComingSoon_id = $moviesinDB[$j]['id'];
