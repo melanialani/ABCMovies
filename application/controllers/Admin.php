@@ -1,5 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-include_once (dirname(__FILE__) . "/Film.php");
+
+require_once (dirname(__FILE__) . "/Film.php");
 
 Class Admin extends Film {
 	
