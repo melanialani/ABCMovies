@@ -85,7 +85,7 @@
 						<input type="radio" name="status" value="0" class="form-control"> Coming Soon<br>
 					    <input type="radio" name="status" value="1" class="form-control"> Now Playing<br>
 					    <input type="radio" name="status" value="2" class="form-control"> Not playing anymore<br>
-					    <input type="radio" name="status" value="3" class="form-control" checked> Unchecked Coming Soon
+					    <input type="radio" name="status" value="3" class="form-control" checked> Unchecked Coming Soon<br>
 					    <input type="radio" name="status" value="4" class="form-control"> Unchecked Now Playing
 					</fieldset>
 					

@@ -2,7 +2,7 @@
 <div id="mainBody">
 <div class="container">
 	<div class="row">
-		<h1 align="center">Profile</h1><hr/>
+		<h1 align="center">Update Profile Picture</h1><hr/>
 		<div class="span3"></div>
 		<div class="span6" align="center">
 			<div class="thumbnail">

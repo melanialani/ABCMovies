@@ -6,8 +6,6 @@
 */
 class DataValidatorLib
 {
-	$stack = array("orange", "banana");
-	
     /**
     * Check if the string is empty or not
     *
@@ -113,14 +111,21 @@ class DataValidatorLib
         return $result;
     }
     
-    /**
-	* Push a value into array
-	* @param undefined $value
-	* 
-	* @return
-	*/
-    public function addKata($value){
-		array_push($stack, $value);
+	public static function isReview($value){
+		//array_push($stack, $value);
+		
+		$stack = array("orange", "banana");
+		
+		$result = FALSE;
+		
+		for ($i=0; $i<sizeof($stack); $i++){
+			if ($value == $stack[$i]){
+				$result = TRUE;
+				break;
+			}
+		}
+
+        return $result;
 	}
 }
 ?>

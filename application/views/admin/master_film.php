@@ -81,6 +81,15 @@
  </div>
 </div>
 
+	<script type="text/javascript" language="javascript" class="init">
+	$(document).ready(function() {
+		$('#datatable').DataTable( {
+			"order": [[ 6, "desc" ]],
+			"columnDefs": [{ "width": "20%", "targets": 7 }]
+		} );
+	} );
+	</script>
+
 	<!-- Footer ================================================================== -->
 	<div  id="footerSection">
 	<div class="container" style="margin-bottom: -2%;">

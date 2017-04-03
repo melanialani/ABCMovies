@@ -58,6 +58,7 @@ Class User extends CI_Controller {
 			
 			$this->load->view('includes/header', $data);
 			$this->load->view('login', $data);
+			$this->load->view('includes/footer');
 		}
 		
 	}

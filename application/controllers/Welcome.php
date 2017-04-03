@@ -43,10 +43,46 @@ class Welcome extends Admin {
 		$response = json_decode($response);
 		
 		//var_dump($response);
-		echo "<pre>"; print_r($response); echo "</pre><br/>";
+		//echo "<pre>"; print_r($response); echo "</pre><br/>";
 		
 		for ($i=0; $i<sizeof($response->statuses); $i++){
 			echo $i." - ".$response->statuses[$i]->text."<hr/>";
+		}
+		
+		/**
+		* Begin feature reduction
+		* Delete username, url, hashtag, and any punctuations
+		*/
+		
+		$result = [];
+		
+		echo "<br><br><br><br>";
+		
+		for ($i=0; $i<sizeof($response->statuses); $i++){
+			$editedResult = $response->statuses[$i]->text;
+			
+			// replace any url with word URL
+			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
+			// replace any hashtag with word HASHTAG 
+			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
+			// replace any username (@..) with word USERNAME
+			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
+			
+			// replace all characters that are not number or alphabet with a single space
+			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult); 
+			// the line above will result with double spaces if there are any punctuation, now we will remove any double spaces here
+			$editedResult = str_replace('  ', ' ', $editedResult); 
+			
+			// replace movie's title with word JUDULFILM
+			$editedResult = str_ireplace('beauty and the beast', 'JUDULFILM', $editedResult);
+			
+			// put the result into array $editedResult
+			array_push($result, $editedResult);
+		}
+		
+		// print the result after feature reduction
+		for ($i=0; $i<sizeof($result); $i++){
+			echo $i." - ".$result[$i]."<hr/>";
 		}
 	}
 	

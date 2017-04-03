@@ -30,14 +30,6 @@
 	<script type="text/javascript" language="javascript" src="<?= base_url('assets/datatable/examples/resources/syntax/shCore.js'); ?>"></script>
 	<script type="text/javascript" language="javascript" src="<?= base_url('assets/datatable/examples/resources/demo.js'); ?>"></script>
 	
-	<script type="text/javascript" language="javascript" class="init">
-	$(document).ready(function() {
-		$('#datatable').DataTable( {
-			"order": [[ 3, "desc" ]]
-		} );
-	} );
-	</script>
-	
 	<style type="text/css" id="enject"></style>
 </head>
 
