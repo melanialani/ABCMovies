@@ -18,6 +18,9 @@
 	<!-- Google-code-prettify -->
 	<link rel="stylesheet" href="<?= base_url('assets/themes/js/google-code-prettify/prettify.css'); ?>" />
 	
+	<!-- Custom Fonts -->
+	<link rel="stylesheet" href="<?= base_url('assets/font-awesome/css/font-awesome.min.css'); ?>" />
+	
 	<!-- DataTables -->
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/datatable/media/css/jquery.dataTables.css'); ?>">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets/datatable/examples/resources/syntax/shCore.css'); ?>">

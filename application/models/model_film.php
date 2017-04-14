@@ -8,7 +8,8 @@ Class Model_film extends CI_Model {
     }
 
     public function getAllFilm(){
-    	$this->db->order_by('playing_date', 'desc');
+    	//$this->db->order_by('playing_date', 'desc');
+    	$this->db->order_by('title');
     	return $this->db->get('film')->result_array();
 	}
 	
@@ -194,6 +195,26 @@ Class Model_film extends CI_Model {
 	public function deleteFilm($id){
 		$this->db->where('id', $id);
 		$this->db->delete('film');
+		return $this->db->affected_rows();
+	}
+	
+	/**
+	* Update count of twitter_negatif and twitter_positif of a movie (by id)
+	* @param int $id
+	* @param int $neg
+	* @param int $pos
+	* 
+	* @return
+	*/
+	public function updateTwitterFilm($id, $neg, $pos){
+		$myArr = array(
+			'twitter_negatif' => $neg,
+			'twitter_positif' => $pos
+		);
+		
+		$this->db->where('id', $id);
+		$this->db->update('film', $myArr);
+		
 		return $this->db->affected_rows();
 	}
 }

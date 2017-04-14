@@ -86,6 +86,12 @@ Class Model_review extends CI_Model {
 		return $this->db->affected_rows();
 	}
 	
+	/**
+	* Calculate local rating of a movie (by id)
+	* @param int $id
+	* 
+	* @return
+	*/
 	public function calculateRating($id = NULL){
 		$this->db->select('COUNT(rating)', FALSE); 
 		$this->db->where('film_id', $id);
@@ -104,5 +110,21 @@ Class Model_review extends CI_Model {
 			$this->db->update('film', $myArr);
 		}
 	}
+	
+	/*public function getNegData(){
+		$this->db->select('text', FALSE);
+		$this->db->from('moviesentiment');
+		$this->db->where('sentiment','neg');
+		$this->db->order_by('text');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getPosData(){
+		$this->db->select('text', FALSE);
+		$this->db->from('moviesentiment');
+		$this->db->where('sentiment','pos');
+		$this->db->order_by('text');
+		return $this->db->get()->result_array();
+	}*/
 }
 ?>

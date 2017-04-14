@@ -2,7 +2,7 @@
  <div class="container">
   <div class="row">
    <div class="span12">
-  		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn btn-info" style="width: 98%;">Insert New Film</span></a>
+  		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Insert New Film</span></a>
 		
 		<br /><br />
 		
@@ -63,9 +63,12 @@
 					        echo "<th>";
 				   				echo form_open('admin/masterFilm');
 				   					echo form_hidden('id', $movies[$i]['id']);
-				   					echo form_submit('detail','Detail','class="btn btn-primary"');
-				   					echo form_submit('update','Update','class="btn btn-primary"');
-				   					echo form_submit('delete','Delete','class="btn btn-primary"');
+				   					?>
+									<button type="submit" name="detail" value="Detail" title="Detail" class="btn btn-xs btn-info"><span class="fa fa-film"></span></button>
+									<button type="submit" name="update" value="Update" title="Update" class="btn btn-xs btn-success"><span class="fa fa-edit"></span></button>
+									<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
+									<button type="submit" name="tweets" value="Tweets" title="See Twitter Sentiment" class="btn btn-xs btn-primary"><span class="fa fa-twitter"></span></button>
+				   					<?php
 				   				echo form_close();
 			   				echo "</th>";
 				        echo "</tr>";
@@ -85,7 +88,7 @@
 	$(document).ready(function() {
 		$('#datatable').DataTable( {
 			"order": [[ 6, "desc" ]],
-			"columnDefs": [{ "width": "20%", "targets": 7 }]
+			"columnDefs": [{ "width": "17%", "targets": 7 }]
 		} );
 	} );
 	</script>

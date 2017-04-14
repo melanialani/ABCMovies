@@ -1,3 +1,4 @@
+
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 require_once (dirname(__FILE__) . "/Film.php");
@@ -10,12 +11,12 @@ Class Admin extends Film {
 		$this->load->model('model_banner');
 		$this->load->model('model_film');
 		$this->load->model('model_user');
+		$this->load->model('model_tweets');
 	}
 	
 	public function masterFilm(){
 		// checks if it's admin
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
-			
 			// get information from form view
 			$data['id'] = $this->input->post('id', TRUE);
 			
@@ -33,6 +34,12 @@ Class Admin extends Film {
 			// detail button on click 
 			else if ($this->input->post('detail') == TRUE){ 
 				$this->detail($data['id']);
+			}
+			
+			// tweets button on click 
+			else if ($this->input->post('tweets') == TRUE){ 
+				set_cookie(array('name' => 'abcmovies_movie_id', 'value' => $data['id'], 'expire' => 0 ));
+				redirect('admin/detailTweets');
 			}
 			
 			// load page as usual
@@ -249,206 +256,42 @@ Class Admin extends Film {
 		}
 	}
 	
-	public function checkNewComingSoonMovies(){
-		$url = "http://www.21cineplex.com/comingsoon/";
-		$timeout = 5;
-		
-		// create a new cURL resource
-		$ch = curl_init(); 
-		
-		// set URL and other appropriate options
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
-		curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		
-		// grab URL and pass it to the browser
-		$data = curl_exec($ch); // at this point, $data = a whole webpage source of $url
-		
-		// close cURL resource, and free up system resources
-		curl_close($ch);
-		
-		// explode string $data to get the inside of var pdata
-		$data = explode('pdata=[', $data);
-		$data = explode('];', $data[1]);
-		$data = "[".$data[0]."]"; // valid json
-		
-		// explode string $data to divide each movie
-		$data = explode('{', $data);
-		
-		// explode string again to get the information we want
-		for ($i=1; $i<sizeof($data); $i++){
-			$info = explode('movieTitle":"', $data[$i]);
-			$info = explode('","', $info[1]);
+	public function detailTweets(){
+		// is it admin?
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
 			
-			// so if the movie title has any (..) in it, we dismiss it
-			if (strpos($info[0], '(') == FALSE){
-				$getdata['title'] = $info[0];
-				
-				$info = explode('movieSinopsis":"', $data[$i]);
-				$info = explode('","', $info[1]);
-				$getdata['summary'] = $info[0];
-				
-				$info = explode('movieImage":"', $data[$i]);
-				$info = explode('.', $info[1]);
-				$getdata['poster'] = $info[0];
-				
-				// check with all coming soon movies
-				$moviesinDB = $this->model_film->getComingSoonMovies();
-				$alreadyinDB = FALSE;
-				for ($j=0; $j<sizeof($moviesinDB); $j++){
-					if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
-						$alreadyinDB = TRUE;
-						break;
-					}
-				}
-				if (!$alreadyinDB){ // check with unchecked coming soon movies
-					$moviesinDB = $this->model_film->getUncheckedComingSoonMovies();
-					for ($j=0; $j<sizeof($moviesinDB); $j++){
-						if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
-							$alreadyinDB = TRUE;
-							break;
-						}
-					}
-				}
-				if (!$alreadyinDB){ // add it to database
-					// get movie's information from omdb api
-					$url = 'http://www.omdbapi.com/?t='.str_replace(" ", "+", $getdata['title']).'&plot=full';
-					$json = file_get_contents($url);
-					$omdb = json_decode($json);
-					//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
-					
-					if ($omdb->Response == "True"){
-						$getdata['genre'] = $omdb->Genre;
-						$getdata['year'] = $omdb->Year;
-						$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
-						$getdata['length'] = $omdb->Runtime;
-						$getdata['director'] = $omdb->Director;
-						$getdata['writer'] = $omdb->Writer;
-						$getdata['actors'] = $omdb->Actors;
-						$getdata['poster'] = htmlspecialchars_decode($omdb->Poster);
-						$getdata['imdb_id'] = $omdb->imdbID;
-						$getdata['imdb_rating'] = $omdb->imdbRating;
-						$getdata['metascore'] = $omdb->Metascore;
-					}
-					
-					$getdata['trailer'] = NULL;
-					$getdata['status'] = 3;
-					
-					$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],$getdata['writer'],
-							$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['status']);
-				}
+			// negate a tweet' status
+			if ($this->input->post('negate')){
+				$this->model_tweets->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('status', TRUE));
+				redirect('admin/detailTweets');
+			} 
+			
+			// delete button on click 
+			else if ($this->input->post('delete') == TRUE){ 
+				$this->model_tweets->deleteTweet($this->input->post('id', TRUE));
+				redirect('admin/detailTweets');
 			}
-		}
-		
-	}
-
-	public function checkNewNowPlayingMovies(){
-		$url = 'http://ibacor.com/api/jadwal-bioskop?id=10&k=f4c162ca97099db0ce393fd06328ebad';
-		$json = file_get_contents($url);
-		$ibacor = json_decode($json);
-		//echo "<pre>"; print_r($ibacor); echo "</pre><br/>";
-		
-		if ($ibacor->status == "success"){
-			for ($i=0; $i<sizeof($ibacor->data); $i++){
-				$getdata['title'] = $ibacor->data[$i]->movie;
+			
+			// load page as usual
+			else {
+				//fetch user's name
+				if ($this->input->cookie('abcmovies')){
+					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+					$data['name'] = $user[0]['name'];
+				} else $data['name'] = null;
 				
-				// so if the movie title has any (..) in it, we dismiss it
-				if (strpos($getdata['title'], '(') == FALSE){ 												
-					// check with all now playing movies
-					$moviesinDB = $this->model_film->getOnGoingMovies();
-					$alreadyinDB = FALSE;
-					for ($j=0; $j<sizeof($moviesinDB); $j++){
-						if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
-							$alreadyinDB = TRUE;
-							break;
-						}
-					}
-					if (!$alreadyinDB){ // check with unchecked now playing movies
-						$moviesinDB = $this->model_film->getUncheckedNowPlayingMovies();						
-						for ($j=0; $j<sizeof($moviesinDB); $j++){
-							if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
-								$alreadyinDB = TRUE;
-								break;
-							}
-						}
-					}
-					$isComingSoon = FALSE;
-					$isComingSoon_id = 0;
-					if (!$alreadyinDB){ // check with coming soon movies										
-						$moviesinDB = $this->model_film->getUncheckedNowPlayingMovies();					
-						for ($j=0; $j<sizeof($moviesinDB); $j++){
-							if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
-								$alreadyinDB = TRUE;
-								$isComingSoon = TRUE;
-								$isComingSoon_id = $moviesinDB[$j]['id'];
-								break;
-							}
-						}
-					}
-					if (!$alreadyinDB && !$isComingSoon){ // check with unchecked coming soon movies			
-						$moviesinDB = $this->model_film->getUncheckedNowPlayingMovies();						
-						for ($j=0; $j<sizeof($moviesinDB); $j++){		
-							if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){			
-								$alreadyinDB = TRUE;
-								$isComingSoon = TRUE;
-								$isComingSoon_id = $moviesinDB[$j]['id'];
-								break;
-							}
-						}
-					}
-					if (!$alreadyinDB){ // add it to database
-						// get movie's information from omdb api
-						$url = 'http://www.omdbapi.com/?t='.str_replace(" ", "+", $getdata['title']).'&plot=full';					
-						$json = file_get_contents($url);
-						$omdb = json_decode($json);
-						//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
-						
-						if ($omdb->Response == "True"){																					
-							$getdata['summary'] = $omdb->Plot;
-							$getdata['year'] = $omdb->Year;
-							$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
-							$getdata['director'] = $omdb->Director;
-							$getdata['writer'] = $omdb->Writer;
-							$getdata['actors'] = $omdb->Actors;
-							$getdata['poster'] = htmlspecialchars_decode($omdb->Poster);
-							$getdata['imdb_id'] = $omdb->imdbID;
-							$getdata['imdb_rating'] = $omdb->imdbRating;
-							$getdata['metascore'] = $omdb->Metascore;
-						} else {
-							$getdata['summary'] = null;
-							$getdata['year'] =null;
-							$getdata['playing_date'] = null;
-							$getdata['director'] = null;
-							$getdata['writer'] = null;
-							$getdata['actors'] = null;
-							$getdata['poster'] = null;
-							$getdata['imdb_id'] = null;
-							$getdata['imdb_rating'] = null;
-							$getdata['metascore'] = null;
-						}
-						
-						$getdata['title'] = $ibacor->data[$i]->movie;
-						$getdata['genre'] = $ibacor->data[$i]->genre;	
-						$getdata['length'] = $ibacor->data[$i]->duration;	
-						$getdata['trailer'] = NULL;
-						$getdata['status'] = 4;
-						
-						if (!$isComingSoon){ // not in database as coming soon, insert it as new
-							$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
-								$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['status']);
-						} else {
-							// already in database as coming soon, just change status
-							$this->model_film->updateStatusFilm($isComingSoon_id, 1);
-						}
-					} // end of insert/update new movie to db
-				} // end of checking if the new movie's title contains (..)
-			} // end of for
-		} // end of status ibacor = success
+				// get information from database
+				$data['tweets'] = $this->model_tweets->getAllMovieTweets($data['film_id']);
+				$data['movie'] = $this->model_film->getFilm($data['film_id']);
+				
+				$this->load->view('includes/header', $data);
+				$this->load->view('admin/detail_tweets', $data);
+			}
+			
+		} else { // not admin, go back to login page
+			redirect('user/login');
+		}
 	}
 	
 }

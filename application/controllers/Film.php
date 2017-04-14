@@ -1,6 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-Class Film extends CI_Controller {
+require_once (dirname(__FILE__) . "/WebSystem.php");
+
+Class Film extends WebSystem {
 	
 	public function __construct(){
 		parent::__construct();
@@ -12,6 +14,9 @@ Class Film extends CI_Controller {
 	}
 	
 	public function index(){
+		$this->checkNewComingSoonMovies();
+		$this->checkNewNowPlayingMovies();
+		
 		// fetch user's name
 		if ($this->input->cookie('abcmovies')){
 			$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
