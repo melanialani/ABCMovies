@@ -13,133 +13,170 @@ class WebSystem extends CI_Controller {
 	}
 	
 	public function checkNewComingSoonMovies(){
-		$url = "http://www.21cineplex.com/comingsoon/";
-		$timeout = 5;
-		
-		// create a new cURL resource
-		$ch = curl_init(); 
-		
-		// set URL and other appropriate options
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,false);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
-		curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-		
-		// grab URL and pass it to the browser
-		$data = curl_exec($ch); // at this point, $data = a whole webpage source of $url
-		
-		// close cURL resource, and free up system resources
-		curl_close($ch);
-		
-		// explode string $data to get the inside of var pdata
-		$data = explode('pdata=[', $data);
-		$data = explode('];', $data[1]);
-		$data = "[".$data[0]."]"; // valid json
-		
-		// explode string $data to divide each movie
-		$data = explode('{', $data);
-		
-		// explode string again to get the information we want
-		for ($i=1; $i<sizeof($data); $i++){
-			$info = explode('movieTitle":"', $data[$i]);
-			$info = explode('","', $info[1]);
+		$BASE_URL = "http://query.yahooapis.com/v1/public/yql";
+	    $yql_query = "select * from html where url='http://www.21cineplex.com/comingsoon/'";
+	    $yql_query_url = $BASE_URL . "?q=" . urlencode($yql_query) . "&format=json";
+	    
+	    // make call with cURL
+	    $session = curl_init($yql_query_url);
+	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+	    $json = curl_exec($session);
+	    
+	    // convert JSON to PHP object
+	    $phpObj =  json_decode($json);
+	    
+	    if ($phpObj->query->results){
+			// get js content from cinema 21
+		    $pdata = $phpObj->query->results->body->div[0]->div[1]->div[1]->div[2]->script->content;
+		    
+		    // explode string to get data -> stored inside var pdata=[..]
+		    $pdata = explode(']', $pdata);
+		    $pdata = $pdata[0];
+		    $pdata = explode('pdata=[', $pdata);
+			$pdata = "[".$pdata[1]."]"; // valid json
+			$pdata = explode('{', $pdata); // explode to get each movie
+			//echo '<pre>'; print_r($pdata); echo '</pre>';
 			
-			// so if the movie title has any (..) in it, we dismiss it
-			if (strpos($info[0], '(') == FALSE){
+			// explode each movie to get informations
+			for ($i=1; $i<sizeof($pdata); $i++){
+				$info = explode('movieTitle":"', $pdata[$i]);
+				$info = explode('","', $info[1]);
 				$getdata['title'] = $info[0];
 				
-				$info = explode('movieSinopsis":"', $data[$i]);
+				$info = explode('movieSinopsis":"', $pdata[$i]);
 				$info = explode('","', $info[1]);
 				$getdata['summary'] = $info[0];
 				
-				$info = explode('movieImage":"', $data[$i]);
-				$info = explode('.', $info[1]);
+				$info = explode('movieImage":"', $pdata[$i]);
+				$info = explode('","', $info[1]);
 				$getdata['poster'] = $info[0];
 				
-				// check with all coming soon movies
-				$moviesinDB = $this->model_film->getComingSoonMovies();
-				$alreadyinDB = FALSE;
-				for ($j=0; $j<sizeof($moviesinDB); $j++){
-					if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
-						$alreadyinDB = TRUE;
-						break;
-					}
-				}
-				if (!$alreadyinDB){ // check with unchecked coming soon movies
-					$moviesinDB = $this->model_film->getUncheckedComingSoonMovies();
+				// so if the movie title has any (..) in it, we dismiss it (because it's definitely a double)
+				if (strpos($getdata['title'], '(') == FALSE){
+					
+					// check with all coming soon movies
+					$moviesinDB = $this->model_film->getComingSoonMovies();
+					$alreadyinDB = FALSE;
 					for ($j=0; $j<sizeof($moviesinDB); $j++){
 						if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
 							$alreadyinDB = TRUE;
 							break;
 						}
 					}
-				}
-				if (!$alreadyinDB){ // add it to database
-					// get movie's information from omdb api
-					$url = 'http://www.omdbapi.com/?t='.str_replace(" ", "+", $getdata['title']).'&plot=full';
-					$json = file_get_contents($url);
-					$omdb = json_decode($json);
-					//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
-					
-					if ($omdb->Response == "True"){
-						$getdata['genre'] = $omdb->Genre;
-						$getdata['year'] = $omdb->Year;
-						$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
-						$getdata['length'] = $omdb->Runtime;
-						$getdata['director'] = $omdb->Director;
-						$getdata['writer'] = $omdb->Writer;
-						$getdata['actors'] = $omdb->Actors;
-						$getdata['poster'] = htmlspecialchars_decode($omdb->Poster);
-						$getdata['imdb_id'] = $omdb->imdbID;
-						$getdata['imdb_rating'] = $omdb->imdbRating;
-						$getdata['metascore'] = $omdb->Metascore;
+					if (!$alreadyinDB){ // check with unchecked coming soon movies
+						$moviesinDB = $this->model_film->getUncheckedComingSoonMovies();
+						for ($j=0; $j<sizeof($moviesinDB); $j++){
+							if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
+								$alreadyinDB = TRUE;
+								break;
+							}
+						}
+					}
+					if (!$alreadyinDB){ // add it to database
+						// get movie's information from omdb api
+						$foundInImdb = FALSE;
+						for ($j=date('Y'); $j>(date('Y')-5); $j--){
+							$url = 'http://www.omdbapi.com/?t='.urlencode($getdata['title']).'&y='.$j.'&plot=full';
+							$json = file_get_contents($url);
+							$omdb = json_decode($json);
+							//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
+							
+							if ($omdb->Response == "True"){
+								$foundInImdb = TRUE;
+								break;
+							}
+						}
+						
+						if ($foundInImdb){
+							$getdata['genre'] = $omdb->Genre;
+							$getdata['year'] = $omdb->Year;
+							$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
+							$getdata['length'] = $omdb->Runtime;
+							$getdata['director'] = $omdb->Director;
+							$getdata['writer'] = $omdb->Writer;
+							$getdata['actors'] = $omdb->Actors;
+							$getdata['poster'] = htmlspecialchars_decode($omdb->Poster);
+							$getdata['imdb_id'] = $omdb->imdbID;
+							$getdata['imdb_rating'] = $omdb->imdbRating;
+							$getdata['metascore'] = $omdb->Metascore;
+							
+							// translate movie's summary from omdb api
+							$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($omdb->Plot).'&lang=en-id';
+							$json = file_get_contents($url);
+							$yandex = json_decode($json);
+							$getdata['summary'] = $yandex->text[0];
+						} else {
+							// get poster from cinema 21
+							$getdata['poster'] = explode('.', $getdata['poster']);
+							$getdata['poster'] =  htmlspecialchars_decode('http://www.21cineplex.com/data/gallery/pictures/'.$getdata['poster'][0].'_300x430.jpg');
+							//echo '<br/>'.$getdata['poster'].'<br/>';
+						}
+						
+						$getdata['trailer'] = NULL;
+						$getdata['status'] = 3;
+						
+						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],$getdata['writer'],
+								$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['status']);
 					}
 					
-					$getdata['trailer'] = NULL;
-					$getdata['status'] = 3;
-					
-					$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],$getdata['writer'],
-							$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['status']);
+					//echo '<hr>'.$getdata['title'].'<br>'.$getdata['summary'].'<br/>'.$getdata['poster'].'<br/>Found in DB : '.$alreadyinDB;
 				}
-			}
+		    }
 		}
-		
 	}
 
 	public function checkNewNowPlayingMovies(){
-		$url = 'http://ibacor.com/api/jadwal-bioskop?id=10&k=f4c162ca97099db0ce393fd06328ebad';
-		$json = file_get_contents($url);
-		$ibacor = json_decode($json);
-		//echo "<pre>"; print_r($ibacor); echo "</pre><br/>";
 		
-		if ($ibacor->status == "success"){
-			// if there's a title in db with status NOW PLAYING
-			// but doesnt exist in the data we got from 21
-			// then change the movie's status into OLD
+		$BASE_URL = "http://query.yahooapis.com/v1/public/yql";
+	    $yql_query = "select * from html where url='http://www.21cineplex.com/nowplaying/'";
+	    $yql_query_url = $BASE_URL . "?q=" . urlencode($yql_query) . "&format=json";
+	    
+	    // make call with cURL
+	    $session = curl_init($yql_query_url);
+	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+	    $json = curl_exec($session);
+	    
+	    // convert JSON to PHP object
+	    $phpObj =  json_decode($json);
+	    
+	    if ($phpObj->query->results){
+			/* get js content from cinema 21
+		    $pdata = $phpObj->query->results->body->div[0]->div[1]->div[1]->div[2]->script->content;
+		    
+		    // explode string to get data -> stored inside var pdata=[..]
+		    $pdata = explode(']', $pdata);
+		    $pdata = $pdata[0];
+		    $pdata = explode('pdata=[', $pdata);
+			$pdata = "[".$pdata[1]."]"; // valid json
+			$pdata = explode('{', $pdata); // explode to get each movie
+			//echo '<pre>'; print_r($pdata); echo '</pre>';*/
+			
+			$pdata = $phpObj->query->results->body->div[0]->div[1]->div[3]->div[0]->div[0]->div[1]->ul->li;
+			
+			// if there's a title in db with status NOW PLAYING, but doesnt exist in the data we got from 21, then change the movie's status into OLD
 			$moviesinDB = $this->model_film->getOnGoingMovies();	
-			$isStillPlaying = FALSE;
 			for ($j=0; $j<sizeof($moviesinDB); $j++){
-				for ($i=0; $i<sizeof($ibacor->data); $i++){
-					$getdata['title'] = $ibacor->data[$i]->movie;
+				$isStillPlaying = FALSE;
+				for ($i=1; $i<sizeof($pdata)-2; $i++){
+					//echo $pdata[$i]->a->img->title.'<br/><img src="'.str_replace('100x147','300x430',$pdata[$i]->a->img->src).'"/><br/>';
+					$getdata['title'] = $pdata[$i]->a->img->title;
+					
 					if (htmlspecialchars_decode($moviesinDB[$j]['title']) == htmlspecialchars_decode($getdata['title'])){
 						$isStillPlaying = TRUE;
 						break;
-					}				
-				}
-				if (!$isStillPlaying) // if not exist, change status
+					}
+			    }
+				if (!$isStillPlaying) // if not exist, change status into old
 					$this->model_film->updateStatusFilm($moviesinDB[$j]['id'], 2);
 			}
 			
-			// check if data from 21 is already recorded in db
-			for ($i=0; $i<sizeof($ibacor->data); $i++){
-				$getdata['title'] = $ibacor->data[$i]->movie;
+			// explode each movie to get informations
+			for ($i=1; $i<sizeof($pdata)-2; $i++){
+				$getdata['title'] = $pdata[$i]->a->img->title;
+				$getdata['poster'] = str_replace('100x147','300x430',$pdata[$i]->a->img->src);
 				
-				// so if the movie title has any (..) in it, we dismiss it
-				if (strpos($getdata['title'], '(') == FALSE){ 												
+				// so if the movie title has any (..) in it, we dismiss it (because it's definitely a double)
+				if (strpos($getdata['title'], '(') == FALSE){
 					// check with all now playing movies
 					$moviesinDB = $this->model_film->getOnGoingMovies();
 					$alreadyinDB = FALSE;
@@ -184,15 +221,24 @@ class WebSystem extends CI_Controller {
 					}
 					if (!$alreadyinDB){ // add it to database
 						// get movie's information from omdb api
-						$url = 'http://www.omdbapi.com/?t='.str_replace(" ", "+", $getdata['title']).'&plot=full';					
-						$json = file_get_contents($url);
-						$omdb = json_decode($json);
-						//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
+						$foundInImdb = FALSE;
+						for ($j=date('Y'); $j>(date('Y')-5); $j--){
+							$url = 'http://www.omdbapi.com/?t='.urlencode($getdata['title']).'&y='.$j.'&plot=full';
+							$json = file_get_contents($url);
+							$omdb = json_decode($json);
+							//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
+							
+							if ($omdb->Response == "True"){
+								$foundInImdb = TRUE;
+								break;
+							}
+						}
 						
-						if ($omdb->Response == "True"){																					
-							$getdata['summary'] = $omdb->Plot;
+						if ($foundInImdb){
+							$getdata['genre'] = $omdb->Genre;
 							$getdata['year'] = $omdb->Year;
 							$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
+							$getdata['length'] = $omdb->Runtime;
 							$getdata['director'] = $omdb->Director;
 							$getdata['writer'] = $omdb->Writer;
 							$getdata['actors'] = $omdb->Actors;
@@ -200,22 +246,14 @@ class WebSystem extends CI_Controller {
 							$getdata['imdb_id'] = $omdb->imdbID;
 							$getdata['imdb_rating'] = $omdb->imdbRating;
 							$getdata['metascore'] = $omdb->Metascore;
-						} else {
-							$getdata['summary'] = null;
-							$getdata['year'] =null;
-							$getdata['playing_date'] = null;
-							$getdata['director'] = null;
-							$getdata['writer'] = null;
-							$getdata['actors'] = null;
-							$getdata['poster'] = null;
-							$getdata['imdb_id'] = null;
-							$getdata['imdb_rating'] = null;
-							$getdata['metascore'] = null;
+							
+							// translate movie's summary from omdb api
+							$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($omdb->Plot).'&lang=en-id';
+							$json = file_get_contents($url);
+							$yandex = json_decode($json);
+							$getdata['summary'] = $yandex->text[0];
 						}
 						
-						$getdata['title'] = $ibacor->data[$i]->movie;
-						$getdata['genre'] = $ibacor->data[$i]->genre;	
-						$getdata['length'] = $ibacor->data[$i]->duration;	
 						$getdata['trailer'] = NULL;
 						$getdata['status'] = 4;
 						
@@ -226,11 +264,10 @@ class WebSystem extends CI_Controller {
 							// already in database as coming soon, just change status
 							$this->model_film->updateStatusFilm($isComingSoon_id, 1);
 						}
-					} // end of insert/update new movie to db
-					
-				} // end of checking if the new movie's title contains (..)
-			} // end of for
-		} // end of status ibacor = success
+					}
+				}
+		    }
+		}
 	}
 	
 	public function calculateTweets(){
@@ -247,8 +284,8 @@ class WebSystem extends CI_Controller {
 		
 		// train naive bayes classifier
 		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 5000); //training with negative data
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 5000); //trainign with positive data	
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 0); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 0); //trainign with positive data	
 		
 		$film_id = $this->input->post('film_id', TRUE); echo $film_id;
 		$movie = $this->model_film->getFilm($film_id);
@@ -310,6 +347,9 @@ class WebSystem extends CI_Controller {
 			// if there's any word that intersects (exist in tweet and in lexicon array), do:
 			if (array_intersect($lexicon, $target)) 
 				array_push($review, $result[$i]);
+			else { // if not, insert into database as 'not a review' (status = 2)
+				$this->model_tweets->insertTweetButNotAReview($film_id, $result[$i], 2);
+			}
 		}
 		
 		// !!! === !!! === begin naive bayes
@@ -320,8 +360,10 @@ class WebSystem extends CI_Controller {
 			$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
 			
 			$status = 1;
-			if ($resultofAnalyzingSentence == "negative" || ($probabilityofSentenceBeingNegative > $probabilityofSentenceBeingPositive))
+			if ($resultofAnalyzingSentence == "negative")
 				$status = 0;
+			else if ($resultofAnalyzingSentence == "Neutral")
+				$status = 3;
 			
 			// if there's already a tweet with the same value, do not add it to database
 			if (!$this->model_tweets->isExist($film_id, $review[$i]))

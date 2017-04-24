@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project name="C:\xampp\htdocs\abcmovies\abcmovies.clpprj">
 	<settings><PM_URL><![CDATA[http://localhost/abcmovies/]]></PM_URL><PM_HOME_URL><![CDATA[http://localhost/abcmovies/]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS><PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION><PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR><PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE></settings><removed value=";C:\xampp\htdocs\abcmovies\application\config\twitter.php;C:\xampp\htdocs\abcmovies\application\controllers\Twitter.php;C:\xampp\htdocs\abcmovies\application\third_party\OAuth.php;"/><added value=""/><lastopfiles>
-		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\controllers\Admin.php"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_rule.php"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php"/>
 	</lastopfiles>
 	<errors version="5.3">
 		<errfile name="C:\xampp\htdocs\abcmovies\application\views\includes\header.php">
@@ -14,14 +16,17 @@
 			<error val="31;33;53;33;2002;1;"/>
 		</errfile>
 		<errfile name="C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php">
-			<error val="57;4;71;4;2002;1;"/>
-			<error val="31;86;53;86;2002;1;"/>
+			<error val="55;17;69;17;2002;1;"/>
+			<error val="31;96;53;96;2002;1;"/>
 		</errfile>
 		<errfile name="C:\xampp\htdocs\abcmovies\application\views\admin\master_banner.php">
 			<error val="31;82;53;82;2002;1;"/>
 		</errfile>
 		<errfile name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php">
-			<error val="31;89;53;89;2002;1;"/>
+			<error val="31;106;53;106;2002;1;"/>
+		</errfile>
+		<errfile name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_rule.php">
+			<error val="31;62;53;62;2002;1;"/>
 		</errfile>
 	</errors>
 	<codestructure version="5.0">
@@ -92,17 +97,25 @@
 			</treenode>
 			<treenode node="VIEWPATH;PHP:PHP Word;C:\xampp\htdocs\abcmovies\index.php;f9;305;17;305;;;;vpos;;v;;r$view_folder.DIRECTORY_SEPARATOR;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="Admin;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f0;5;1;296;;;;vpos;;vFilm;;c;;r;;d25,5;;b0,0;;m">
+			<treenode node="Admin;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f0;5;1;447;;;;vpos;;vFilm;;c;;r;;d25,5;;b0,0;;m">
 				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f8;7;2;14;;;;vpos;;v;;r;;d30,7;;b1,0;;m">
 					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f2;10;7;10;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="detailTweets;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f8;258;2;294;;;;vpos;;v;;r;;d31,258;;b1,0;;m">
+				<treenode node="detailRule;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f8;304;2;445;;;;vpos;;v;;r;;d29,304;;b1,0;;m">
+					<treenode node="data;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f3;307;8;307;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f6;306;11;306;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="user;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f5;332;10;332;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="detailTweets;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f8;258;2;302;;;;vpos;;v;;r;;d31,258;;b1,0;;m">
 					<treenode node="data;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f3;261;8;261;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f6;260;11;260;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="user;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f5;279;10;279;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="user;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f5;287;10;287;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="insertFilm;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Admin.php;f8;65;2;115;;;;vpos;;v;;r;;d29,65;;b1,0;;m">
@@ -1192,58 +1205,102 @@
 					</treenode>
 				</treenode>
 			</treenode>
-			<treenode node="Model_review;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f0;2;1;128;;;;vpos;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
-				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;4;5;7;;;;vpos;;v;;r;;d30,4;;b1,0;;m">
+			<treenode node="Model_review;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f0;2;1;129;;;;vpos;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
+				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;4;5;7;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;4;5;7;;;;vpos;;v;;r;;d30,4;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;6;13;6;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;6;13;6;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="calculateRating;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;94;2;111;;;;vpos;;v;;r&#xA;Description&#xA;     Calculate local rating of a movie (by id)&#xA;&#xA;Parameters:&#xA;    int $id;;d44,94;;b1,0;;mint $id;;p">
-					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f33;94;36;94;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="count;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;97;8;97;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;97;8;97;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f33;94;36;94;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f33;94;36;94;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f3;107;9;107;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f3;107;9;107;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="sum;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;102;6;102;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;102;6;102;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;95;7;95;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;95;7;95;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="deleteReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;82;2;86;;;;vpos;;v;;r&#xA;Description&#xA;     Delete review (by id)&#xA;&#xA;Parameters:&#xA;    int $id;;d34,82;;b1,0;;mint $id;;p">
-					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f30;82;33;82;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f30;82;33;82;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f30;82;33;82;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;83;7;83;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;83;7;83;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="getAllReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f11;9;2;11;;;;vpos;;v;;r;;d34,9;;b1,0;;m">
+				<treenode node="getAllReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f11;9;2;11;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f11;9;2;11;;;;vpos;;v;;r;;d34,9;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f15;10;20;10;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f15;10;20;10;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="getAllReviewFilm;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;30;2;37;;;;vpos;;v;;r&#xA;Description&#xA;     Returns all reviews for spesific film&#xA;&#xA;Parameters:&#xA;    int $film_id;;d43,30;;b1,0;;mint $film_id;;p">
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f34;30;42;30;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f34;30;42;30;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f34;30;42;30;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;31;7;31;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;31;7;31;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="getReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;18;2;24;;;;vpos;;v;;r&#xA;Description&#xA;     Returns spesific review (by id) To fill the fields in edit review&#xA;&#xA;Parameters:&#xA;    int $id;;d31,18;;b1,0;;mint $id;;p">
-					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f27;18;30;18;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f27;18;30;18;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f27;18;30;18;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;19;7;19;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;19;7;19;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="insertReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;46;2;57;;;;vpos;;v;;r&#xA;Description&#xA;     Insert Review&#xA;&#xA;Parameters:&#xA;    int $film_id&#xA;    string $email&#xA;    int $rating&#xA;    string $review;;d65,46;;b1,0;;mint $film_id;;pstring $email;;pint $rating;;pstring $review;;p">
-					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f40;46;46;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f40;46;46;46;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f40;46;46;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f30;46;38;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f30;46;38;46;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f30;46;38;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="rating;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f48;46;55;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;47;14;47;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;47;14;47;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="review;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f57;46;64;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="rating;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f48;46;55;46;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f48;46;55;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="review;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f57;46;64;46;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f57;46;64;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;54;13;54;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;54;13;54;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="updateReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f8;66;2;76;;;;vpos;;v;;r&#xA;Description&#xA;     Update Review (by id) Can only update rating &amp; review&#xA;&#xA;Parameters:&#xA;    int $id&#xA;    int $rating&#xA;    string $review;;d52,66;;b1,0;;mint $id;;pint $rating;;pstring $review;;p">
-					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f30;66;33;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f30;66;33;66;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f30;66;33;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="rating;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f35;66;42;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;67;8;67;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;67;8;67;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="review;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f44;66;51;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="rating;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f35;66;42;66;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f35;66;42;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="review;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f44;66;51;66;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f44;66;51;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;72;7;72;;C:\xampp\htdocs\abcmovies\application\models\Model_review.php;f2;72;7;72;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 			</treenode>
-			<treenode node="Model_tweets;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f0;2;1;148;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f0;2;1;148;;;;vpos;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
+			<treenode node="Model_system;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f0;4;1;29;;;;vpos;;vCI_Model;;c;;r;;d36,4;;b0,0;;m">
+				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;6;5;9;;;;vpos;;v;;r;;d30,6;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;8;13;8;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="getSentiment;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;18;2;27;;;;vpos;;v;;r;;d40,18;;b1,0;;msentence;;p">
+					<treenode node="isNegative;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;19;13;19;;;;vposSentimentAnalyzerTest;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="sat;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f2;22;6;22;;;;vposSentimentAnalyzerTest;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="sentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f30;18;39;18;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="isReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f11;11;2;16;;;;vpos;;v;;r;;d30,11;;b1,0;;m">
+					<treenode node="isReview;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Codelobster0.php;f8;12;17;12;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+			</treenode>
+			<treenode node="Model_tweets;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f0;2;1;148;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f0;2;1;268;;;;vpos;;vCI_Model;;c;;r;;d36,2;;b0,0;;m">
 				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;4;5;7;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;4;5;7;;;;vpos;;v;;r;;d30,4;;b1,0;;m">
 					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;6;13;6;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;6;13;6;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="deleteTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;121;2;125;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;121;2;125;;;;vpos;;v;;r&#xA;Description&#xA;     Delete a tweet (by id)&#xA;&#xA;Parameters:&#xA;    int $id;;d33,121;;b1,0;;mint $id;;p">
-					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f29;121;32;121;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f29;121;32;121;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="deleteTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;121;2;125;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;204;2;208;;;;vpos;;v;;r&#xA;Description&#xA;     Delete a tweet (by id)&#xA;&#xA;Parameters:&#xA;    int $id;;d33,204;;b1,0;;mint $id;;p">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f29;121;32;121;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f29;204;32;204;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;122;7;122;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;122;7;122;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;122;7;122;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;205;7;205;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="getAllMovieTweets;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;29;2;36;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;29;2;36;;;;vpos;;v;;r&#xA;Description&#xA;     Get all tweets for a spesific movie (by film_id)&#xA;&#xA;Parameters:&#xA;    int $film_id;;d44,29;;b1,0;;mint $film_id;;p">
+				<treenode node="getAllMovieTweets;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;29;2;36;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;29;2;38;;;;vpos;;v;;r&#xA;Description&#xA;     Get all tweets for a spesific movie (by film_id)&#xA;&#xA;Parameters:&#xA;    int $film_id;;d44,29;;b1,0;;mint $film_id;;p">
 					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f35;29;43;29;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f35;29;43;29;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;30;13;30;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;30;13;30;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
@@ -1253,78 +1310,148 @@
 					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;15;13;15;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;15;13;15;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="getMovieCountNegTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;55;2;61;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;55;2;61;;;;vpos;;v;;r&#xA;Description&#xA;     Count how many negative tweets there are about a film (by film_id)&#xA;&#xA;Parameters:&#xA;    int $film_id;;d48,55;;b1,0;;mint $film_id;;p">
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f39;55;47;55;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f39;55;47;55;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="hasil;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;59;8;59;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;59;8;59;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;56;7;56;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;56;7;56;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="getAllUncheckedTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;40;2;47;;;;vpos;;v;;r;;d39,40;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;41;13;41;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="getMovieCountPosTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;69;2;75;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;69;2;75;;;;vpos;;v;;r&#xA;Description&#xA;     Count how many positive tweets there are about a film (by film_id)&#xA;&#xA;Parameters:&#xA;    int $film_id;;d48,69;;b1,0;;mint $film_id;;p">
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f39;69;47;69;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f39;69;47;69;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="hasil;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;73;8;73;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;73;8;73;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;70;7;70;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;70;7;70;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="getGroundTruthAll;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;49;2;57;;;;vpos;;v;;r;;d36,49;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;50;13;50;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="getTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;44;2;47;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;44;2;47;;;;vpos;;v;;r&#xA;Description&#xA;     Get a spesific information about of a tweet (by id)&#xA;&#xA;Parameters:&#xA;    int $id;;d30,44;;b1,0;;mint $id;;p">
-					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f26;44;29;44;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f26;44;29;44;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;45;7;45;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;45;7;45;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="getGroundTruthNegative;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;93;2;103;;;;vpos;;v;;r;;d41,93;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;94;13;94;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="insertTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;85;2;95;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;85;2;95;;;;vpos;;v;;r&#xA;Description&#xA;     Insert a tweet&#xA;&#xA;Parameters:&#xA;    int $film_id&#xA;    string $tweet&#xA;    boolean $status;;d55,85;;b1,0;;mint $film_id;;pstring $tweet;;pboolean $status;;p">
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f29;85;37;85;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f29;85;37;85;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;86;14;86;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;86;14;86;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f47;85;54;85;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f47;85;54;85;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;92;13;92;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;92;13;92;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="tweet;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f39;85;45;85;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f39;85;45;85;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="getGroundTruthNotReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;70;2;79;;;;vpos;;v;;r;;d42,70;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;71;13;71;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="isExist;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;134;2;146;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;134;2;146;;;;vpos;;v;;r&#xA;Description&#xA;     Check if tweet is already in database&#xA;&#xA;Parameters:&#xA;    int $film_id&#xA;    string $tweet;;d42,134;;b1,0;;mint $film_id;;pstring $tweet;;p">
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f25;134;33;134;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f25;134;33;134;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f7;138;9;138;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f7;138;9;138;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="result;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;137;9;137;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;137;9;137;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f12;135;17;135;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f12;135;17;135;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="tweet;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f35;134;41;134;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f35;134;41;134;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="tweets;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;135;9;135;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;135;9;135;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="getGroundTruthPositive;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;81;2;91;;;;vpos;;v;;r;;d41,81;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;82;13;82;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="updateStatusTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;104;2;113;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;104;2;113;;;;vpos;;v;;r&#xA;Description&#xA;     Update a tweet's status (negate it!) (by id)&#xA;&#xA;Parameters:&#xA;    int $id&#xA;    boolean $status;;d48,104;;b1,0;;mint $id;;pboolean $status;;p">
-					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f35;104;38;104;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f35;104;38;104;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="getGroundTruthReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;59;2;68;;;;vpos;;v;;r;;d39,59;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;60;13;60;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;105;8;105;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;105;8;105;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="getMovieCountNegTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;55;2;61;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;122;2;129;;;;vpos;;v;;r&#xA;Description&#xA;     Count how many negative tweets there are about a film (by film_id)&#xA;&#xA;Parameters:&#xA;    int $film_id;;d48,122;;b1,0;;mint $film_id;;p">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f39;55;47;55;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f39;122;47;122;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f40;104;47;104;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f40;104;47;104;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="hasil;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;59;8;59;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;127;8;127;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;109;7;109;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;109;7;109;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;56;7;56;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;123;7;123;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="getMovieCountPosTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;69;2;75;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;137;2;144;;;;vpos;;v;;r&#xA;Description&#xA;     Count how many positive tweets there are about a film (by film_id)&#xA;&#xA;Parameters:&#xA;    int $film_id;;d48,137;;b1,0;;mint $film_id;;p">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f39;69;47;69;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f39;137;47;137;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="hasil;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;73;8;73;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;142;8;142;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;70;7;70;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;138;7;138;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="getTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;44;2;47;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;111;2;114;;;;vpos;;v;;r&#xA;Description&#xA;     Get a spesific information about of a tweet (by id)&#xA;&#xA;Parameters:&#xA;    int $id;;d30,111;;b1,0;;mint $id;;p">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f26;44;29;44;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f26;111;29;111;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;45;7;45;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;112;7;112;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="insertTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;85;2;95;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;154;2;164;;;;vpos;;v;;r&#xA;Description&#xA;     Insert a tweet&#xA;&#xA;Parameters:&#xA;    int $film_id&#xA;    string $tweet&#xA;    boolean $status;;d55,154;;b1,0;;mint $film_id;;pstring $tweet;;pboolean $status;;p">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f29;85;37;85;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f29;154;37;154;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;86;14;86;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;155;14;155;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f47;85;54;85;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f47;154;54;154;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;92;13;92;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;161;13;161;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="tweet;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f39;85;45;85;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f39;154;45;154;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="insertTweetButNotAReview;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;166;2;178;;;;vpos;;v;;r;;d68,166;;b1,0;;mfilm_id;;ptweet;;pstatus;;p">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f42;166;50;166;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;167;14;167;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f60;166;67;166;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;175;13;175;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="tweet;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f52;166;58;166;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="isExist;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;134;2;146;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;217;2;229;;;;vpos;;v;;r&#xA;Description&#xA;     Check if tweet is already in database&#xA;&#xA;Parameters:&#xA;    int $film_id&#xA;    string $tweet;;d42,217;;b1,0;;mint $film_id;;pstring $tweet;;p">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f25;134;33;134;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f25;217;33;217;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f7;138;9;138;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f7;221;9;221;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="result;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;137;9;137;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;220;9;220;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f12;135;17;135;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f12;218;17;218;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="tweet;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f35;134;41;134;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f35;217;41;217;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="tweets;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;135;9;135;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;218;9;218;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="updateStatusTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f8;104;2;113;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;187;2;196;;;;vpos;;v;;r&#xA;Description&#xA;     Update a tweet's status (negate it!) (by id)&#xA;&#xA;Parameters:&#xA;    int $id&#xA;    boolean $status;;d48,187;;b1,0;;mint $id;;pboolean $status;;p">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f35;104;38;104;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f35;187;38;187;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;105;8;105;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;188;8;188;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f40;104;47;104;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f40;187;47;187;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Modelweets.php;f2;109;7;109;;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;192;7;192;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="updateTruthNaiveTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;258;2;267;;;;vpos;;v;;r&#xA;Description&#xA;     Negate the ground truth about a naive bayes result (by id)&#xA;&#xA;Parameters:&#xA;    int $id&#xA;    boolean $truth_naive;;d57,258;;b1,0;;mint $id;;pboolean $truth_naive;;p">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f39;258;42;258;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;259;8;259;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;263;7;263;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="truth_naive;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f44;258;56;258;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="updateTruthRuleTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f8;238;2;249;;;;vpos;;v;;r&#xA;Description&#xA;     Negate the ground truth about a rule-based system (by id)&#xA;&#xA;Parameters:&#xA;    int $id&#xA;    boolean $truth_rule;;d55,238;;b1,0;;mint $id;;pboolean $truth_rule;;p">
+					<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f38;238;41;238;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;239;8;239;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f2;245;7;245;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="truth_rule;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php;f43;238;54;238;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 			</treenode>
 			<treenode node="Model_user;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f0;2;1;160;;;;vpos;;vCI_Model;;c;;r;;d34,2;;b0,0;;m">
 				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;4;5;7;;;;vpos;;v;;r;;d30,4;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;6;13;6;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="checkLogin;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;49;2;63;;;;vpos;;vboolean;;r&#xA;Description&#xA;     Checks if user is allowed to login (login with email)&#xA;&#xA;Parameters:&#xA;    string(max - 32) $email&#xA;    string(max - 32) $password;;d46,49;;b1,0;;mstring(max;;pstring(max;;p">
+					<treenode node="allUser;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;52;10;52;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f28;49;34;49;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f7;53;9;53;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="isRegistered;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;50;15;50;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="password;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f36;49;45;49;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f13;52;18;52;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="getAllUser;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f11;9;2;11;;;;vpos;;v;;r;;d32,9;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f15;10;20;10;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="getUser;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;18;2;21;;;;vpos;;v;;r&#xA;Description&#xA;     Return user's information To fill the fields in User's Profile&#xA;&#xA;Parameters:&#xA;    string $email;;d32,18;;b1,0;;mstring $email;;p">
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f25;18;31;18;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;19;7;19;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="insertUser;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;90;2;101;;;;vpos;;v;;r&#xA;Description&#xA;     Insert User (REGISTER)&#xA;&#xA;Parameters:&#xA;    string $email&#xA;    string(max - 32) $password&#xA;    string $name&#xA;    date $date;;d60,90;;b1,0;;mstring $email;;pstring(max;;pstring $name;;pdate $date;;p">
@@ -1332,17 +1459,39 @@
 					</treenode>
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f28;90;34;90;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;91;14;91;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="name;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f47;90;52;90;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="password;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f36;90;45;90;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;98;13;98;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="is_admin;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;65;2;79;;;;vpos;;v;;r;;d33,65;;b1,0;;memail;;p">
+					<treenode node="allAdmin;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;70;11;70;;;;vposCI_DB_result;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f26;65;32;65;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f7;72;9;72;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="isAdmin;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;66;10;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;68;8;68;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;69;7;69;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="isUserExist;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;29;2;41;;;;vpos;;vboolean;;r&#xA;Description&#xA;     Checks if EMAIL exists If exists, cannot be registered&#xA;&#xA;Parameters:&#xA;    string $email;;d36,29;;b1,0;;mstring $email;;p">
+					<treenode node="allUser;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;32;10;32;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f29;29;35;29;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f7;33;9;33;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="isExist;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;30;10;30;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f13;32;18;32;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="updateUser;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;111;2;121;;;;vpos;;v;;r&#xA;Description&#xA;     Update User (EDIT PROFILE) Can only update name and birthdate&#xA;&#xA;Parameters:&#xA;    string $email&#xA;    string $name&#xA;    date $date&#xA;    file $picture;;d49,111;;b1,0;;memail;;pname;;pdate;;p">
@@ -1350,19 +1499,31 @@
 					</treenode>
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f28;111;34;111;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;112;8;112;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="name;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f36;111;41;111;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;117;7;117;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="updateUserPassword;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;150;2;159;;;;vpos;;v;;r&#xA;Description&#xA;     Update user's password Can only update user's password&#xA;&#xA;Parameters:&#xA;    string $email&#xA;    string(max - 32) $password;;d54,150;;b1,0;;mstring $email;;pstring(max;;p">
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f36;150;42;150;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;151;8;151;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="password;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f44;150;53;150;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;155;7;155;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="updateUserPicture;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f8;131;2;140;;;;vpos;;v;;r&#xA;Description&#xA;     Update user's profile picture Can only update user's profile picture&#xA;&#xA;Parameters:&#xA;    string $email&#xA;    string $picture;;d52,131;;b1,0;;mstring $email;;pstring $picture;;p">
 					<treenode node="email;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f35;131;41;131;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
+					<treenode node="myArr;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;132;8;132;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="picture;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f43;131;51;131;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\models\Model_user.php;f2;136;7;136;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 			</treenode>
@@ -1370,24 +1531,70 @@
 			</treenode>
 			<treenode node="SentimentAnalyzer;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f1;43;2;185;;;;vpos;;v;;r&#xA;Description&#xA;     Sentiment-Analyzer;;d1,44;;b0,0;;m">
 				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f9;54;3;57;;;;vpos;;v;;r;;d2,55;;b1,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;56;8;56;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="analyzeDocument;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f9;151;3;184;;;;vpos;;v;;r;;d2,152;;b1,0;;mdocumentLocation;;p">
+					<treenode node="documentHandle;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;153;18;153;;;;vposresource;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="documentLocation;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f34;151;51;151;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="negativity;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f20;154;31;154;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="positivity;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;154;14;154;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="sentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f10;155;19;155;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="sentiment;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f4;157;14;157;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="analyzeSentence;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f9;101;3;149;;;;vpos;;v;;r;;d2,102;;b1,0;;msentence;;p">
+					<treenode node="bayesDifference;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f4;130;20;130;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="negativity;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;137;14;137;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="positivity;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;136;14;136;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="sentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f34;101;43;101;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="sentiment;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f4;140;14;140;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="sentimentScores;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;107;19;107;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f12;103;17;103;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="tracker;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f6;116;14;116;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="type;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f31;103;36;103;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="word;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f22;112;27;112;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="words;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;108;9;108;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="insertTestData;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f9;65;3;99;;;;vpos;;v;;r;;d2,66;;b1,0;;mtestDataLocation;;ptestDataType;;ptestDataAmount;;p">
-					<treenode node="testDataAmount;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f67;65;82;65;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="amountTracker;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;72;17;72;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="testData;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f3;73;12;73;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="testDataAmount;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f67;65;82;65;;;;vposbool;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="testDataLocation;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f33;65;50;65;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 					<treenode node="testDataType;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f52;65;65;65;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
+					<treenode node="testDatum;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f10;74;20;74;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f32;67;37;67;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="word;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f24;86;29;86;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="words;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f5;85;11;85;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 				</treenode>
 				<treenode node="splitSentence;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f10;59;3;63;;;;vpos;;v;;r;;d2,60;;b3,0;;mwords;;p">
+					<treenode node="matches;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f35;61;43;61;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
 					<treenode node="words;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php;f33;59;39;59;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
@@ -1652,6 +1859,34 @@
 				<treenode node="settings;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Codelobster0.php;f1;5;10;5;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f1;5;10;5;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 				</treenode>
 			</treenode>
+			<treenode node="Translator;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f0;31;1;240;;;;vpos;;v;;r&#xA;Description&#xA;     .--------------------------------------------------------------------------. |  Software: Translator                                                    | |  Version: 0.1  (2015 April 18)                                           | |  Contact: http://github.com/subins2000/francium-translator               | |  Documentation: https://subinsb.com/Project-Name                         | |  Support: http://subinsb.com/ask/Project-Name                            | '--------------------------------------------------------------------------';;d17,31;;b0,0;;m">
+				<treenode node="config;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f16;166;3;168;;;;vpos;;v;;r&#xA;Description&#xA;     Merge user config and default config;;d33,166;;b1,5;;m">
+				</treenode>
+				<treenode node="construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f16;187;3;189;;;;vpos;;v;;r;;d36,187;;b1,5;;m">
+				</treenode>
+				<treenode node="log;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f16;175;3;185;;;;vpos;;v;;r&#xA;Description&#xA;     Log something in the Francium.log file. To enable logging, make a file called &quot;Francium.log&quot; in the directory where &quot;class.logsys.php&quot; file is situated;;d39,175;;b1,5;;mmsg;;p">
+					<treenode node="msg;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f29;175;33;175;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="translate;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f16;194;3;219;;;;vpos;;v;;r&#xA;Description&#xA;     Translate a word;;d67,194;;b1,5;;mword;;pto;;pfrom;;p">
+					<treenode node="from;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f52;194;57;194;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="to;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f42;194;45;194;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="word;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f35;194;40;194;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="url_get_contents;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f16;221;3;239;;;;vpos;;v;;r;;d48,221;;b1,5;;murl;;p">
+					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f42;221;46;221;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="config;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f16;160;23;160;;;;vpos;;v;;r&#xA;Description&#xA;     Any default languages;;d-1,-1;;b1,5;;m">
+				</treenode>
+				<treenode node="constructed;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f17;161;29;161;;;;vpos;;v;;r;;d-1,-1;;b3,5;;m">
+				</treenode>
+				<treenode node="default_config;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\class.translator.php;f16;39;31;39;;;;vpos;;v;;r&#xA;Description&#xA;     ------------ BEGIN CONFIG ------------ Edit the configuraion;;d-1,-1;;b1,5;;m">
+				</treenode>
+			</treenode>
 			<treenode node="TwitterAPIExchange;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\third_party\TwitterAPIExchange.php;f0;14;1;403;;;;vpos;;v;;r&#xA;Description&#xA;     Twitter-API-PHP : Simple PHP wrapper for the v1.1 API;;d0,15;;b0,0;;m">
 				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\third_party\TwitterAPIExchange.php;f11;79;5;98;;;;vpos;;v;;r&#xA;Description&#xA;     Create the API access object. Requires an array of settings:: oauth access token, oauth access token secret, consumer key, consumer secret These are all available by creating your own application on dev.twitter.com Requires the cURL library&#xA;&#xA;Parameters:&#xA;    array $settings;;d4,80;;b1,0;;marray $settings;;p">
 					<treenode node="settings;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\third_party\TwitterAPIExchange.php;f38;79;47;79;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
@@ -1812,9 +2047,9 @@
 					</treenode>
 				</treenode>
 			</treenode>
-			<treenode node="WebSystem;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f0;5;1;310;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f0;5;1;336;;;;vpos;;vCI_Controller;;c;;r;;d38,5;;b0,0;;m">
-				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f1;7;2;12;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f1;7;2;12;;;;vpos;;v;;r;;d24,7;;b0,0;;m">
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;10;7;10;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;10;7;10;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="WebSystem;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f0;5;1;310;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f0;5;1;378;;;;vpos;;vCI_Controller;;c;;r;;d38,5;;b0,0;;m">
+				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f1;7;2;12;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f1;7;2;12;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f1;7;2;12;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f1;7;2;12;;;;vpos;;v;;r;;d24,7;;b0,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;10;7;10;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;10;7;10;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;10;7;10;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;10;7;10;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 				<treenode node="calculateTweet;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f8;216;2;309;;;;vpos;;v;;r;;d33,216;;b1,0;;m">
@@ -1869,171 +2104,151 @@
 					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;238;6;238;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;239;6;239;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="calculateTweets;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;235;2;335;;;;vpos;;v;;r;;d34,235;;b1,0;;m">
-					<treenode node="editedResult;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;273;16;273;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="calculateTweets;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;276;2;381;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;272;2;377;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;272;2;377;;;;vpos;;v;;r;;d34,272;;b1,0;;m">
+					<treenode node="editedResult;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;314;16;314;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;310;16;310;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;310;16;310;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;252;10;252;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;293;10;293;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;289;10;289;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;289;10;289;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="getfield;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;261;11;261;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="getfield;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;302;11;302;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;298;11;298;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;298;11;298;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;272;9;272;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;313;9;313;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;309;9;309;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;309;9;309;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="isReview;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;299;12;299;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="isReview;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;340;12;340;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;336;12;336;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;336;12;336;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="j;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;305;10;305;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="j;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;346;10;346;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;342;10;342;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;342;10;342;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="lexicon;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;237;10;237;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="lexicon;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;278;10;278;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;274;10;274;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;274;10;274;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="movie;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;253;8;253;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="movie;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;294;8;294;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;290;8;290;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;290;8;290;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="probabilityofSentenceBeingNegative;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;319;38;319;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="probabilityofSentenceBeingNegative;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;363;38;363;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;359;38;359;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;359;38;359;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="probabilityofSentenceBeingPositive;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;318;38;318;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="probabilityofSentenceBeingPositive;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;362;38;362;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;358;38;358;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;358;38;358;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="requestMethod;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;259;16;259;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="requestMethod;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;300;16;300;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;296;16;296;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;296;16;296;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="response;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;264;11;264;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="response;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;305;11;305;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;301;11;301;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;301;11;301;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="result;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;270;9;270;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="result;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;311;9;311;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;307;9;307;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;307;9;307;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="resultofAnalyzingSentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;317;29;317;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="resultofAnalyzingSentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;361;29;361;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;357;29;357;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;357;29;357;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="review;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;296;9;296;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="review;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;337;9;337;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;333;9;333;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;333;9;333;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="sat;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;248;6;248;;;;vposSentimentAnalyzerTest;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="sat;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;285;6;285;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;285;6;285;;;;vposSentimentAnalyzerTest;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="sentimentAnalysisOfSentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;316;31;316;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="sentimentAnalysisOfSentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;360;31;360;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;356;31;356;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;356;31;356;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="settings;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;240;11;240;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="settings;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;281;11;281;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;277;11;277;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;277;11;277;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="splitit;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;303;11;303;;;;vposarray;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="splitit;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;344;11;344;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;340;11;340;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;340;11;340;;;;vposarray;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;321;10;321;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;365;10;365;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;361;10;361;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;361;10;361;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="target;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;302;10;302;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="target;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;343;10;343;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;339;10;339;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;339;10;339;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f13;252;18;252;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f13;293;18;293;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f13;289;18;289;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f13;289;18;289;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="title;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;254;8;254;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="title;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;295;8;295;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;291;8;291;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;291;8;291;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="twitter;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;263;10;263;;;;vposTwitterAPIExchange;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="twitter;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;304;10;304;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;300;10;300;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;300;10;300;;;;vposTwitterAPIExchange;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;258;6;258;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-				</treenode>
-				<treenode node="checkNewComingSoonMovies;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f8;14;2;110;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;14;2;110;;;;vpos;;v;;r;;d43,14;;b1,0;;m">
-					<treenode node="alreadyinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;64;16;64;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;64;16;64;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="ch;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;19;5;19;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;19;5;19;;;;vposresource;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="data;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;32;7;32;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;32;7;32;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="getdata;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;52;12;52;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;52;12;52;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f7;46;9;46;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;46;9;46;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="info;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f3;47;8;47;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;47;8;47;;;;vposarray;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="j;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f9;65;11;65;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f9;65;11;65;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="json;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;83;10;83;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;83;10;83;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="moviesinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;63;15;63;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;63;15;63;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="omdb;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;84;10;84;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;84;10;84;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f18;63;23;63;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f18;63;23;63;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="timeout;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;16;10;16;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;16;10;16;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;15;6;15;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;15;6;15;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;299;6;299;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;295;6;295;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;295;6;295;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
-				<treenode node="checkNewNowPlayingMovies;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f8;112;2;214;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;112;2;233;;;;vpos;;v;;r;;d43,112;;b1,0;;m">
-					<treenode node="alreadyinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;126;17;126;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;144;17;144;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+				<treenode node="checkNewComingSoonMovies;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f8;14;2;110;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;14;2;125;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;14;2;125;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;14;2;125;;;;vpos;;v;;r;;d43,14;;b1,0;;m">
+					<treenode node="alreadyinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;64;16;64;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;58;17;58;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;58;17;58;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="getdata;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;120;12;120;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;126;13;126;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="BASE_URL;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;15;11;15;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f8;119;10;119;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f9;125;11;125;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="ch;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;19;5;19;;;;vposresource;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="ibacor;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;115;9;115;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;115;9;115;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="data;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;32;7;32;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="isComingSoon;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;142;18;142;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;160;18;160;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="foundInImdb;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f6;76;18;76;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="isComingSoon_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;143;21;143;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;161;21;161;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="getdata;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;52;12;52;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;43;12;43;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;43;12;43;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="isStillPlaying;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;123;18;123;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f7;46;9;46;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;40;10;40;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;40;10;40;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="j;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f10;127;12;127;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;124;10;124;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="info;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f3;47;8;47;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;41;9;41;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;41;9;41;;;;vposarray;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="json;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;114;7;114;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;114;7;114;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="j;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f9;65;11;65;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f10;59;12;59;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f10;59;12;59;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="moviesinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;125;16;125;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;122;14;122;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="json;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;83;10;83;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;22;10;22;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;22;10;22;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;22;10;22;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="omdb;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f6;170;11;170;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f6;188;11;188;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="moviesinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;63;15;63;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;57;16;57;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;57;16;57;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f19;125;24;125;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f17;122;22;122;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="omdb;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;84;10;84;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;80;12;80;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;80;12;80;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
-					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;113;6;113;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;113;6;113;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					<treenode node="pdata;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f6;29;12;29;;;;vposarray;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="phpObj;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;25;12;25;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="session;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;20;13;20;;;;vposresource;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f18;63;23;63;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f19;57;24;57;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f19;57;24;57;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="timeout;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;16;10;16;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;15;6;15;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;78;11;78;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;78;11;78;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="yandex;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;105;14;105;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="yql_query;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;16;15;16;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="yql_query_url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;17;19;17;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+				</treenode>
+				<treenode node="checkNewNowPlayingMovies;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f8;112;2;214;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;127;2;274;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;127;2;270;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;127;2;270;;;;vpos;;v;;r;;d43,127;;b1,0;;m">
+					<treenode node="alreadyinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;126;17;126;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;180;17;180;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;181;17;181;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;181;17;181;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="BASE_URL;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f2;129;11;129;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="foundInImdb;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f6;223;18;223;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="getdata;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f4;120;12;120;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;160;13;160;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;161;13;161;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;161;13;161;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f8;119;10;119;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f9;159;11;159;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f9;159;11;159;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f9;159;11;159;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="ibacor;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;115;9;115;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="isComingSoon;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;142;18;142;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;196;18;196;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;197;18;197;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;197;18;197;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="isComingSoon_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;143;21;143;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;197;21;197;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;198;21;198;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;198;21;198;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="isStillPlaying;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f4;158;19;158;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="j;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f10;127;12;127;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;157;10;157;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;157;10;157;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f8;157;10;157;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="json;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;114;7;114;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;136;10;136;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;136;10;136;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;136;10;136;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="moviesinDB;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f5;125;16;125;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;156;14;156;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;156;14;156;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;156;14;156;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="omdb;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f6;170;11;170;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;226;12;226;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;227;12;227;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;227;12;227;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="pdata;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f3;153;9;153;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="phpObj;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;139;12;139;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="session;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;134;13;134;;;;vposresource;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f19;125;24;125;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f17;156;22;156;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f17;156;22;156;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f17;156;22;156;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\System.php;f2;113;6;113;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;224;11;224;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;225;11;225;;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;225;11;225;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="yandex;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f7;252;14;252;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="yql_query;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;130;15;130;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+					</treenode>
+					<treenode node="yql_query_url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php;f5;131;19;131;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 					</treenode>
 				</treenode>
 			</treenode>
-			<treenode node="Welcome;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f0;6;1;119;;;;vpos;;vCI_Controller;;c;;r;;d36,6;;b0,0;;m">
+			<treenode node="Welcome;PHP:Class Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f0;6;1;125;;;;vpos;;vCI_Controller;;c;;r;;d36,6;;b0,0;;m">
 				<treenode node="__construct;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f8;8;2;10;;;;vpos;;v;;r;;d30,8;;b1,0;;m">
 				</treenode>
-				<treenode node="coba;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f8;12;2;107;;;;vpos;;v;;r;;d23,12;;b1,0;;m">
-					<treenode node="editedResult;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;50;16;50;;;;vposstring;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;29;10;29;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="getfield;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;38;11;38;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f7;49;9;49;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="isReview;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;76;12;76;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="j;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f8;82;10;82;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="lexicon;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;14;10;14;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="movie;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;30;8;30;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="probabilityofSentenceBeingNegative;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;96;38;96;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="probabilityofSentenceBeingPositive;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;95;38;95;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="requestMethod;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;36;16;36;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="response;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;41;11;41;;;;vposmixed;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="result;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;47;9;47;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="resultofAnalyzingSentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;94;29;94;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="review;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;73;9;73;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="sat;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;25;6;25;;;;vposSentimentAnalyzerTest;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="sentimentAnalysisOfSentence;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;93;31;93;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="settings;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;17;11;17;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="splitit;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;80;11;80;;;;vposarray;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="status;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;98;10;98;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="target;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f3;79;10;79;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f11;30;16;30;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="title;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;31;8;31;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="twitter;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;40;10;40;;;;vposTwitterAPIExchange;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-					<treenode node="url;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f2;35;6;35;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-					</treenode>
-				</treenode>
-				<treenode node="index;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f8;109;2;117;;;;vpos;;v;;r;;d24,109;;b1,0;;m">
+				<treenode node="index;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php;f8;12;2;123;;;;vpos;;v;;r;;d24,12;;b1,0;;m">
 				</treenode>
 			</treenode>
 			<treenode node="get_instance;PHP:Function Name;C:\xampp\htdocs\abcmovies\application\libraries\Fake_functions.php;f0;6;1;9;;;;vpos;;vCI_Controller;;r&#xA;Description&#xA;      Enter description here ...;;d0,7;;b0,0;;m">
@@ -2072,8 +2287,6 @@
 			</treenode>
 			<treenode node="director;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\review\update_review.php;f37;43;46;43;;C:\xampp\htdocs\abcmovies\application\views\review\insert_review.php;f37;43;46;43;;C:\xampp\htdocs\abcmovies\application\views\admin\update_film.php;f71;43;80;43;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f37;43;46;43;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="dropDown;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f9;5;18;5;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
-			</treenode>
 			<treenode node="error;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\errors\html\error_php.php;f37;16;43;16;;C:\xampp\htdocs\abcmovies\application\views\errors\html\error_exception.php;f42;16;48;16;;C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_php.php;f36;12;42;12;;C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_exception.php;f41;12;47;12;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="exception;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\errors\html\error_exception.php;f30;8;40;8;;C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_exception.php;f34;4;44;4;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
@@ -2082,7 +2295,7 @@
 			</treenode>
 			<treenode node="filepath;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\errors\html\error_php.php;f24;10;33;10;;C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_php.php;f24;6;33;6;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f35;6;43;6;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f35;43;43;43;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="film_id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f35;6;43;6;;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f40;30;48;30;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_rule.php;f40;38;48;38;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f35;43;43;43;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="foreign_characters;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\config\foreign_chars.php;f0;11;19;11;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
@@ -2090,7 +2303,7 @@
 			</treenode>
 			<treenode node="heading;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\errors\html\error_general.php;f17;59;25;59;;C:\xampp\htdocs\abcmovies\application\views\errors\html\error_db.php;f17;59;25;59;;C:\xampp\htdocs\abcmovies\application\views\errors\html\error_404.php;f17;59;25;59;;C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_general.php;f1;4;9;4;;C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_db.php;f1;4;9;4;;C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_404.php;f1;4;9;4;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\soon.php;f12;8;14;8;;C:\xampp\htdocs\abcmovies\application\views\old.php;f12;8;14;8;;C:\xampp\htdocs\abcmovies\application\views\now.php;f12;8;14;8;;C:\xampp\htdocs\abcmovies\application\views\index.php;f8;15;10;15;;C:\xampp\htdocs\abcmovies\application\views\admin\master_banner.php;f12;55;14;55;;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f14;7;16;7;;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f12;24;14;24;;C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php;f12;35;14;35;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f13;78;15;78;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f12;61;14;61;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="i;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\soon.php;f12;8;14;8;;C:\xampp\htdocs\abcmovies\application\views\old.php;f12;8;14;8;;C:\xampp\htdocs\abcmovies\application\views\now.php;f12;8;14;8;;C:\xampp\htdocs\abcmovies\application\views\index.php;f8;15;10;15;;C:\xampp\htdocs\abcmovies\application\views\admin\master_banner.php;f12;55;14;55;;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f12;24;14;24;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f13;78;15;78;;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f12;16;14;16;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_rule.php;f12;17;14;17;;C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php;f12;47;14;47;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f12;62;14;62;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="id;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\review\update_review.php;f41;77;44;77;;C:\xampp\htdocs\abcmovies\application\views\review\insert_review.php;f36;77;39;77;;C:\xampp\htdocs\abcmovies\application\views\admin\update_film.php;f61;11;64;11;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f43;84;46;84;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
@@ -2112,7 +2325,7 @@
 			</treenode>
 			<treenode node="movie;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f20;6;26;6;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="movies;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\soon.php;f28;8;35;8;;C:\xampp\htdocs\abcmovies\application\views\old.php;f28;8;35;8;;C:\xampp\htdocs\abcmovies\application\views\now.php;f28;8;35;8;;C:\xampp\htdocs\abcmovies\application\views\index.php;f28;40;35;40;;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f33;7;40;7;;C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php;f28;35;35;35;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="movies;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\soon.php;f28;8;35;8;;C:\xampp\htdocs\abcmovies\application\views\old.php;f28;8;35;8;;C:\xampp\htdocs\abcmovies\application\views\now.php;f28;8;35;8;;C:\xampp\htdocs\abcmovies\application\views\index.php;f28;40;35;40;;C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php;f28;47;35;47;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="name;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\user\profile.php;f17;24;22;24;;C:\xampp\htdocs\abcmovies\application\views\user\edit_profile.php;f65;18;70;18;;C:\xampp\htdocs\abcmovies\application\views\includes\header.php;f12;43;17;43;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
@@ -2160,13 +2373,13 @@
 			</treenode>
 			<treenode node="table;PHP:Var Name;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Scroller\examples\data\ssp.php;f0;21;6;21;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\server_side\scripts\server_processing.php;f0;21;6;21;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\server_side\scripts\post.php;f0;21;6;21;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\server_side\scripts\objects.php;f0;7;6;7;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\server_side\scripts\jsonp.php;f0;21;6;21;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\server_side\scripts\ids-objects.php;f0;21;6;21;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\server_side\scripts\ids-arrays.php;f0;21;6;21;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\user\profile.php;f17;20;22;20;;C:\xampp\htdocs\abcmovies\application\views\user\edit_profile.php;f68;14;73;14;;C:\xampp\htdocs\abcmovies\application\views\user\edit_picture.php;f68;17;73;17;;C:\xampp\htdocs\abcmovies\application\views\user\edit_password.php;f68;14;73;14;;C:\xampp\htdocs\abcmovies\application\views\includes\header.php;f9;57;14;57;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f14;79;19;79;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="this;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\user\profile.php;f17;20;22;20;;C:\xampp\htdocs\abcmovies\application\views\user\edit_profile.php;f68;14;73;14;;C:\xampp\htdocs\abcmovies\application\views\user\edit_picture.php;f68;17;73;17;;C:\xampp\htdocs\abcmovies\application\views\user\edit_password.php;f68;14;73;14;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f14;79;19;79;;C:\xampp\htdocs\abcmovies\application\views\includes\header.php;f9;57;14;57;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="title;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\review\update_review.php;f14;9;20;9;;C:\xampp\htdocs\abcmovies\application\views\review\insert_review.php;f14;9;20;9;;C:\xampp\htdocs\abcmovies\application\views\admin\update_film.php;f65;15;71;15;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f14;9;20;9;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="trailer;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\review\update_review.php;f10;66;18;66;;C:\xampp\htdocs\abcmovies\application\views\review\insert_review.php;f10;66;18;66;;C:\xampp\htdocs\abcmovies\application\views\admin\update_film.php;f12;71;20;71;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f10;66;18;66;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="tweets;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f28;34;35;34;;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f28;24;35;24;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f28;61;35;61;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="tweets;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f28;24;35;24;;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f28;16;35;16;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_rule.php;f28;17;35;17;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f28;62;35;62;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="twitter_negatif;PHP:Var Name;C:\xampp\htdocs\abcmovies\application\views\review\update_review.php;f47;29;63;29;;C:\xampp\htdocs\abcmovies\application\views\review\insert_review.php;f47;29;63;29;;C:\xampp\htdocs\abcmovies\application\views\detail.php;f47;29;63;29;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
@@ -26528,7 +26741,7 @@
 			</treenode>
 			<treenode node="docElem;JS:JS Var Name;C:\xampp\htdocs\abcmovies\assets\datatable\media\jquery-1.12.4.js;f1;606;8;606;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
-			<treenode node="document;JS:JS Var Name;C:\xampp\htdocs\abcmovies\assets\themes\js\less.js;f20387;8;20395;8;;C:\xampp\htdocs\abcmovies\assets\themes\js\bootshop.js;f2;1;10;1;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\jquery.dataTables.js;f22;58;30;58;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.uikit.js;f23;34;31;34;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.semanticui.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.material.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.jqueryui.js;f23;37;31;37;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.foundation.js;f23;37;31;37;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.bootstrap4.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.bootstrap.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\jquery-1.12.4.js;f4;46;12;46;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Select\js\dataTables.select.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Scroller\js\dataTables.scroller.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\RowReorder\js\dataTables.rowReorder.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.semanticui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.jqueryui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.foundation.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.bootstrap4.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.bootstrap.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\dataTables.responsive.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\KeyTable\js\dataTables.keyTable.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\FixedHeader\js\dataTables.fixedHeader.js;f23;49;31;49;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\FixedColumns\js\dataTables.fixedColumns.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\ColReorder\js\dataTables.colReorder.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\dataTables.buttons.js;f23;29;31;29;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.semanticui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.print.js;f23;34;31;34;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.jqueryui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.foundation.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.flash.js;f23;37;31;37;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.colVis.js;f23;34;31;34;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.bootstrap4.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.bootstrap.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\dataTables.autoFill.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.semanticui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.jqueryui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.foundation.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.bootstrap4.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.bootstrap.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\resources\demo.js;f3;5;11;5;;C:\xampp\htdocs\abcmovies\application\views\admin\master_banner.php;f3;83;11;83;;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f3;61;11;61;;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f3;52;11;52;;C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php;f3;87;11;87;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f3;90;11;90;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
+			<treenode node="document;JS:JS Var Name;C:\xampp\htdocs\abcmovies\assets\themes\js\less.js;f20387;8;20395;8;;C:\xampp\htdocs\abcmovies\assets\themes\js\bootshop.js;f2;1;10;1;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\jquery.dataTables.js;f22;58;30;58;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.uikit.js;f23;34;31;34;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.semanticui.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.material.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.jqueryui.js;f23;37;31;37;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.foundation.js;f23;37;31;37;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.bootstrap4.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\js\dataTables.bootstrap.js;f23;40;31;40;;C:\xampp\htdocs\abcmovies\assets\datatable\media\jquery-1.12.4.js;f4;46;12;46;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Select\js\dataTables.select.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Scroller\js\dataTables.scroller.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\RowReorder\js\dataTables.rowReorder.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.semanticui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.jqueryui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.foundation.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.bootstrap4.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\responsive.bootstrap.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Responsive\js\dataTables.responsive.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\KeyTable\js\dataTables.keyTable.js;f23;48;31;48;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\FixedHeader\js\dataTables.fixedHeader.js;f23;49;31;49;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\FixedColumns\js\dataTables.fixedColumns.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\ColReorder\js\dataTables.colReorder.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\dataTables.buttons.js;f23;29;31;29;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.semanticui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.print.js;f23;34;31;34;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.jqueryui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.foundation.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.flash.js;f23;37;31;37;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.colVis.js;f23;34;31;34;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.bootstrap4.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\Buttons\js\buttons.bootstrap.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\dataTables.autoFill.js;f23;47;31;47;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.semanticui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.jqueryui.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.foundation.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.bootstrap4.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\extensions\AutoFill\js\autoFill.bootstrap.js;f23;33;31;33;;C:\xampp\htdocs\abcmovies\assets\datatable\examples\resources\demo.js;f3;5;11;5;;C:\xampp\htdocs\abcmovies\application\views\admin\master_banner.php;f3;83;11;83;;C:\xampp\htdocs\abcmovies\application\views\admin\master_tweets.php;f3;52;11;52;;C:\xampp\htdocs\abcmovies\application\views\admin\Codelobster0.php;f3;49;11;49;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_rule.php;f3;63;11;63;;C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php;f3;97;11;97;;C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php;f3;107;11;107;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
 			<treenode node="documentElement;JS:JS Var Name;C:\xampp\htdocs\abcmovies\assets\datatable\media\jquery-1.12.4.js;f4;6513;19;6513;;;;vpos;;v;;r;;d-1,-1;;b0,0;;m">
 			</treenode>
@@ -31596,7 +31809,7 @@
 		<file name="C:\xampp\htdocs\abcmovies\application\views\user\edit_password.php" crc="-42707730"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\review\update_review.php" crc="1928713596"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\review\insert_review.php" crc="-1994687505"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\views\includes\header.php" crc="608069422"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\views\includes\header.php" crc="-441335434"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\includes\footer.php" crc="5451432"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\errors\html\error_php.php" crc="1602992008"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\errors\html\error_general.php" crc="-141541059"/>
@@ -31609,10 +31822,11 @@
 		<file name="C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_db.php" crc="-635194338"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\errors\cli\error_404.php" crc="1323700698"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\update_film.php" crc="-1447707648"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php" crc="1440221132"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\master_film.php" crc="1719991584"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\master_banner.php" crc="2109042486"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\insert_film.php" crc="2002192799"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php" crc="-16465943"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_tweets.php" crc="-1408590544"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\views\admin\detail_rule.php" crc="-1363396575"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\welcome_message.php" crc="-783354249"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\soon.php" crc="-1838649690"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\views\register.php" crc="-738654779"/>
@@ -31626,8 +31840,8 @@
 		<file name="C:\xampp\htdocs\abcmovies\application\third_party\SentimentAnalyzer.class.php" crc="2082039627"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\third_party\lexicon.txt" crc="1345081098"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_user.php" crc="-1585681594"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php" crc="1779115706"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_review.php" crc="1556273479"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_tweets.php" crc="-462428990"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_review.php" crc="652578883"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_film.php" crc="1585091366"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\models\Model_banner.php" crc="942608841"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\libraries\Fake_functions.php" crc="-429614655"/>
@@ -31636,11 +31850,11 @@
 		<file name="C:\xampp\htdocs\abcmovies\application\libraries\Curl.php" crc="1609284965"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\libraries\CI_phpStorm.php" crc="807964330"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\libraries\CI_IntelliSense.php" crc="-720633567"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php" crc="-1145150291"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php" crc="998380815"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\controllers\Welcome.php" crc="-1353829909"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\controllers\WebSystem.php" crc="1433916423"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\controllers\User.php" crc="-807582357"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\controllers\Film.php" crc="-2052148514"/>
-		<file name="C:\xampp\htdocs\abcmovies\application\controllers\Admin.php" crc="-186610203"/>
+		<file name="C:\xampp\htdocs\abcmovies\application\controllers\Admin.php" crc="-1103800765"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\config\user_agents.php" crc="1443899639"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\config\smileys.php" crc="-1971199974"/>
 		<file name="C:\xampp\htdocs\abcmovies\application\config\routes.php" crc="-416380888"/>

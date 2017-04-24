@@ -2,8 +2,20 @@
  <div class="container">
   <div class="row">
    <div class="span12">
-  		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Insert New Film</span></a>
-		
+   		<h4>Ground Truth</h4>
+        <div class="tooltip-demo">
+        	<?= form_open('admin/detailRule'); ?>
+	        <?= form_submit('all','All Tweet','class="btn btn-default"'); ?>
+	        <?= form_submit('unchecked','Unchecked Tweet','class="btn btn-default"'); ?>
+	        <?= form_submit('groundTruth','All Ground Truth','class="btn btn-default"'); ?>
+	        <?= form_submit('nonreview','Non-Review Ground Truth','class="btn btn-default"'); ?>
+	        <?= form_submit('review','Review Ground Truth','class="btn btn-default"'); ?>
+	        <?= form_submit('positive','Positive Review Ground Truth','class="btn btn-default"'); ?>
+	        <?= form_submit('negative','Negative Review Ground Truth','class="btn btn-default"'); ?>
+	        <?= form_close(); ?>
+        </div>
+        <br />
+		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Insert New Film</span></a>
 		<br /><br />
 		
 		<table id="datatable" class="table table-striped table-bordered display">
@@ -14,7 +26,7 @@
 		            <!--th>Summary</th-->
 		            <th>Genre</th>
 		            <th>Year</th>
-		            <!--th>Playing date</th-->
+		            <th>Playing date</th>
 		            <!--th>Length</th-->
 		            <!--th>Director</th-->
 		            <!--th>Writer</th-->
@@ -26,7 +38,7 @@
 		            <th>Metascore</th>
 		            <!--th>Positif review from Twitter</th-->
 		            <!--th>Negatif review from Twitter</th-->
-		            <th>Rating</th>
+		            <!--th>Rating</th-->
 		            <th>Status</th>
 		            <th>Action</th>
 		        </tr>
@@ -40,7 +52,7 @@
 					        //echo "<td>" . $movies[$i]['summary'] . "</td >";
 					        echo "<td>" . $movies[$i]['genre'] . "</td>";
 					        echo "<td>" . $movies[$i]['year'] . "</td>";
-					        //echo "<td>" . date("Y-m-d", strtotime($movies[$i]['playing_date'])) . "</td>";
+					        echo "<td>" . date("Y-m-d", strtotime($movies[$i]['playing_date'])) . "</td>";
 					        //echo "<td>" . $movies[$i]['length'] . " </td>";
 					        //echo "<td>" . $movies[$i]['director'] . "</td>";
 					        //echo "<td>" . $movies[$i]['writer'] . "</td>";
@@ -52,7 +64,7 @@
 					        echo "<td>" . $movies[$i]['metascore'] . "</td>";
 					        //echo "<td>" . $movies[$i]['twitter_positif'] . "</td>";
 					        //echo "<td>" . $movies[$i]['twitter_negatif'] . "</td>";
-					        echo "<td>" . $movies[$i]['rating'] . "</td>";
+					        //echo "<td>" . $movies[$i]['rating'] . "</td>";
 					        echo "<td>";  
 				   				if ($movies[$i]['status'] == 0) echo "Coming Soon";
 				   				else if ($movies[$i]['status'] == 1) echo "Now Playing";
@@ -72,8 +84,6 @@
 				   				echo form_close();
 			   				echo "</th>";
 				        echo "</tr>";
-				        
-				        //echo "<td><img style='width:100px;height:100px;'src='" . $b_url.$users[$i]['picture'] . "'/></td>";
 				    }
 		   		?>
 		   	</tbody>

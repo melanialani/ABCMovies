@@ -55,7 +55,7 @@
 					<li><a href="<?php echo site_url('film/old'); ?>" style="color: white;">Old Movies</a></li>
 					<?php
 					// if admin, show master film
-					if ($this->input->cookie('abcmovies') == 'admin@abcmovies.co.id'){
+					if ($this->input->cookie('abcmovies') == 'melanialani@gmail.com'){
 						echo '<li><a href="'.site_url('admin/masterFilm').'" style="color: white;">Master Film</a></li>';
 						echo '<li><a href="'.site_url('admin/masterBanner').'" style="color: white;">Master Banner</a></li>';
 					}

@@ -105,7 +105,7 @@ Class Model_review extends CI_Model {
 		
 		// update movie's rating
 		if ($count > 0){
-			$myArr = array('rating' => ($sum/$count));
+			$myArr = array('rating' => round(($sum/$count),1));
 			$this->db->where('id', $id);
 			$this->db->update('film', $myArr);
 		}
@@ -126,5 +126,6 @@ Class Model_review extends CI_Model {
 		$this->db->order_by('text');
 		return $this->db->get()->result_array();
 	}*/
+	
 }
 ?>
