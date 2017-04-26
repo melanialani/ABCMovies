@@ -302,147 +302,96 @@ Class Admin extends Film {
 		}
 	}
 	
-	public function detailRule(){
-		// is it admin?
-		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+	public function report(){
+		/* is it admin?
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){*/
 			$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
 			
-			// negate a tweet' status
 			if ($this->input->post('negate1')){
 				$this->model_tweets->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('status', TRUE));
 				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
 				redirect('admin/detailRule');
 			} else if ($this->input->post('negate2')){
 				$this->model_tweets->updateTruthRuleTweet($this->input->post('id', TRUE), !$this->input->post('truth_rule', TRUE));
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
 				redirect('admin/detailRule');
 			} else if ($this->input->post('negate3')){
 				$this->model_tweets->updateTruthNaiveTweet($this->input->post('id', TRUE), !$this->input->post('truth_naive', TRUE));
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
 				redirect('admin/detailRule');
-			} 
-			
-			// delete button on click 
-			else if ($this->input->post('delete') == TRUE){ 
+			} else if ($this->input->post('delete') == TRUE){ 
 				$this->model_tweets->deleteTweet($this->input->post('id', TRUE));
 				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
 				redirect('admin/detailRule');
 			}
 			
+			else if ($this->input->post('true_pos')){
+				$data['title'] = 'True Positive';
+				$data['tweets'] = $this->model_tweets->getTruePositive();
+			} else if ($this->input->post('true_neg')){
+				$data['title'] = 'True Negative';
+				$data['tweets'] = $this->model_tweets->getTrueNegative();
+			} else if ($this->input->post('false_pos')){
+				$data['title'] = 'False Positive';
+				$data['tweets'] = $this->model_tweets->getFalsePositive();
+			} else if ($this->input->post('false_neg')){
+				$data['title'] = 'False Negative';
+				$data['tweets'] = $this->model_tweets->getFalseNegative();
+			} 
+			
+			else if ($this->input->post('true_review')){
+				$data['title'] = 'True Review';
+				$data['tweets'] = $this->model_tweets->getTrueReview();
+			} else if ($this->input->post('true_non')){
+				$data['title'] = 'True Non-Review';
+				$data['tweets'] = $this->model_tweets->getTrueNonReview();
+			} else if ($this->input->post('false_review')){
+				$data['title'] = 'False Review';
+				$data['tweets'] = $this->model_tweets->getFalseReview();
+			} else if ($this->input->post('false_non')){
+				$data['title'] = 'False Non-Review';
+				$data['tweets'] = $this->model_tweets->getFalseNonReview();
+			} 
+			
 			else if ($this->input->post('groundtruth') == TRUE){ 
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
+				$data['title'] = 'All Checked Data';
 				$data['tweets'] = $this->model_tweets->getGroundTruthAll();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
-			}
-			
-			else if ($this->input->post('review') == TRUE){ 
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
+			} else if ($this->input->post('review') == TRUE){ 
+				$data['title'] = 'All Review Tweets';
 				$data['tweets'] = $this->model_tweets->getGroundTruthReview();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
-			}
-			
-			else if ($this->input->post('nonreview') == TRUE){ 
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
+			} else if ($this->input->post('nonreview') == TRUE){ 
+				$data['title'] = 'All Non-review Tweets';
 				$data['tweets'] = $this->model_tweets->getGroundTruthNotReview();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
-			}
-			
-			else if ($this->input->post('positive') == TRUE){ 
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
+			} else if ($this->input->post('positive') == TRUE){ 
+				$data['title'] = 'All Positive Reviews';
 				$data['tweets'] = $this->model_tweets->getGroundTruthPositive();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
-			}
-			
-			else if ($this->input->post('negative') == TRUE){ 
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
+			} else if ($this->input->post('negative') == TRUE){ 
+				$data['title'] = 'All Negative Reviews';
 				$data['tweets'] = $this->model_tweets->getGroundTruthNegative();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
-			}
-			
-			else if ($this->input->post('unchecked') == TRUE){ 
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
+			} else if ($this->input->post('unchecked') == TRUE){ 
+				$data['title'] = 'All Unchecked Tweets';
 				$data['tweets'] = $this->model_tweets->getAllUncheckedTweet();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
-			}
-			
-			else if ($this->input->post('all') == TRUE){ 
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
+			} else if ($this->input->post('all') == TRUE){ 
+				$data['title'] = 'All Tweets';
 				$data['tweets'] = $this->model_tweets->getAllTweets();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
+			} 
+			
+			else { // load page as usual = load ground truth review
+				$data['title'] = 'Laporan';
+				$data['tweets'] = NULL;
 			}
 			
-			// load page as usual = load ground truth review
-			else {
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
-				$data['tweets'] = $this->model_tweets->getGroundTruthReview();
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_rule', $data);
-			}
+			//fetch user's name
+			if ($this->input->cookie('abcmovies')){
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+				$data['name'] = $user[0]['name'];
+			} else $data['name'] = null;
 			
-		} else { // not admin, go back to login page
+			$this->load->view('includes/header', $data);
+			$this->load->view('admin/laporan', $data);			
+		/*} else { // not admin, go back to login page
 			redirect('user/login');
-		}
+		}*/
 	}
 	
 }

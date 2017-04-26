@@ -2,22 +2,8 @@
  <div class="container">
   <div class="row">
    <div class="span12">
-   		<h4>Ground Truth</h4>
-        <div class="tooltip-demo">
-        	<?= form_open('admin/detailRule'); ?>
-	        <?= form_submit('all','All Tweet','class="btn btn-default"'); ?>
-	        <?= form_submit('unchecked','Unchecked Tweet','class="btn btn-default"'); ?>
-	        <?= form_submit('groundTruth','All Ground Truth','class="btn btn-default"'); ?>
-	        <?= form_submit('nonreview','Non-Review Ground Truth','class="btn btn-default"'); ?>
-	        <?= form_submit('review','Review Ground Truth','class="btn btn-default"'); ?>
-	        <?= form_submit('positive','Positive Review Ground Truth','class="btn btn-default"'); ?>
-	        <?= form_submit('negative','Negative Review Ground Truth','class="btn btn-default"'); ?>
-	        <?= form_close(); ?>
-        </div>
-        <br />
 		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Insert New Film</span></a>
 		<br /><br />
-		
 		<table id="datatable" class="table table-striped table-bordered display">
 		    <thead>
 		        <tr>
@@ -88,6 +74,8 @@
 		   		?>
 		   	</tbody>
 		</table>
+		<br/><br/>
+		<a href="<?php echo site_url('admin/report'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Lihat laporan</span></a>
 	</div>	<!--/.main-->
 	
   </div>
@@ -112,4 +100,3 @@
 
 </body>
 </html>
-  	

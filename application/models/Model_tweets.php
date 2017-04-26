@@ -34,75 +34,9 @@ Class Model_tweets extends CI_Model {
 		$this->db->where('t.truth_rule', 1);
 		$this->db->where('t.film_id', $film_id);
 		$this->db->order_by('t.timestamp', 'desc');
-		//$this->db->order_by('t.status', 'desc');
 		return $this->db->get()->result_array();
 	}
 	
-	public function getAllUncheckedTweet(){
-        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
-		$this->db->from('tweets as t, film as f');
-		$this->db->where('t.film_id = f.id');
-		$this->db->where('t.checked', 0);
-		$this->db->order_by('t.id');
-		return $this->db->get()->result_array();
-	}
-	
-	public function getGroundTruthAll(){
-        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
-		$this->db->from('tweets as t, film as f');
-		$this->db->where('t.film_id = f.id');
-		$this->db->where('t.checked', 1);
-		$this->db->order_by('t.id');
-		$this->db->limit(2000, 1); // limit 2000 data id
-		return $this->db->get()->result_array();
-	}
-	
-	public function getGroundTruthReview(){
-        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
-		$this->db->from('tweets as t, film as f');
-		$this->db->where('t.film_id = f.id');
-		$this->db->where('t.truth_rule', 1);
-		$this->db->where('t.checked', 1);
-		$this->db->order_by('t.id');
-		$this->db->limit(1000, 1); // limit 1000 data id
-		return $this->db->get()->result_array();
-	}
-	
-	public function getGroundTruthNotReview(){
-        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
-		$this->db->from('tweets as t, film as f');
-		$this->db->where('t.film_id = f.id');
-		$this->db->where('t.truth_rule', 0);
-		$this->db->where('t.checked', 1);
-		$this->db->order_by('t.id');
-		$this->db->limit(1000, 1); // limit 1000 data id
-		return $this->db->get()->result_array();
-	}
-	
-	public function getGroundTruthPositive(){
-        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
-		$this->db->from('tweets as t, film as f');
-		$this->db->where('t.film_id = f.id');
-		$this->db->where('t.truth_rule', 1);
-		$this->db->where('t.checked', 1);
-		$this->db->where("((t.status = 1 AND t.truth_naive = 1) OR (t.status = 0 AND t.truth_naive = 0))");
-		$this->db->order_by('t.id');
-		$this->db->limit(500, 1); // limit 500 data id
-		return $this->db->get()->result_array();
-	}
-	
-	public function getGroundTruthNegative(){
-        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
-		$this->db->from('tweets as t, film as f');
-		$this->db->where('t.film_id = f.id');
-		$this->db->where('t.truth_rule', 1);
-		$this->db->where('t.checked', 1);
-		$this->db->where("((t.status = 0 AND t.truth_naive = 1) OR (t.status = 1 AND t.truth_naive = 0))");
-		$this->db->order_by('t.id');
-		$this->db->limit(500, 1); // limit 500 data id
-		return $this->db->get()->result_array();
-	}
-
 	/**
 	* Get a spesific information about of a tweet (by id)
 	* @param int $id
@@ -265,6 +199,180 @@ Class Model_tweets extends CI_Model {
 		$this->db->update('tweets', $myArr);
 	
 		return $this->db->affected_rows();
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	public function getTruePositive(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('t.status', 1);
+		$this->db->where('t.truth_naive', 1);
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getTrueNegative(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('t.status', 0);
+		$this->db->where('t.truth_naive', 0);
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getFalsePositive(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('t.status', 1);
+		$this->db->where('t.truth_naive', 0);
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getFalseNegative(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('t.status', 0);
+		$this->db->where('t.truth_naive', 1);
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getTrueReview(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('(t.status = 1 OR t.status = 0)');
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getTrueNonReview(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 0);
+		$this->db->where('t.status', 2);
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getFalseReview(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 0);
+		$this->db->where('(t.status = 1 OR t.status = 0)');
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	public function getFalseNonReview(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('t.status', 2);
+		$this->db->order_by('t.id');
+		return $this->db->get()->result_array();
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	public function getGroundTruthAll(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->order_by('t.id');
+		$this->db->limit(2000, 1); // limit 2000 data id
+		return $this->db->get()->result_array();
+	}
+	
+	public function getGroundTruthReview(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->order_by('t.id');
+		$this->db->limit(1000, 1); // limit 1000 data id
+		return $this->db->get()->result_array();
+	}
+	
+	public function getGroundTruthNotReview(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 0);
+		$this->db->order_by('t.id');
+		$this->db->limit(1000, 1); // limit 1000 data id
+		return $this->db->get()->result_array();
+	}
+	
+	public function getGroundTruthPositive(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('t.truth_naive', 1);
+		$this->db->order_by('t.id');
+		$this->db->limit(500, 1); // limit 500 data id
+		return $this->db->get()->result_array();
+	}
+	
+	public function getGroundTruthNegative(){
+        $this->db->select('f.title as title, t.id as id, t.tweet as tweet, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.truth_rule', 1);
+		$this->db->where('t.truth_naive', 0);
+		$this->db->order_by('t.id');
+		$this->db->limit(500, 1); // limit 500 data id
+		return $this->db->get()->result_array();
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	* Insert tweet into 3 diffenret tables
+	* with value of $table_name only accept 3 values: 'tweets_ori','tweets_regex','tweets_replaced'
+	* @param int $film_id
+	* @param int $twitter_id
+	* @param string $text
+	* @param datetime $created_at
+	* @param string $table_name
+	* 
+	* @return
+	*/
+	public function insertTweetInto($film_id, $twitter_id, $text, $created_at, $table_name){
+        $myArr = array(
+			'film_id' 		=> $film_id,
+        	'twitter_id' 	=> $twitter_id,
+        	'text' 			=> $text,
+        	'created_at' 	=> $created_at
+        );
+        $this->db->insert($table_name, $myArr);
+        return $this->db->affected_rows();
+	}
+	
+	public function insertTweetFinal($film_id, $twitter_id, $text, $created_at, $system_says, $yes_review, $yes_positive){
+        $myArr = array(
+			'film_id' 		=> $film_id,
+        	'twitter_id' 	=> $twitter_id,
+        	'text' 			=> $text,
+        	'created_at' 	=> $created_at
+        );
+        $this->db->insert('tweets_replaced', $myArr);
+        return $this->db->affected_rows();
 	}
 }
 ?>

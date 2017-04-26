@@ -252,6 +252,18 @@ class WebSystem extends CI_Controller {
 							$json = file_get_contents($url);
 							$yandex = json_decode($json);
 							$getdata['summary'] = $yandex->text[0];
+						} else {
+							$getdata['summary'] = NULL;
+							$getdata['genre'] = NULL;
+							$getdata['year'] = NULL;
+							$getdata['playing_date'] = NULL;
+							$getdata['length'] = NULL;
+							$getdata['director'] = NULL;
+							$getdata['writer'] = NULL;
+							$getdata['actors'] = NULL;
+							$getdata['imdb_id'] = NULL;
+							$getdata['imdb_rating'] = NULL;
+							$getdata['metascore'] = NULL;
 						}
 						
 						$getdata['trailer'] = NULL;
@@ -284,10 +296,10 @@ class WebSystem extends CI_Controller {
 		
 		// train naive bayes classifier
 		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 0); //training with negative data
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 0); //trainign with positive data	
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //trainign with positive data	
 		
-		$film_id = $this->input->post('film_id', TRUE); echo $film_id;
+		$film_id = $this->input->post('film_id', TRUE); 
 		$movie = $this->model_film->getFilm($film_id);
 		$title = $movie[0]['title'];
 		
@@ -308,7 +320,7 @@ class WebSystem extends CI_Controller {
 		$result = []; // to store the tweets that had been reduced
 		
 		for ($i=0; $i<sizeof($response->statuses); $i++){
-			$editedResult = strtolower($response->statuses[$i]->text);
+			$editedResult = strtolower($response->statuses[$i]->text); //$response->statuses[$i]->id   $response->statuses[$i]->created_at
 			
 			// replace any url with word URL
 			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
@@ -316,12 +328,9 @@ class WebSystem extends CI_Controller {
 			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
 			// replace any username (@..) with word USERNAME
 			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
-			
 			// replace all characters that are not number or alphabet with a single space
 			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult); 
-			// the line above will result with double spaces if there are any punctuation, now we will remove any double spaces here
-			$editedResult = str_replace('  ', ' ', $editedResult); 
-			
+		
 			// replace movie's title with word JUDULFILM
 			$editedResult = str_ireplace($title, 'JUDULFILM', $editedResult);
 			
@@ -331,50 +340,52 @@ class WebSystem extends CI_Controller {
 		
 		// !!! === !!! === begin rule-based system --> delete any tweets that are not a review
 		
-		$review = []; // to store any tweet that has passed rule-based
+		$review = [];
 		
 		for ($i=0; $i<sizeof($result); $i++){
-			$isReview = 0;
+			$review[$i]['text'] = $nonreview[$i];
 			
 			// split tweet word by word and put it into an array, to compare easily
-			$target = $result[$i];
-			$splitit = explode(' ', $target);
-			$target = [];
-			for ($j=0; $j<sizeof($splitit); $j++){
-				array_push($target, $splitit[$j]);
-			}
+			$target = $nonreview[$i];
+			$target = $this->splitSentence($target);
+			$target = $target[0];
 			
 			// if there's any word that intersects (exist in tweet and in lexicon array), do:
 			if (array_intersect($lexicon, $target)) 
-				array_push($review, $result[$i]);
-			else { // if not, insert into database as 'not a review' (status = 2)
-				$this->model_tweets->insertTweetButNotAReview($film_id, $result[$i], 2);
-			}
+				$review[$i]['status'] = 1;
+			else // not a review, status = 2
+				$review[$i]['status'] = 2;
 		}
 		
 		// !!! === !!! === begin naive bayes
 		for ($i=0; $i<sizeof($review); $i++){
-			$sentimentAnalysisOfSentence = $sat->analyzeSentence($review[$i]);
-			$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
-			$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
-			$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
-			
-			$status = 1;
-			if ($resultofAnalyzingSentence == "negative")
-				$status = 0;
-			else if ($resultofAnalyzingSentence == "Neutral")
-				$status = 3;
-			
-			// if there's already a tweet with the same value, do not add it to database
-			if (!$this->model_tweets->isExist($film_id, $review[$i]))
-				$this->model_tweets->insertTweet($film_id, $review[$i], $status);
-				//echo $film_id.' - '.$review[$i].' - '.$status.'<br/>';
+			if ($review[$i]['status'] == 1){
+				$sentimentAnalysisOfSentence = $sat->analyzeSentence($review[$i]['text']);
+				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
+				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
+				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
+				
+				if ($resultofAnalyzingSentence == "negative" || ($probabilityofSentenceBeingNegative>$probabilityofSentenceBeingPositive))
+					$review[$i]['status'] = 0;
+				else if ($resultofAnalyzingSentence == "positive")
+					$review[$i]['status'] = 1;
+				//else if ($resultofAnalyzingSentence == "Neutral") $review[$i]['status'] = 2;
+				
+				if (!$this->model_tweets->isExist($film_id, $review[$i]['text']))
+					$this->model_tweets->insertTweet($film_id, $review[$i]['text'], $review[$i]['status']);
+			} else
+				$this->model_tweets->insertTweetButNotAReview($film_id, $result[$i], 2);
 		}
 		
 		// update film
 		$this->model_film->updateTwitterFilm($film_id, $this->model_tweets->getMovieCountNegTweet($film_id), $this->model_tweets->getMovieCountPosTweet($film_id));
 		
 		redirect('admin/detailTweets');
+	}
+	
+	private function splitSentence($words){
+		preg_match_all('/\w+/', $words, $matches);
+		return $matches;
 	}
 }
 
