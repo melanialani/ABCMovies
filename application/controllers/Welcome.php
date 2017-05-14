@@ -11,7 +11,12 @@ class Welcome extends CI_Controller {
 	}
 	
 	public function index(){
-		redirect('film/index');
+		redirect('film/index');		
+	}
+	
+	private function splitSentence($words){
+		preg_match_all('/\w+/', $words, $matches);
+		return $matches;
 	}
 	
 }

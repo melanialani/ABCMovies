@@ -135,3 +135,161 @@
 		}
 
 -->
+<!--	TEST DATA TWEET LAMA
+
+		// for rule-based system
+		$lexicon = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($lexicon, trim($activeLine));	
+		}
+		
+		$stopword = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/stopword.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($stopword, trim($activeLine));	
+		}
+		
+		$alay = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/alay.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($alay, trim($activeLine));	
+		}
+		
+		$alay_replace = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/alay_arti.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($alay_replace, trim($activeLine));	
+		}
+		
+		// train naive bayes classifier
+		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //trainign with positive data	
+		
+		$review = array(;
+
+		// put response into array
+		$result = [];
+		for ($i=0; $i<sizeof($review); $i++){
+			$result[$i]['text'] = $review[$i];
+			$result[$i]['is_review'] = 2;
+			$result[$i]['is_positive'] = 0;
+		}
+		
+		// !!! === !!! === begin rule-based system === !!! === !!!
+		
+		// !!! === !!! === compare with lexicon data
+		for ($i=0; $i<sizeof($result); $i++){
+			// split tweet word by word and put it into an array, to compare easily
+			$target = $result[$i]['text'];
+			$target = $this->splitSentence($target);
+			$target = $target[0];
+			
+			// if there's any word that intersects (exist in 2 arrays), do:
+			if (array_intersect($lexicon, $target)) {
+				$result[$i]['is_review'] = 1;
+				
+				$intersectStr = null;
+				$intersectsWith = array_intersect($lexicon, $target);
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					if ($intersectStr == null)
+						$intersectStr = $lexicon[$arrayKey];
+					else 
+						$intersectStr .= ',' . $lexicon[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+			}
+		}
+		
+		// !!! === !!! === feature reduction -> delete username, url, hashtag, punctuations
+		for ($i=0; $i<sizeof($result); $i++){
+			$editedResult = $result[$i]['text'];
+			
+			// replace any url with word URL
+			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
+			// replace any hashtag with word HASHTAG 
+			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
+			// replace any username (@..) with word USERNAME
+			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
+			// replace all characters that are not number or alphabet with a single space
+			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult); 
+			
+			$result[$i]['text'] = $editedResult;
+		}
+		
+		// !!! === !!! === replace bahasa alay
+		for ($i=0; $i<sizeof($result); $i++){
+			// split tweet word by word and put it into an array, to compare easily
+			$target = $result[$i]['text'];
+			$target = $this->splitSentence($target);
+			$target = $target[0];
+			
+			// if there's any word that intersects (exist in 2 arrays), do:
+			if (array_intersect($alay, $target)) {
+				$intersectStr = null;
+				$intersectsWith = array_intersect($alay, $target);
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					$result[$i]['text'] = preg_replace('/'.$alay[$arrayKey].'/', $alay_replace[$arrayKey], $result[$i]['text']);
+					
+					if ($intersectStr == null)
+						$intersectStr = $alay[$arrayKey];
+					else 
+						$intersectStr .= ',' . $alay[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+			}
+		}
+		
+		// !!! === !!! === delete stopword
+		for ($i=0; $i<sizeof($result); $i++){
+			// split tweet word by word and put it into an array, to compare easily
+			$target = $result[$i]['text'];
+			$target = $this->splitSentence($target);
+			$target = $target[0];
+			
+			// if there's any word that intersects (exist in 2 arrays), do:
+			if (array_intersect($stopword, $target)) {
+				$intersectStr = null;
+				$intersectsWith = array_intersect($stopword, $target);
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					$result[$i]['text'] = preg_replace('/'.$stopword[$arrayKey].'/', '', $result[$i]['text']);
+					
+					if ($intersectStr == null)
+						$intersectStr = $stopword[$arrayKey];
+					else 
+						$intersectStr .= ',' . $stopword[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+			}
+		}
+		
+		// !!! === !!! === begin naive bayes
+		for ($i=0; $i<sizeof($result); $i++){
+			if ($result[$i]['is_review'] == 1){
+				$sentimentAnalysisOfSentence = $sat->analyzeSentence($result[$i]['text']);
+				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
+				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
+				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
+				
+				if ($resultofAnalyzingSentence == "positive")
+					$result[$i]['is_review'] = 1;
+				else
+					$result[$i]['is_review'] = 0;
+			}
+		}
+		
+		for ($i=0; $i<sizeof($result); $i++){
+			echo $result[$i]['is_review'].'<br>';
+		}
+
+-->

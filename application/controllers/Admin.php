@@ -368,13 +368,14 @@ Class Admin extends Film {
 			} else if ($this->input->post('negative') == TRUE){ 
 				$data['title'] = 'All Negative Reviews';
 				$data['tweets'] = $this->model_tweets->getGroundTruthNegative();
-			} else if ($this->input->post('unchecked') == TRUE){ 
-				$data['title'] = 'All Unchecked Tweets';
-				$data['tweets'] = $this->model_tweets->getAllUncheckedTweet();
 			} else if ($this->input->post('all') == TRUE){ 
 				$data['title'] = 'All Tweets';
 				$data['tweets'] = $this->model_tweets->getAllTweets();
 			} 
+			
+			else if ($this->input->post('unchecked') == TRUE){ 
+				redirect('admin/unchecked');
+			}
 			
 			else { // load page as usual = load ground truth review
 				$data['title'] = 'Laporan';
@@ -387,8 +388,66 @@ Class Admin extends Film {
 				$data['name'] = $user[0]['name'];
 			} else $data['name'] = null;
 			
+			// calculate accuracy, recall, precision
+			$data['tp'] = sizeof($this->model_tweets->getTruePositive());
+			$data['tn'] = sizeof($this->model_tweets->getTrueNegative());
+			$data['fp'] = sizeof($this->model_tweets->getFalsePositive());
+			$data['fn'] = sizeof($this->model_tweets->getFalseNegative());
+			$data['accuracy'] = (($data['tn']+$data['tp'])*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+			$data['recall_pos'] = ($data['tp']*100) / ($data['tp']+$data['fn']);
+			$data['recall_neg'] = ($data['tn']*100) / ($data['tn']+$data['fp']);
+			$data['precision_pos'] = ($data['tp']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+			$data['precision_neg'] = ($data['tn']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+			
+			$data['review_tp'] = sizeof($this->model_tweets->getTrueReview());
+			$data['review_tn'] = sizeof($this->model_tweets->getTrueNonReview());
+			$data['review_fp'] = sizeof($this->model_tweets->getFalseReview());
+			$data['review_fn'] = sizeof($this->model_tweets->getFalseNonReview());
+			$data['review_accuracy'] = (($data['review_tn']+$data['review_tp'])*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+			$data['review_recall_pos'] = ($data['review_tp']*100) / ($data['review_tp']+$data['review_fn']);
+			$data['review_recall_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_fp']);
+			$data['review_precision_pos'] = ($data['review_tp']*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+			$data['review_precision_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+			
 			$this->load->view('includes/header', $data);
 			$this->load->view('admin/laporan', $data);			
+		/*} else { // not admin, go back to login page
+			redirect('user/login');
+		}*/
+	}
+	
+	public function unchecked(){
+		/* is it admin?
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){*/
+			$data['title'] = 'Unchecked Tweets';
+			if ($this->input->post('review1')){
+				$this->model_tweets->updateReviewTweetFinal($this->input->post('id', TRUE), 1);
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
+				redirect('admin/unchecked');
+			} else if ($this->input->post('review0')){
+				$this->model_tweets->updateReviewTweetFinal($this->input->post('id', TRUE), 0);
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
+				redirect('admin/unchecked');
+			} else if ($this->input->post('positive1')){
+				$this->model_tweets->updatePositiveTweetFinal($this->input->post('id', TRUE), 1);
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
+				redirect('admin/unchecked');
+			} else if ($this->input->post('positive0') == TRUE){ 
+				$this->model_tweets->updatePositiveTweetFinal($this->input->post('id', TRUE), 0);
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
+				redirect('admin/unchecked');
+			}
+			
+			//fetch user's name
+			if ($this->input->cookie('abcmovies')){
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+				$data['name'] = $user[0]['name'];
+			} else $data['name'] = null;
+			
+			$data['tweets'] = $this->model_tweets->getAllUncheckedTweet();
+			
+			$this->load->view('includes/header', $data);
+			$this->load->view('admin/steps', $data);			
 		/*} else { // not admin, go back to login page
 			redirect('user/login');
 		}*/

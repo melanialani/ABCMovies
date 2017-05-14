@@ -32,7 +32,7 @@ Class Model_user extends CI_Model {
 
 		$allUser = $this->getAllUser();
 		for ($i = 0; $i < count($allUser); $i++){
-			if ($allUser[$i]['email'] == $email){
+			if (mb_strtolower($allUser[$i]['email']) == mb_strtolower($email)){
 				$isExist = TRUE;
 				break;
 			}
@@ -52,7 +52,7 @@ Class Model_user extends CI_Model {
 		
 		$allUser = $this->getAllUser();
 		for ($i = 0; $i < count($allUser); $i++){
-			if ($allUser[$i]['email'] == $email){
+			if (mb_strtolower($allUser[$i]['email']) == mb_strtolower($email)){
 				if ($allUser[$i]['password'] == md5($password)){
 					$isRegistered = TRUE;
 					break;
@@ -71,7 +71,7 @@ Class Model_user extends CI_Model {
 		$allAdmin = $this->db->get('user')->result_array();
 		
 		for ($i = 0; $i < count($allAdmin); $i++){
-			if ($allAdmin[$i]['email'] == $email){
+			if (mb_strtolower($allAdmin[$i]['email']) == mb_strtolower($email)){
 				$isAdmin = TRUE;
 			}
 		}
