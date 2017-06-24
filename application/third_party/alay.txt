@@ -1,7 +1,12 @@
-A.k.a,aka
+﻿A.k.a,aka
 Ababil
+abis
 Absurd
 Acan
+ade
+adl
+adlh
+ae
 Afgan
 Aja
 Aja kaya kuwé
@@ -22,13 +27,16 @@ Amaca cihh
 Amba
 Ambén
 Amleng
+ampe
 Ana
+and
 Andi Lau
 Angger
 Anjir
 Anjog
 Antob
 anx
+appreciate
 Aran
 Arang
 Arip
@@ -37,6 +45,7 @@ Asber
 Aséng
 Atis
 ATM
+ato
 Awak
 Awake Pada Lara
 Awan
@@ -55,12 +64,15 @@ baen
 Bagel
 Baget
 Bais
+bakal
 Baks
 Bakul
 Bal
 Bal-balan
 Bandem
+bang
 bangedh
+banget
 Baper
 Bapuk
 BARYAW
@@ -69,7 +81,9 @@ Batir
 Batur
 Bawon
 bay
+bayangin
 Bebeh
+begajulan
 belagu
 Belet
 Belik
@@ -78,6 +92,7 @@ Belok Lepot
 Belum
 Bén
 bene
+bener
 bengkolang
 Besengut
 best
@@ -86,22 +101,32 @@ beud
 beut
 BF
 bff
+bgt
+bhkn
 biarin
+bikin
 Binggo
 Bingit
 Bingits
 BINUN
 Biyung
+biz
+bkn
 Blakasuta
 Blas
 bleg
 Blekethir
 blig
 Blijing
+bljr
+blm
 Blusuk
 Blusukan
+bnr
+bnrnya
 Boam
 boaring
+bodo
 Bodol
 Boil
 bokap nyokap
@@ -109,18 +134,23 @@ bokebb
 Bokep
 BOKIS
 Boléd
+bolehla
 Boléng
 Bondan
 Bonyok
+boong
 BOT
 BRB
 Brengkolang
 Brug
 BT
+bun
 bunda
 Bungah
 butul
+bwh
 bye
+byk
 c8
 CA OONG CIH
 Cabe Cabean
@@ -138,25 +168,34 @@ CEMUNGUDH
 Cengis
 Cengkli
 Cepe deh
+cewe
+cewek
 Ciblon
 Cilaka
 Cipp
+cite
+cius
 Cius Miapah
 ciyh
-Ciyus
+ciyus
 Ciyus Miyapah
 ckepp
+ckp
 Clebek
 Cmiiw
+cmn
 Cocot
 cotba
 Couldi
+cowo
+cowok
 cowwyy
 coz
 cpa
 cpeg
 cppa
 cppe
+cte
 Cuco
 Cucuk
 Cukstaw
@@ -167,17 +206,28 @@ Cupet
 Curcol
 curhat
 cuxin
+cuy
 cvrht
+cwe
 cwekz
+cwo
 cwokz
 cz
 Dablongan
 Dafuq
+dah
 Damat
 Danta
 Dayoh
+debes
 dech
+dedek
+deg"an
+deg2an
+deg-deg an
+deg-degan
 Deleng
+demn
 Dempa
 Deneng
 Deneng Neng Kono
@@ -185,6 +235,7 @@ dengka
 Dengklang
 dewe
 deyh
+dgan
 Dhewek
 Dhupak
 dikep
@@ -202,18 +253,31 @@ disit
 Diwadani
 Diwei
 DL
+dlm
 doang
+doi
 Dopok
 Dopokan
+doyan
+dr pada
+dr pd
+drpd
+duh
 duluw
 dum
 dumz
+dunk
 Egin
+eh
+ekspektasi
 Elo gue End
 Ember
 empet
 EMPRIT
+ending
+endingnya
 ENELAN
+enggak
 enggal
 enggane
 enggane Kowe Neng Kene
@@ -223,18 +287,23 @@ Ereg
 Eri
 esih
 ETDAAH
+faham
+first
 Fix
 FLU
 Friendzone
 Fudul
+fun
 FYI
 g
+ga
 Gabut
 gag
 gagean
 gageyan
 Gaje
 Gajebo
+gak
 Galau
 Ganu
 Gari
@@ -246,6 +315,9 @@ Gela
 geledek
 Gelis
 Gembelengan
+gemes
+gemesin
+gempak
 Gendul
 Gengges
 Gering
@@ -255,14 +327,17 @@ ghiey
 ghiy
 gi
 Gigal
+gilak
 Gili
 gitchu
 Githir
 Gitu
 gituw
+gk
 Glepung
 Glewehan
 Gludug
+gmn
 Goroh
 Gotak
 Gotek
@@ -270,9 +345,12 @@ GPL
 Grabag-Grubug
 Grajih
 Gretongan
+gt
+gtg
 gtw
+gua
 Gudnyus
-Gue
+gue
 Gujih
 Gujis
 gundu
@@ -280,10 +358,16 @@ gur
 gutul
 Guyon
 guyonan
+gw
+gwe
 GWS
 gz
 Hacep
+hadam
 haghaghag
+handsome
+haritu
+hbs
 Heri
 Hoax
 hozz
@@ -299,6 +383,7 @@ Ikih
 Ilfeel
 Ilmune Inyong Esih Cupet
 imoetz
+indo
 iniyh
 inyong
 Inyong Agi Dhewekan
@@ -311,11 +396,14 @@ Jaki
 Janjane
 Jawil
 Jayus
+jd
+je
 Jejek
 Jek
 jelalatan
 jengkel
 Jenthik
+jg
 jimot
 jiyot
 JJM
@@ -326,11 +414,13 @@ Jorog
 jorogna
 Jotos
 judes
+jugak
 jujug
 jujugna
 jukut
 Jungkat
 Jutek
+jwb
 Ka
 kajog
 kakagg
@@ -348,11 +438,13 @@ KAMSUD
 kamuh
 kamuwh
 kamyu
+kan
 Kanca
 Kandah
 Kandahan
 kang
 kant
+kantukku
 kanz
 Karus
 Katisen
@@ -361,16 +453,21 @@ kawit
 Kawus
 Kaya
 Kaya kiye
-Kayaknya
+kayaknya
 Kayonge
+keburu
+kece
 kece badai
 Keduman
+kegantengan
+keje
 Kelalen
 kelas teri
 Keleg
 keleleb
 Keles
 Keleus
+kelingan
 Kelir
 Kemaki
 Kemal
@@ -386,17 +483,23 @@ kepo
 kepriben
 keprimen
 kepriwe
+keputer
 kesel
 Kesuh
+ketagihan
+ketawa
+ketebak
 Ketempuhan
 Ketilem
 keton
+kewren
 Keyen
 kezel
 khan
 khuzuz
 Kicep
 Kipak
+kirain
 Kiye
 KIYIM
 Kleleb
@@ -416,6 +519,8 @@ krang
 krank
 krent
 krenz
+krn
+ku
 Kucluk
 kug
 Kuna
@@ -424,9 +529,12 @@ Kuna Lereng
 Kungkum
 kuq
 Kur
+kureng
 Kuwe
-KZL
+kzl
+la
 LAHACIA
+laki
 lam
 Lamreta
 Lamreta Bingit
@@ -446,7 +554,11 @@ Lelli
 Lempogen
 Lengob
 Lenjeh
+lepasni
 Lereng
+lg
+lht
+liat
 lindhig
 Lirih
 Liya
@@ -459,6 +571,7 @@ lochkz
 lochx
 Logika
 LOL
+lom
 Lombo
 Londhog
 Longan
@@ -466,12 +579,16 @@ louphh
 loupz
 Love
 low
+lps
+lu
 luchuw
+lucuk
 luff
 Lunga
 luph
 lupz
 luthu
+lw
 MAACIH
 Maaciw
 MACAMA
@@ -499,9 +616,12 @@ manies
 maniezt
 Maning
 Manjat
+mantap
+mantep
 Marakna
 Masuk
 Mathak
+mayan
 Mayeng
 mayuh
 Mbajug
@@ -513,6 +633,11 @@ mbene
 Mbene kober kiye
 mbesengut
 Mboke
+mbrebes
+mbuka
+mcm
+meh
+mempan
 men
 Menangi
 Meneketehe
@@ -528,6 +653,8 @@ Miki
 Ming
 Mitaya
 Modus
+mosok
+movie
 mudun
 mumz
 Mure
@@ -536,11 +663,15 @@ muupz
 muuv
 mu'uv
 mz
+nak
 nal
+nangis
+napadah
 naq
 Narsis
 nax
 nc
+ndak
 Ndeplak
 Ndeyan
 ndikep
@@ -548,12 +679,26 @@ Ndilalah
 Ndopok
 Nek
 nembe
+nga
 Ngajog
+ngak
+ngakak
 Nganah
 Ngandel
+ngantok
+ngapain
+ngebut
+ngehargai
+ngehargain
+ngejar
+ngeledekin
 Ngeneh
 ngengkrek
-Nggak
+ngerasa
+ngerti
+ngets
+ngga
+nggak
 Nglogog
 Nglokro
 Nglombo
@@ -562,7 +707,9 @@ Ngonoh
 Ngudang
 Nguja
 ngundang
+ni
 Nidokna
+nie
 niech
 nieyh
 Ningen
@@ -570,12 +717,21 @@ niyh
 njagong
 njeplak
 Njeprah
+nk
+nnt
+nnti
 No Afhan
 No Rhoma
 No Rosa
+nonton
 NP
+ntap
+ntar
 NW
+nyangka
 nyeletuk
+nyh
+nyoba
 nyong
 ogah
 Olih
@@ -583,17 +739,25 @@ Olih-Olih
 Ora Nguja
 Ora Petha
 Oretz
+org
 Otre
 OTW
 pa
-Pada
+pada
 Pahal
+pake
 Palbis
 Paper
 Paribasan
+part
+pas
 Patia
+patternnya
+pattern-nya
 Pecah
 Pecicilan
+pengen
+pengin
 Penjorangan
 pereg
 Peres
@@ -605,6 +769,9 @@ Pethuk
 PHP
 pidek
 pie
+pilem
+pilm
+pingin
 Pira
 Pitakon
 Pitik
@@ -623,6 +790,7 @@ prikitew
 Prikitiew
 primen
 priwe
+psycho
 Pundung
 Pungkasan
 Putu
@@ -634,11 +802,15 @@ qmu
 Raine Ora Mitayani
 Rama
 Randa
+rasa
 Reang
+recommended
 Rega
 Rekasa
+rekomen
 Rempong
 repp
+resek
 Rika
 Rikala
 Risban
@@ -654,32 +826,53 @@ Sabeb
 Saben
 saiang
 saiank
-Saiko
+said
+saiko
+sampe
 Sanding
 Sanga
 Sapa
+sbb
+sbg
+sbnrnya
+se
 sebel
+sebnrnya
+sebodo
 Sedela
+sedy
 Sejen
+sek
 Sekang
 Sekem
 Seliyane
 Selon
 Semblothongan
 Semriwing
+seneng
 Senthong
 sepethil
 Sepetil
 seuwise
 Sewise
+sgd
+sia"
+sia2
+sick
 siech
 sieyh
 Siki
+sikit
+skit
 SMS
+sngt
+so
 Sokil Gob
+sorang
 sowry
 spa
 sppa
+spt
 Spupet
 Sripilan
 STW
@@ -687,8 +880,10 @@ styp
 Sue
 Sumed
 Sumeng
+sumpah
 Suteralah
 t4
+tady
 tak
 Takon
 tasih
@@ -703,25 +898,41 @@ tembe
 tembeke
 Temen
 Temenan
+tengok
 Terong Terongan
 Terus Gue Harus Bilang Wow Gitu
 tesih
+tetengah
 Teyeng
 TFI
+tggu
+tgk
+tgok
 thanks
+the best
 thok
 thx
+tido
 Tidokna
 tilp
+tk
 tlaten
+tngok
+tnp
 tok
+tp
 Trataban
+trimakasih
+trims
 trs
 trz
+ttg
 tuch
 tuh
+tuk
 tuwh
 tw
+ty
 tyap
 Typo
 tyuz
@@ -730,15 +941,17 @@ Ubay
 uchul
 Ucul
 Udah
+udh
 Udu Inyong Ka
 ui
 Ujar
 Ujarku
 Ujug-ujug
 Umeb
-Unyu
+unyu
 Uput-uput
 ur welcome
+urang
 usil
 Uwan
 Uyel-uyelan
@@ -766,6 +979,8 @@ xmx
 yaisi
 Yalsi
 Yayu,Yayuné
+yg
+you
 you welcome
 you're welcome
 Yupz,Ia,Iupz

@@ -50,6 +50,8 @@ Class User extends CI_Controller {
 			// go to home page
 			redirect('film/index');
 		} else { // load login page
+			$data['is_admin'] = FALSE;
+		
 			// fetch user's name
 			if ($this->input->cookie('abcmovies')){
 				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
@@ -108,6 +110,8 @@ Class User extends CI_Controller {
 			// go to home page
 			redirect('film/index');
 		} else { // load page again
+			$data['is_admin'] = FALSE;
+			
 			// fetch user's name
 			if ($this->input->cookie('abcmovies')){
 				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
@@ -127,21 +131,13 @@ Class User extends CI_Controller {
 	}
 	
 	public function profile(){
-		// check session -> have the user logged in properly?
-		if ($this->input->cookie('abcmovies')){
-			
-			// if button update clicked
+		if ($this->input->cookie('abcmovies')){ // check session -> have the user logged in properly?
+			// button clicked actions
 			if ($this->input->post('update')){
 				redirect('user/updateProfile');
-			} 
-			
-			// if button update_picture clicked
-			else if ($this->input->post('update_picture')){
+			} else if ($this->input->post('update_picture')){
 				redirect('user/updateProfilePicture');
-			} 
-			
-			// if button update_password clicked
-			else if ($this->input->post('update_password')){
+			} else if ($this->input->post('update_password')){
 				redirect('user/updateProfilePassword');
 			} 
 			
@@ -151,6 +147,10 @@ Class User extends CI_Controller {
 			$data['password'] = $user[0]['password'];
 			$data['birthdate'] = $user[0]['birthdate'];
 			$data['picture'] = $user[0]['picture'];
+			
+			// check if admin
+			if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
+			else $data['is_admin'] = FALSE;
 			
 			$this->load->view('includes/header', $data);
 			$this->load->view('user/profile', $data);
@@ -162,9 +162,7 @@ Class User extends CI_Controller {
 	}
 	
 	public function updateProfile(){
-		// check session -> have the user logged in properly?
-		if ($this->input->cookie('abcmovies')){
-			
+		if ($this->input->cookie('abcmovies')){ // check session -> have the user logged in properly?
 			// if button save clicked
 			if ($this->input->post('save')){
 				// fetch user input
@@ -181,6 +179,10 @@ Class User extends CI_Controller {
 				$data['name'] = $user[0]['name'];
 				$data['birthdate'] = $user[0]['birthdate'];
 				
+				// check if admin
+				if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
+				else $data['is_admin'] = FALSE;
+				
 				$this->load->view('includes/header', $data);
 				$this->load->view('user/edit_profile', $data);
 				$this->load->view('includes/footer');
@@ -191,8 +193,7 @@ Class User extends CI_Controller {
 	}
 	
 	public function updateProfilePassword(){
-		// check session -> have the user logged in properly?
-		if ($this->input->cookie('abcmovies')){
+		if ($this->input->cookie('abcmovies')){ // check session -> have the user logged in properly?
 			$okay = FALSE;
 			$data['message'] = NULL;
 			
@@ -219,6 +220,10 @@ Class User extends CI_Controller {
 				$data['name'] = $user[0]['name'];
 				$data['password'] = $user[0]['password'];
 				
+				// check if admin
+				if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
+				else $data['is_admin'] = FALSE;
+				
 				$this->load->view('includes/header', $data);
 				$this->load->view('user/edit_password', $data);
 				$this->load->view('includes/footer');
@@ -229,8 +234,7 @@ Class User extends CI_Controller {
 	}
 	
 	public function updateProfilePicture(){
-		// check session -> have the user logged in properly?
-		if ($this->input->cookie('abcmovies')){
+		if ($this->input->cookie('abcmovies')){ // check session -> have the user logged in properly?
 			$okay = FALSE;
 			$data['message'] = NULL;
 			
@@ -268,6 +272,10 @@ Class User extends CI_Controller {
 				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
 				$data['name'] = $user[0]['name'];
 				$data['picture'] = $user[0]['picture'];
+				
+				// check if admin
+				if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
+				else $data['is_admin'] = FALSE;
 				
 				$this->load->view('includes/header', $data);
 				$this->load->view('user/edit_picture', $data);

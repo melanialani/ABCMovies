@@ -93,6 +93,10 @@
 							<td align="right"><b style="margin-right: 20px;">Metacritic score</b></td>
 							<td><input type="number" id="metascore" name="metascore" value="<?= $metascore; ?>" class="form-control" style="width:95%"/></td>
 						</tr>
+						<tr>
+							<td width="15%" align="right"><b style="margin-right: 20px;">Twitter Search</b></td>
+							<td><input type="text" id="twitter_search" name="twitter_search" value="<?= $twitter_search; ?>" class="form-control" style="width:95%"/></td>
+						</tr>
 					</table>
 					</fieldset>
 					

@@ -50,12 +50,12 @@
 				</form-->
 				
 				<ul id="topMenu" class="nav pull-right">
-					<li><a href="<?php echo site_url('film/now'); ?>" style="color: white;">Now Playing</a></li>
-					<li><a href="<?php echo site_url('film/soon'); ?>" style="color: white;">Coming Soon</a></li>
-					<li><a href="<?php echo site_url('film/old'); ?>" style="color: white;">Old Movies</a></li>
+					<li><a href="<?php echo site_url('film/catalog/now'); ?>" style="color: white;">Now Playing</a></li>
+					<li><a href="<?php echo site_url('film/catalog/soon'); ?>" style="color: white;">Coming Soon</a></li>
+					<li><a href="<?php echo site_url('film/catalog/old'); ?>" style="color: white;">Old Movies</a></li>
 					<?php
 					// if admin, show master film
-					if ($this->input->cookie('abcmovies') == 'melanialani@gmail.com'){
+					if ($is_admin){
 						echo '<li><a href="'.site_url('admin/masterFilm').'" style="color: white;">Master Film</a></li>';
 						echo '<li><a href="'.site_url('admin/masterBanner').'" style="color: white;">Master Banner</a></li>';
 					}

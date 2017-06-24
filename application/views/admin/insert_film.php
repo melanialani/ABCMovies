@@ -77,6 +77,10 @@
 							<td align="right"><b style="margin-right: 20px;">Metacritic score</b></td>
 							<td><input type="number" id="metascore" name="metascore" placeholder="73" class="form-control" style="width:95%"/></td>
 						</tr>
+						<tr>
+							<td width="12%" align="right"><b style="margin-right: 20px;">Twitter Search</b></td>
+							<td><input type="text" id="twitter_search" name="twitter_search" placeholder="ff8, the last ride, fast8, fast 8, furious 8" class="form-control" style="width:95%"/></td>
+						</tr>
 					</table>
 					</fieldset>
 					

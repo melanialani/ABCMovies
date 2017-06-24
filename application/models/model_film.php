@@ -96,11 +96,13 @@ Class Model_film extends CI_Model {
 	* @param string $imdb_id
 	* @param double $imdb_rating
 	* @param int $metascore
+	* @param string $twitter_search
 	* @param int $status
 	* 
 	* @return
 	*/
-	public function insertFilm($title, $summary, $genre, $year, $playing_date, $length, $director, $writer, $actors, $poster, $trailer, $imdb_id, $imdb_rating, $metascore, $status){
+	public function insertFilm($title, $summary, $genre, $year, $playing_date, $length, $director, 
+		$writer, $actors, $poster, $trailer, $imdb_id, $imdb_rating, $metascore, $twitter_search, $status){
 		
         $myArr = array(
         	'title' 			=> $title,
@@ -117,6 +119,7 @@ Class Model_film extends CI_Model {
 			'imdb_id' 			=> $imdb_id,
 			'imdb_rating' 		=> $imdb_rating,
 			'metascore' 		=> $metascore,
+			'twitter_search' 	=> $twitter_search,
 			'status' 			=> $status
         );
 
@@ -142,11 +145,13 @@ Class Model_film extends CI_Model {
 	* @param string $imdb_id
 	* @param double $imdb_rating
 	* @param int $metascore
+	* @param string $twitter_search
 	* @param int $status
 	* 
 	* @return
 	*/
-	public function updateFilm($id, $title, $summary, $genre, $year, $playing_date, $length, $director, $writer, $actors, $poster, $trailer, $imdb_id, $imdb_rating, $metascore, $status){
+	public function updateFilm($id, $title, $summary, $genre, $year, $playing_date, $length, $director, $writer, 
+		$actors, $poster, $trailer, $imdb_id, $imdb_rating, $metascore, $twitter_search, $status){
 		
 		$myArr = array(
         	'title' 			=> $title,
@@ -163,6 +168,7 @@ Class Model_film extends CI_Model {
 			'imdb_id' 			=> $imdb_id,
 			'imdb_rating' 		=> $imdb_rating,
 			'metascore' 		=> $metascore,
+			'twitter_search' 	=> $twitter_search,
 			'status' 			=> $status
         );
 	

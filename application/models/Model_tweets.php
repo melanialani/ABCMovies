@@ -408,15 +408,17 @@ Class Model_tweets extends CI_Model {
 	* @param string $text
 	* @param boolean $is_review
 	* @param boolean $is_positive
+	* @param boolean $duplicate
 	* 
 	* @return
 	*/
-	public function insertTweetFinal($twitter_id, $text, $is_review, $is_positive){
+	public function insertTweetFinal($twitter_id, $text, $is_review, $is_positive, $duplicate){
         $myArr = array(
         	'ori_id' 		=> $twitter_id,
         	'text' 			=> $text,
         	'is_review' 	=> $is_review,
-        	'is_positive' 	=> $is_positive
+        	'is_positive' 	=> $is_positive,
+        	'duplicate' 	=> $duplicate
         );
         $this->db->insert('tweets_final', $myArr);
 		return $this->db->affected_rows();
@@ -433,6 +435,17 @@ Class Model_tweets extends CI_Model {
 	public function getTweetFORSL($table_name, $id){
 		$this->db->where('id', $id);
 		return $this->db->get($table_name)->result_array();
+	}
+	
+	/**
+	* Check if a text is already exist in table tweets_final
+	* @param string $text
+	* 
+	* @return
+	*/
+	public function textExistInTweetFinal($text){
+		$this->db->where('text', $text);
+		return $this->db->get('tweets_final')->result_array();
 	}
 	
 	/**
@@ -502,6 +515,43 @@ Class Model_tweets extends CI_Model {
 			$this->db->where('id', $id);
 			$this->db->update('tweets_final', $myArr);
 		}
+	}
+	
+	/**
+	* Get all data from a table
+	* Param $table_name accepts: tweets, tweets_ori, tweets_final, tweets_lexicon, tweets_regex, tweets_replaced, tweets_stopword
+	* @param string $table_name
+	* 
+	* @return
+	*/
+	public function getAllTweetsFrom($table_name){
+        return $this->db->get($table_name)->result_array();
+	}
+	
+	/**
+	* Count how many data is in a table
+	* Param $table_name accepts: tweets, tweets_ori, tweets_final, tweets_lexicon, tweets_regex, tweets_replaced, tweets_stopword
+	* @param string $table_name
+	* 
+	* @return
+	*/
+	public function getCountTweet($table_name){
+		return $this->db->count_all($table_name);
+	}
+	
+	/**
+	* Get data from a table with pagination
+	* Param $table_name accepts: tweets, tweets_ori, tweets_final, tweets_lexicon, tweets_regex, tweets_replaced, tweets_stopword
+	* @param string $table_name
+	* @param int $limit
+	* @param int $start
+	* 
+	* @return
+	*/
+	public function get_data($table_name, $limit, $start){
+		$this->db->limit($limit, $start);
+		$query = $this->db->get($table_name);
+		return $query->result_array();
 	}
 	
 	public function getAllUncheckedTweet(){
@@ -600,7 +650,7 @@ Class Model_tweets extends CI_Model {
 		$this->db->where('is_positive', 0);
 		$this->db->where('confirmed', 0);
 		$this->db->where('film_id', $film_id);
-		$hasil = $this->db->get('tweets_final')->row_array();
+		$hasil = $this->db->get()->row_array();
 		$hasil = $hasil['negative'];
 		$sum += $hasil;
 		
@@ -612,7 +662,7 @@ Class Model_tweets extends CI_Model {
 		$this->db->where('yes_positive', 0);
 		$this->db->where('confirmed', 1);
 		$this->db->where('film_id', $film_id);
-		$hasil = $this->db->get('tweets_final')->row_array();
+		$hasil = $this->db->get()->row_array();
 		$hasil = $hasil['negative'];
 		$sum += $hasil;
 		
@@ -645,7 +695,7 @@ Class Model_tweets extends CI_Model {
 		$this->db->where('is_positive', 1);
 		$this->db->where('confirmed', 0);
 		$this->db->where('film_id', $film_id);
-		$hasil = $this->db->get('tweets_final')->row_array();
+		$hasil = $this->db->get()->row_array();
 		$hasil = $hasil['positive'];
 		$sum += $hasil;
 		
@@ -657,7 +707,7 @@ Class Model_tweets extends CI_Model {
 		$this->db->where('yes_positive', 1);
 		$this->db->where('confirmed', 1);
 		$this->db->where('film_id', $film_id);
-		$hasil = $this->db->get('tweets_final')->row_array();
+		$hasil = $this->db->get()->row_array();
 		$hasil = $hasil['positive'];
 		$sum += $hasil;
 		

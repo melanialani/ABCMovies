@@ -10,7 +10,8 @@
 		            <!--th>ID</th-->
 		            <th>Title</th>
 		            <!--th>Summary</th-->
-		            <th>Genre</th>
+		            <!--th>Genre</th-->
+		            <th>Param</th>
 		            <th>Year</th>
 		            <th>Playing date</th>
 		            <!--th>Length</th-->
@@ -36,7 +37,8 @@
 					        //echo "<td>" . $movies[$i]['id'] . "</td>";
 					        echo "<td>" . $movies[$i]['title'] . "</td>";
 					        //echo "<td>" . $movies[$i]['summary'] . "</td >";
-					        echo "<td>" . $movies[$i]['genre'] . "</td>";
+					        //echo "<td>" . $movies[$i]['genre'] . "</td>";
+					        echo "<td>" . $movies[$i]['twitter_search'] . "</td>";
 					        echo "<td>" . $movies[$i]['year'] . "</td>";
 					        echo "<td>" . date("Y-m-d", strtotime($movies[$i]['playing_date'])) . "</td>";
 					        //echo "<td>" . $movies[$i]['length'] . " </td>";
@@ -86,7 +88,7 @@
 	$(document).ready(function() {
 		$('#datatable').DataTable( {
 			"order": [[ 6, "desc" ]],
-			"columnDefs": [{ "width": "17%", "targets": 7 }]
+			"columnDefs": [{ "width": "17%", "targets": 7 }, { "width": "15%", "targets": 1 }]
 		} );
 	} );
 	</script>

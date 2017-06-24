@@ -17,27 +17,20 @@ Class Admin extends Film {
 	public function masterFilm(){
 		// checks if it's admin
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
+			
 			// get information from form view
 			$data['id'] = $this->input->post('id', TRUE);
 			
-			// update button on click -> go to update_film page
+			// button clicked actions
 			if ($this->input->post('update')){
 				$this->updateFilm($data['id']);
-			} 
-			
-			// delete button on click 
-			else if ($this->input->post('delete') == TRUE){ 
+			}  else if ($this->input->post('delete') == TRUE){ 
 				$this->model_film->deleteFilm($data['id']);
 				redirect('admin/masterFilm');
-			}
-			
-			// detail button on click 
-			else if ($this->input->post('detail') == TRUE){ 
+			} else if ($this->input->post('detail') == TRUE){ 
 				$this->detail($data['id']);
-			}
-			
-			// tweets button on click 
-			else if ($this->input->post('tweets') == TRUE){ 
+			} else if ($this->input->post('tweets') == TRUE){ 
 				set_cookie(array('name' => 'abcmovies_movie_id', 'value' => $data['id'], 'expire' => 0 ));
 				redirect('admin/detailTweets');
 			}
@@ -64,11 +57,10 @@ Class Admin extends Film {
 	}
 	
 	public function insertFilm(){
-		// checks if it's admin
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
 			
-			// button save on click
-			if ($this->input->post('insert')){
+			if ($this->input->post('insert')){ // button save on click
 				// get input from view
 				$data['title'] = $this->input->post('title', TRUE);
 				$data['summary'] = $this->input->post('summary', TRUE);
@@ -84,13 +76,14 @@ Class Admin extends Film {
 				$data['imdb_id'] = $this->input->post('imdb_id', TRUE);
 				$data['imdb_rating'] = $this->input->post('imdb_rating', TRUE);
 				$data['metascore'] = $this->input->post('metascore', TRUE);
+				$data['twitter_search'] = $this->input->post('twitter_search', TRUE);
 				$data['status'] = $this->input->post('status', TRUE);
 				
 				// insert button on click
 				if ($this->input->post('insert')){
 					if ($this->model_film->insertFilm($data['title'],$data['summary'],$data['genre'],$data['year'],$data['playing_date'],
 							$data['length'],$data['director'],$data['writer'],$data['actors'],$data['poster'],$data['trailer'],
-							$data['imdb_id'],$data['imdb_rating'],$data['metascore'],$data['status'])) 
+							$data['imdb_id'],$data['imdb_rating'],$data['metascore'],$data['twitter_search'],$data['status'])) 
 						
 						// success, go to master film
 						$this->masterFilm();
@@ -116,11 +109,10 @@ Class Admin extends Film {
 	}
 	
 	public function updateFilm($id = NULL){
-		// checks if it's admin
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
 			
-			// button save on click
-			if ($this->input->post('save')){
+			if ($this->input->post('save')){ // button save on click
 				// get input from view
 				$data['id'] = $this->input->post('id', TRUE);
 				$data['title'] = $this->input->post('title', TRUE);
@@ -137,12 +129,13 @@ Class Admin extends Film {
 				$data['imdb_id'] = $this->input->post('imdb_id', TRUE);
 				$data['imdb_rating'] = $this->input->post('imdb_rating', TRUE);
 				$data['metascore'] = $this->input->post('metascore', TRUE);
+				$data['twitter_search'] = $this->input->post('twitter_search', TRUE);
 				$data['status'] = $this->input->post('status', TRUE);
 				
 				// update the movie
 				if ($this->model_film->updateFilm($data['id'],$data['title'],$data['summary'],$data['genre'],$data['year'],$data['playing_date'],
 					$data['length'],$data['director'],$data['writer'],$data['actors'],$data['poster'],$data['trailer'],
-					$data['imdb_id'],$data['imdb_rating'],$data['metascore'],$data['status'])) 
+					$data['imdb_id'],$data['imdb_rating'],$data['metascore'],$data['twitter_search'],$data['status'])) 
 					
 					// success -> go back to master voucher
 					redirect('admin/masterFilm');
@@ -170,6 +163,7 @@ Class Admin extends Film {
 				$data['metascore'] = $dataFilm[0]['metascore'];
 				$data['twitter_positif'] = $dataFilm[0]['twitter_positif'];
 				$data['twitter_negatif'] = $dataFilm[0]['twitter_negatif'];
+				$data['twitter_search'] = $dataFilm[0]['twitter_search'];
 				$data['rating'] = $dataFilm[0]['rating'];
 				$data['status'] = $dataFilm[0]['status'];
 				
@@ -190,12 +184,11 @@ Class Admin extends Film {
 	}
 	
 	public function masterBanner(){
-		// is it admin?
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
 			$data['message'] = NULL;
 			
-			// if button insert clicked
-			if ($this->input->post('insert')){
+			if ($this->input->post('insert')){ // if button insert clicked
 				
 				// fetch user input
 				$data['banner_name'] = $this->input->post('banner_name', TRUE);
@@ -257,8 +250,8 @@ Class Admin extends Film {
 	}
 	
 	public function detailTweets(){
-		// is it admin?
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
 			$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
 			
 			// negate a tweet' status
@@ -303,8 +296,8 @@ Class Admin extends Film {
 	}
 	
 	public function report(){
-		/* is it admin?
-		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){*/
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
 			$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
 			
 			if ($this->input->post('negate1')){
@@ -411,14 +404,14 @@ Class Admin extends Film {
 			
 			$this->load->view('includes/header', $data);
 			$this->load->view('admin/laporan', $data);			
-		/*} else { // not admin, go back to login page
+		} else { // not admin, go back to login page
 			redirect('user/login');
-		}*/
+		}
 	}
 	
 	public function unchecked(){
-		/* is it admin?
-		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){*/
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
 			$data['title'] = 'Unchecked Tweets';
 			if ($this->input->post('review1')){
 				$this->model_tweets->updateReviewTweetFinal($this->input->post('id', TRUE), 1);
@@ -448,9 +441,9 @@ Class Admin extends Film {
 			
 			$this->load->view('includes/header', $data);
 			$this->load->view('admin/steps', $data);			
-		/*} else { // not admin, go back to login page
+		} else { // not admin, go back to login page
 			redirect('user/login');
-		}*/
+		}
 	}
 	
 }

@@ -12,54 +12,76 @@ class WebSystem extends CI_Controller {
 		$this->load->model('model_film');
 	}
 	
-	public function checkNewComingSoonMovies(){
+	public function checkNewMovies(){
+		// old code YQL
 		$BASE_URL = "http://query.yahooapis.com/v1/public/yql";
-	    $yql_query = "select * from html where url='http://www.21cineplex.com/comingsoon/'";
+	    $yql_query = "select * from html where url='http://www.21cineplex.com/nowplaying/'";
 	    $yql_query_url = $BASE_URL . "?q=" . urlencode($yql_query) . "&format=json";
 	    
+		// new code YQL
+		$site = "http://www.21cineplex.com/nowplaying/";
+		$yql = "select * from htmlstring where url='" . $site . "'";
+		$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+	    
 	    // make call with cURL
-	    $session = curl_init($yql_query_url);
+	    $session = curl_init($resturl);
 	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
 	    $json = curl_exec($session);
 	    
 	    // convert JSON to PHP object
-	    $phpObj =  json_decode($json);
+	    $phpObj =  json_decode($json); 
 	    
-	    if ($phpObj->query->results){
-			// get js content from cinema 21
-		    $pdata = $phpObj->query->results->body->div[0]->div[1]->div[1]->div[2]->script->content;
-		    
-		    // explode string to get data -> stored inside var pdata=[..]
-		    $pdata = explode(']', $pdata);
-		    $pdata = $pdata[0];
-		    $pdata = explode('pdata=[', $pdata);
-			$pdata = "[".$pdata[1]."]"; // valid json
-			$pdata = explode('{', $pdata); // explode to get each movie
-			//echo '<pre>'; print_r($pdata); echo '</pre>';
+	    /***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** CHECK NOW PLAYING ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****/
+	     
+	    $playing = $phpObj->query->results->result;
+		$playing = explode('<div id="playing">', $playing);
+		$playing = explode('</div>', $playing[1]);
+		//echo $playing[0].'<hr>';
+	   	
+	   	$nowPlaying = [];
+	   	
+	   	$title = explode('title', $playing[0]);
+	   	$img = explode('src', $playing[0]);
+		for ($i=1; $i<sizeof($title); $i++){
+			$trueTitle = explode('"', $title[$i]);
+			$trueImg = explode('"', $img[$i]);
+			//echo $i.' - '.$trueTitle[1].'<br><img src="'.$trueImg[1].'"/><br/><br/>';
+			$nowPlaying[$i]['title'] = $trueTitle[1];
+			$nowPlaying[$i]['img'] = $trueImg[1];
+		}
+	    
+	    if ($nowPlaying != NULL){
+			// if there's a title in db with status NOW PLAYING, but doesnt exist in the data we got from 21, then change the movie's status into OLD
+			$moviesinDB = $this->model_film->getOnGoingMovies();	
+			for ($j=0; $j<sizeof($moviesinDB); $j++){
+				$isStillPlaying = FALSE;
+				for ($i=1; $i<sizeof($nowPlaying); $i++){
+					if (mb_strtolower($moviesinDB[$j]['title']) == mb_strtolower($nowPlaying[$i]['title'])){
+						$isStillPlaying = TRUE;
+						break;
+					}
+			    }
+				if (!$isStillPlaying) // if not exist, change status into old
+					$this->model_film->updateStatusFilm($moviesinDB[$j]['id'], 2);
+			}
 			
 			// explode each movie to get informations
-			for ($i=1; $i<sizeof($pdata); $i++){
-				$info = explode('movieTitle":"', $pdata[$i]);
-				$info = explode('","', $info[1]);
-				$getdata['title'] = $info[0];
+			for ($i=1; $i<sizeof($nowPlaying); $i++){
+				$getdata['title'] = $nowPlaying[$i]['title'];
+				$getdata['poster'] = htmlspecialchars_decode(str_replace('100x147','300x430',$nowPlaying[$i]['img']));
 				
-				$info = explode('movieSinopsis":"', $pdata[$i]);
-				$info = explode('","', $info[1]);
-				$getdata['summary'] = $info[0];
-				
-				$info = explode('movieImage":"', $pdata[$i]);
-				$info = explode('","', $info[1]);
-				$getdata['poster'] = $info[0];
-				
-				// so if the movie title has any (..) in it, we dismiss it (because it's definitely a double)
-				if (strpos($getdata['title'], '(') == FALSE){
-					
-					// check with all coming soon movies
+				// so if the movie title has any 3D or IMAX in it, we dismiss it (because it's definitely a double)
+				if (strpos($getdata['title'], '3D') == FALSE && strpos($getdata['title'], 'IMAX') == FALSE){
+					// check with all now playing movies
 					$moviesinDB = $this->model_film->getAllFilm();
 					$alreadyinDB = FALSE;
+					$inDB_id = NULL; 
 					for ($j=0; $j<sizeof($moviesinDB); $j++){
 						if (mb_strtolower($moviesinDB[$j]['title']) == mb_strtolower($getdata['title'])){
 							$alreadyinDB = TRUE;
+							$inDB_id = $moviesinDB[$j]['id'];
 							break;
 						}
 					}
@@ -68,9 +90,12 @@ class WebSystem extends CI_Controller {
 						$foundInImdb = FALSE;
 						for ($j=date('Y'); $j>(date('Y')-5); $j--){
 							$url = 'http://www.omdbapi.com/?t='.urlencode($getdata['title']).'&y='.$j.'&plot=full';
-							$json = file_get_contents($url);
-							$omdb = json_decode($json);
-							//echo "<pre>"; print_r($omdb); echo "</pre><br/>";
+							
+							//$json = file_get_contents($url);
+							$session = curl_init($url);
+						    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+						    $json = curl_exec($session);
+						    $omdb =  json_decode($json); 
 							
 							if ($omdb->Response == "True"){
 								$foundInImdb = TRUE;
@@ -97,55 +122,205 @@ class WebSystem extends CI_Controller {
 							$yandex = json_decode($json);
 							$getdata['summary'] = $yandex->text[0];
 						} else {
-							// get poster from cinema 21
-							$getdata['poster'] = explode('.', $getdata['poster']);
-							$getdata['poster'] =  htmlspecialchars_decode('http://www.21cineplex.com/data/gallery/pictures/'.$getdata['poster'][0].'_300x430.jpg');
-							//echo '<br/>'.$getdata['poster'].'<br/>';
+							$getdata['summary'] = NULL;
+							$getdata['genre'] = NULL;
+							$getdata['year'] = NULL;
+							$getdata['playing_date'] = NULL;
+							$getdata['length'] = NULL;
+							$getdata['director'] = NULL;
+							$getdata['writer'] = NULL;
+							$getdata['actors'] = NULL;
+							$getdata['imdb_id'] = NULL;
+							$getdata['imdb_rating'] = NULL;
+							$getdata['metascore'] = NULL;
+						}
+						
+						$getdata['trailer'] = NULL;
+						$getdata['status'] = 4;
+						
+						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
+							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],NULL,$getdata['status']);
+					} else { // already in db, just change status
+						$this->model_film->updateStatusFilm($inDB_id, 1);
+					}
+					
+					//echo $getdata['title'].'<br>';
+				}
+		    }
+		}
+		
+		/***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** CHECK COMING SOON ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****/
+	     
+	    $coming = $phpObj->query->results->result;
+		$coming = explode('<div id="coming">', $coming);
+		$coming = explode('</div>', $coming[1]);
+		//echo $coming[0].'<hr>';
+	   	
+	   	$comingSoon = [];
+	   	
+	   	$title = explode('title', $coming[0]);
+	   	$img = explode('src', $coming[0]);
+		for ($i=1; $i<sizeof($title); $i++){
+			$trueTitle = explode('"', $title[$i]);
+			$trueImg = explode('"', $img[$i]);
+			//echo $i.' - '.$trueTitle[1].'<br><img src="'.$trueImg[1].'"/><br/><br/>';
+			$comingSoon[$i]['title'] = $trueTitle[1];
+			$comingSoon[$i]['img'] = $trueImg[1];
+		}
+	    
+	    if ($comingSoon != NULL){
+			// explode each movie to get informations
+			for ($i=1; $i<sizeof($comingSoon); $i++){
+				$getdata['title'] = $comingSoon[$i]['title'];
+				$getdata['poster'] = htmlspecialchars_decode(str_replace('100x147','300x430',$comingSoon[$i]['img']));
+				
+				// so if the movie title has any 3D or IMAX in it, we dismiss it (because it's definitely a double)
+				if (strpos($getdata['title'], '3D') == FALSE && strpos($getdata['title'], 'IMAX') == FALSE){
+					// check if title already exist in database
+					if (!$this->model_film->getFilmByTitle($getdata['title'])){
+						// get movie's information from omdb api
+						$foundInImdb = FALSE;
+						for ($j=date('Y'); $j>(date('Y')-5); $j--){
+							$url = 'http://www.omdbapi.com/?t='.urlencode($getdata['title']).'&y='.$j.'&plot=full';
+							
+							//$json = file_get_contents($url);
+							$session = curl_init($url);
+						    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+						    $json = curl_exec($session);
+						    $omdb =  json_decode($json); 
+							
+							if ($omdb->Response == "True"){
+								$foundInImdb = TRUE;
+								break;
+							}
+						}
+						
+						if ($foundInImdb){
+							$getdata['genre'] = $omdb->Genre;
+							$getdata['year'] = $omdb->Year;
+							$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
+							$getdata['length'] = $omdb->Runtime;
+							$getdata['director'] = $omdb->Director;
+							$getdata['writer'] = $omdb->Writer;
+							$getdata['actors'] = $omdb->Actors;
+							$getdata['poster'] = htmlspecialchars_decode($omdb->Poster);
+							$getdata['imdb_id'] = $omdb->imdbID;
+							$getdata['imdb_rating'] = $omdb->imdbRating;
+							$getdata['metascore'] = $omdb->Metascore;
+							
+							// translate movie's summary from omdb api
+							$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($omdb->Plot).'&lang=en-id';
+							$json = file_get_contents($url);
+							$yandex = json_decode($json);
+							$getdata['summary'] = $yandex->text[0];
+						} else {
+							$getdata['summary'] = NULL;
+							$getdata['genre'] = NULL;
+							$getdata['year'] = NULL;
+							$getdata['playing_date'] = NULL;
+							$getdata['length'] = NULL;
+							$getdata['director'] = NULL;
+							$getdata['writer'] = NULL;
+							$getdata['actors'] = NULL;
+							$getdata['imdb_id'] = NULL;
+							$getdata['imdb_rating'] = NULL;
+							$getdata['metascore'] = NULL;
 						}
 						
 						$getdata['trailer'] = NULL;
 						$getdata['status'] = 3;
 						
-						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],$getdata['writer'],
-								$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['status']);
-					}
+						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
+							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],NULL,$getdata['status']);
+					
+						//echo $getdata['title'].'<br>';
+					} 
 				}
 		    }
 		}
 	}
-
-	public function checkNewNowPlayingMovies(){
-		$BASE_URL = "http://query.yahooapis.com/v1/public/yql";
-	    $yql_query = "select * from html where url='http://www.21cineplex.com/nowplaying/'";
-	    $yql_query_url = $BASE_URL . "?q=" . urlencode($yql_query) . "&format=json";
-	    
-	    # make call with cURL
-	    $session = curl_init($yql_query_url);
-	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
-	    $json = curl_exec($session);
-	    
-	    # convert JSON to PHP object
-	    $phpObj =  json_decode($json);
-	    
-	    if ($phpObj->query->results){
-			$pdata = $phpObj->query->results->body->div[0]->div[1]->div[3]->div[0]->div[0]->div[1]->ul->li;
+	
+	public function getTweets($film_id = NULL){
+		$result = []; $index = 0;
+		
+		$movie = $this->model_film->getFilm($film_id);
+		$title = $movie[0]['title'];
+		$param = trim(explode(',', $movie[0]['twitter_search']));
+		
+		$url = 'https://api.twitter.com/1.1/search/tweets.json';
+		$requestMethod = 'GET';
+		$settings = array(
+		    'oauth_access_token' => "1430750114-nsW0ODE88uJsy68jd6xJqB2HJIWlrDKAE3DOzQW",
+		    'oauth_access_token_secret' => "BzZSA3Z0rcYcGBaTBRjbn3FjOSvIKMqGGAPNZPMv3VI76",
+		    'consumer_key' => "Tweak7j9XE7hcMWnrKoPTvFZW",
+		    'consumer_secret' => "5d7WLg2jSRZQCRvC3yyS3ZlhGuFDnXGaOCF1Cunearu1d0akLu"
+		);
+		
+		// search with tag movieTitle minus RT, only in bahasa indonesia, sorted by recent one
+		$getfield = '?count=100&q=#'.str_replace(' ', '', $title).'+-RT&lang=id&result_type=recent';
+		$twitter = new TwitterAPIExchange($settings);
+		$response = $twitter->setGetfield($getfield)->buildOauth($url, $requestMethod)->performRequest();
+		$response = json_decode($response);
+		
+		for ($i=0; $i<sizeof($response->statuses); $i++){ // put response into array
+			$result[$index]['twitter_id'] = $response->statuses[$i]->id;
+			$result[$index]['text'] = strtolower($response->statuses[$i]->text);
+			$result[$index]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
+			$result[$index]['is_review'] = 0;
+			$result[$index]['is_positive'] = 0;
 			
-			# if there's a title in db with status NOW PLAYING, but doesnt exist in the data we got from 21, then change the movie's status into OLD
-			$moviesinDB = $this->model_film->getOnGoingMovies();	
-			for ($j=0; $j<sizeof($moviesinDB); $j++){
-				$isStillPlaying = FALSE;
-				for ($i=1; $i<sizeof($pdata)-2; $i++){
-					if (mb_strtolower($moviesinDB[$j]['title']) == mb_strtolower($pdata[$i]->a->img->title)){
-						$isStillPlaying = TRUE;
-						break;
-					}
-			    }
-				if (!$isStillPlaying) # if not exist, change status into old
-					$this->model_film->updateStatusFilm($moviesinDB[$j]['id'], 2);
-			}
+			if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id'])){
+				$this->model_tweets->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
+			} 
 			
-			# explode each movie to get informations
+			$index ++;
 		}
+		
+		// search with exact words of "movie's title" minus RT, only in bahasa indonesia, sorted by recent one
+		$getfield = '?count=100&q="'.$title.'"+-RT&lang=id&result_type=recent';
+		$twitter = new TwitterAPIExchange($settings);
+		$response = $twitter->setGetfield($getfield)->buildOauth($url, $requestMethod)->performRequest();
+		$response = json_decode($response);
+		
+		for ($i=0; $i<sizeof($response->statuses); $i++){ // put response into array
+			$result[$index]['twitter_id'] = $response->statuses[$i]->id;
+			$result[$index]['text'] = strtolower($response->statuses[$i]->text);
+			$result[$index]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
+			$result[$index]['is_review'] = 0;
+			$result[$index]['is_positive'] = 0;
+			
+			if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id'])){
+				$this->model_tweets->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
+			} 
+			
+			$index ++;
+		}
+		
+		// search with param
+		for ($a=0; $a<sizeof($param); $a++){
+			$getfield = '?count=100&q="'.$param[$a].'"+-RT&lang=id&result_type=recent';
+			$twitter = new TwitterAPIExchange($settings);
+			$response = $twitter->setGetfield($getfield)->buildOauth($url, $requestMethod)->performRequest();
+			$response = json_decode($response);
+			
+			for ($i=0; $i<sizeof($response->statuses); $i++){ // put response into array
+				$result[$index]['twitter_id'] = $response->statuses[$i]->id;
+				$result[$index]['text'] = strtolower($response->statuses[$i]->text);
+				$result[$index]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
+				$result[$index]['is_review'] = 0;
+				$result[$index]['is_positive'] = 0;
+				
+				if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id'])){
+					$this->model_tweets->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
+				} 
+				
+				$index ++;
+			}
+		}
+		
+		return $result;
 	}
 	
 	public function calculateTweets(){
@@ -184,46 +359,65 @@ class WebSystem extends CI_Controller {
 		$movie = $this->model_film->getFilm($film_id);
 		$title = $movie[0]['title'];
 		
-		// begin twitter request -> with tag movieTitle or exact words of "movie's title" minus RT, only in bahasa indonesia, sorted by recent one
-		$settings = array(
-		    'oauth_access_token' => "1430750114-nsW0ODE88uJsy68jd6xJqB2HJIWlrDKAE3DOzQW",
-		    'oauth_access_token_secret' => "BzZSA3Z0rcYcGBaTBRjbn3FjOSvIKMqGGAPNZPMv3VI76",
-		    'consumer_key' => "Tweak7j9XE7hcMWnrKoPTvFZW",
-		    'consumer_secret' => "5d7WLg2jSRZQCRvC3yyS3ZlhGuFDnXGaOCF1Cunearu1d0akLu"
-		);
-		
-		$url = 'https://api.twitter.com/1.1/search/tweets.json';
-		$requestMethod = 'GET';
-		$getfield = '?count=100&q=#'.str_replace(' ', '', $title).'+OR+"'.$title.'"+-RT&lang=id&result_type=recent';
-		
-		$twitter = new TwitterAPIExchange($settings);
-		$response = $twitter->setGetfield($getfield)->buildOauth($url, $requestMethod)->performRequest();
-		$response = json_decode($response);
-		
-		// put response into array
-		$result = [];
-		for ($i=0; $i<sizeof($response->statuses); $i++){
-			$result[$i]['twitter_id'] = $response->statuses[$i]->id;
-			$result[$i]['text'] = strtolower($response->statuses[$i]->text);
-			$result[$i]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
-			$result[$i]['is_review'] = 0;
-			$result[$i]['is_positive'] = 0;
-			
-			if (!$this->model_tweets->getTweetOri($result[$i]['twitter_id'])){
-				$this->model_tweets->insertTweetOri($film_id, $result[$i]['twitter_id'], $result[$i]['text'], $result[$i]['created_at']);
-			} 
-		}
+		$result = $this->getTweets($film_id);
 		
 		// !!! === !!! === begin rule-based system === !!! === !!!
-		
-		// !!! === !!! === compare with lexicon data
 		for ($i=0; $i<sizeof($result); $i++){
-			// split tweet word by word and put it into an array, to compare easily
-			$target = $result[$i]['text'];
-			$target = $this->splitSentence($target);
+			// decode html characters
+			$result[$i]['text'] = html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+			
+			// split camel case words
+			$result[$i]['text'] = preg_split('/(?=[A-Z])/', $result[$i]['text']);
+			
+			// split sentence
+			$target = $this->splitSentence($result[$i]['text']);
 			$target = $target[0];
 			
-			// if there's any word that intersects (exist in 2 arrays), do:
+			// replace bahasa alay
+			if (array_intersect($alay, $target)) {
+				$intersectStr = null;
+				$intersectsWith = array_intersect($alay, $target);
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					$result[$i]['text'] = str_ireplace($alay[$arrayKey], $alay_replace[$arrayKey], $result[$i]['text']);
+					
+					if ($intersectStr == null)
+						$intersectStr = $alay[$arrayKey];
+					else 
+						$intersectStr .= ',' . $alay[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+				
+				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_replaced', $result[$i]['twitter_id'])){
+					$this->model_tweets->insertTweetRS('tweets_replaced', $result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
+				}
+			}
+			
+			// delete stopword
+			if (array_intersect($stopword, $target)) {
+				$intersectStr = null;
+				$intersectsWith = array_intersect($stopword, $target);
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					$result[$i]['text'] = str_ireplace($stopword[$arrayKey], '', $result[$i]['text']);
+					
+					if ($intersectStr == null)
+						$intersectStr = $stopword[$arrayKey];
+					else 
+						$intersectStr .= ',' . $stopword[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+				
+				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_stopword', $result[$i]['twitter_id'])){
+					$this->model_tweets->insertTweetRS('tweets_stopword', $result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
+				}
+			}
+			
+			// compare with lexicon data
 			if (array_intersect($lexicon, $target)) {
 				$result[$i]['is_review'] = 1;
 				
@@ -244,88 +438,18 @@ class WebSystem extends CI_Controller {
 					$this->model_tweets->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
 				}
 			}
-		}
-		
-		// !!! === !!! === feature reduction --> delete username, url, hashtag, punctuations
-		for ($i=0; $i<sizeof($result); $i++){
-			$editedResult = $result[$i]['text'];
 			
-			// replace any url with word URL
+			// feature reduction --> delete username, url, hashtag, punctuations
+			$editedResult = $result[$i]['text'];
 			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
-			// replace any hashtag with word HASHTAG 
 			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
-			// replace any username (@..) with word USERNAME
 			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
-			// replace all characters that are not number or alphabet with a single space
 			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult); 
-			// replace movie's title with word JUDULFILM
 			$editedResult = str_ireplace($title, 'JUDULFILM', $editedResult);
 			
 			$result[$i]['text'] = $editedResult;
 			if (!$this->model_tweets->getTweetFRSLbyOri('tweets_regex', $result[$i]['twitter_id'])){
 				$this->model_tweets->insertTweetRegex($result[$i]['twitter_id'], $result[$i]['text']);
-			}
-		}
-		
-		// !!! === !!! === replace bahasa alay
-		for ($i=0; $i<sizeof($result); $i++){
-			// split tweet word by word and put it into an array, to compare easily
-			$target = $result[$i]['text'];
-			$target = $this->splitSentence($target);
-			$target = $target[0];
-			
-			// if there's any word that intersects (exist in 2 arrays), do:
-			if (array_intersect($alay, $target)) {
-				$intersectStr = null;
-				$intersectsWith = array_intersect($alay, $target);
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					//$result[$i]['text'] = str_ireplace($alay[$arrayKey], $alay_replace[$arrayKey], $result[$i]['text']);
-					$result[$i]['text'] = preg_replace('/'.$alay[$arrayKey].'/', $alay_replace[$arrayKey], $result[$i]['text']);
-					
-					if ($intersectStr == null)
-						$intersectStr = $alay[$arrayKey];
-					else 
-						$intersectStr .= ',' . $alay[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
-				}
-				
-				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_replaced', $result[$i]['twitter_id'])){
-					$this->model_tweets->insertTweetRS('tweets_replaced', $result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
-				}
-			}
-		}
-		
-		// !!! === !!! === delete stopword
-		for ($i=0; $i<sizeof($result); $i++){
-			// split tweet word by word and put it into an array, to compare easily
-			$target = $result[$i]['text'];
-			$target = $this->splitSentence($target);
-			$target = $target[0];
-			
-			// if there's any word that intersects (exist in 2 arrays), do:
-			if (array_intersect($stopword, $target)) {
-				$intersectStr = null;
-				$intersectsWith = array_intersect($stopword, $target);
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					//$result[$i]['text'] = str_ireplace($stopword[$arrayKey], '', $result[$i]['text']);
-					$result[$i]['text'] = preg_replace('/'.$stopword[$arrayKey].'/', '', $result[$i]['text']);
-					
-					if ($intersectStr == null)
-						$intersectStr = $stopword[$arrayKey];
-					else 
-						$intersectStr .= ',' . $stopword[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
-				}
-				
-				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_stopword', $result[$i]['twitter_id'])){
-					$this->model_tweets->insertTweetRS('tweets_stopword', $result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
-				}
 			}
 		}
 		
