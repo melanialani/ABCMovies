@@ -439,13 +439,15 @@ Class Model_tweets extends CI_Model {
 	
 	/**
 	* Check if a text is already exist in table tweets_final
+	* with value of $table_name only accept 6 values: 'tweets_ori', tweets_replaced', 'tweets_stopword', 'tweets_regex', 'tweets_lexicon', and 'tweets_final'
+	* @param string $table_name
 	* @param string $text
 	* 
 	* @return
 	*/
-	public function textExistInTweetFinal($text){
+	public function getTweetFORSLbyText($table_name, $text){
 		$this->db->where('text', $text);
-		return $this->db->get('tweets_final')->result_array();
+		return $this->db->get($table_name)->result_array();
 	}
 	
 	/**

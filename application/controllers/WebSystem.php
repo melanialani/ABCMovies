@@ -271,7 +271,8 @@ class WebSystem extends CI_Controller {
 			$result[$index]['is_review'] = 0;
 			$result[$index]['is_positive'] = 0;
 			
-			if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id'])){
+			// if twitter id and text doesnt exist in db
+			if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id']) && !$this->model_tweets->getTweetFORSLbyText('tweets_ori', $result[$index]['text'])){
 				$this->model_tweets->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
 			} 
 			
