@@ -7,11 +7,6 @@ Class Admin extends Film {
 	
 	public function __construct(){
 		parent::__construct();
-		
-		$this->load->model('model_banner');
-		$this->load->model('model_film');
-		$this->load->model('model_user');
-		$this->load->model('model_tweets');
 	}
 	
 	public function masterFilm(){
@@ -254,23 +249,23 @@ Class Admin extends Film {
 			$data['is_admin'] = TRUE;
 			$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
 			
-			// negate a tweet' status
-			if ($this->input->post('negate1')){
-				$this->model_tweets->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('status', TRUE));
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
+			if ($this->input->post('delete')){ // mark a tweet as a non-review
+				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
+					$this->model_tweets_new->deleteTweetFinal($this->input->post('id', TRUE));
+				else // then old tweet
+					$this->model_tweets_old->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('yes_true', TRUE));
+				
+				// update count post & neg tweet
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
 				redirect('admin/detailTweets');
-			} else if ($this->input->post('negate2')){
-				$this->model_tweets->updateTruthRuleTweet($this->input->post('id', TRUE), !$this->input->post('truth_rule', TRUE));
-				redirect('admin/detailTweets');
-			} else if ($this->input->post('negate3')){
-				$this->model_tweets->updateTruthNaiveTweet($this->input->post('id', TRUE), !$this->input->post('truth_naive', TRUE));
-				redirect('admin/detailTweets');
-			} 
-			
-			// delete button on click 
-			else if ($this->input->post('delete') == TRUE){ 
-				$this->model_tweets->deleteTweet($this->input->post('id', TRUE));
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
+			} else if ($this->input->post('negate')){ // negate a tweet's yes_positive
+				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
+					$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), !$this->input->post('yes_true', TRUE));
+				else // then old tweet
+					$this->model_tweets_old->deleteTweet($this->input->post('id', TRUE));
+					
+				// update count post & neg tweet
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
 				redirect('admin/detailTweets');
 			}
 			
@@ -283,7 +278,7 @@ Class Admin extends Film {
 				} else $data['name'] = null;
 				
 				// get information from database
-				$data['tweets'] = $this->model_tweets->getAllMovieTweets($data['film_id']);
+				$data['tweets'] = $this->model_tweets_new->getAllTweetByMovie($data['film_id']);
 				$data['movie'] = $this->model_film->getFilm($data['film_id']);
 				
 				$this->load->view('includes/header', $data);
@@ -295,84 +290,157 @@ Class Admin extends Film {
 		}
 	}
 	
-	public function report(){
+	public function reportv1(){ // old twitter
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
 			$data['is_admin'] = TRUE;
+			$data['type'] = 'Positive';
+			$data['title'] = 'Laporan ';
+			$data['tweets'] = NULL;
 			$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
 			
-			if ($this->input->post('negate1')){
-				$this->model_tweets->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('status', TRUE));
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailRule');
-			} else if ($this->input->post('negate2')){
-				$this->model_tweets->updateTruthRuleTweet($this->input->post('id', TRUE), !$this->input->post('truth_rule', TRUE));
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailRule');
-			} else if ($this->input->post('negate3')){
-				$this->model_tweets->updateTruthNaiveTweet($this->input->post('id', TRUE), !$this->input->post('truth_naive', TRUE));
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailRule');
-			} else if ($this->input->post('delete') == TRUE){ 
-				$this->model_tweets->deleteTweet($this->input->post('id', TRUE));
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets->getMovieCountNegTweet($data['film_id']), $this->model_tweets->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailRule');
+			if ($this->input->post('delete')){ // mark a tweet as a non-review
+				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
+					$this->model_tweets_new->deleteTweetFinal($this->input->post('id', TRUE));
+				else // then old tweet
+					$this->model_tweets_old->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('yes_true', TRUE));
+				
+				// update count post & neg tweet
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				redirect('admin/detailTweets');
+			} else if ($this->input->post('negate')){ // negate a tweet's yes_positive
+				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
+					$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), !$this->input->post('yes_true', TRUE));
+				else // then old tweet
+					$this->model_tweets_old->deleteTweet($this->input->post('id', TRUE));
+					
+				// update count post & neg tweet
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				redirect('admin/detailTweets');
 			}
 			
 			else if ($this->input->post('true_pos')){
 				$data['title'] = 'True Positive';
-				$data['tweets'] = $this->model_tweets->getTruePositive();
+				$data['tweets'] = $this->model_tweets_old->getTruePositive();
 			} else if ($this->input->post('true_neg')){
 				$data['title'] = 'True Negative';
-				$data['tweets'] = $this->model_tweets->getTrueNegative();
+				$data['tweets'] = $this->model_tweets_old->getTrueNegative();
 			} else if ($this->input->post('false_pos')){
 				$data['title'] = 'False Positive';
-				$data['tweets'] = $this->model_tweets->getFalsePositive();
+				$data['tweets'] = $this->model_tweets_old->getFalsePositive();
 			} else if ($this->input->post('false_neg')){
 				$data['title'] = 'False Negative';
-				$data['tweets'] = $this->model_tweets->getFalseNegative();
+				$data['tweets'] = $this->model_tweets_old->getFalseNegative();
 			} 
 			
 			else if ($this->input->post('true_review')){
 				$data['title'] = 'True Review';
-				$data['tweets'] = $this->model_tweets->getTrueReview();
+				$data['tweets'] = $this->model_tweets_old->getTrueReview();
 			} else if ($this->input->post('true_non')){
 				$data['title'] = 'True Non-Review';
-				$data['tweets'] = $this->model_tweets->getTrueNonReview();
+				$data['tweets'] = $this->model_tweets_old->getTrueNonReview();
 			} else if ($this->input->post('false_review')){
 				$data['title'] = 'False Review';
-				$data['tweets'] = $this->model_tweets->getFalseReview();
+				$data['tweets'] = $this->model_tweets_old->getFalseReview();
 			} else if ($this->input->post('false_non')){
 				$data['title'] = 'False Non-Review';
-				$data['tweets'] = $this->model_tweets->getFalseNonReview();
+				$data['tweets'] = $this->model_tweets_old->getFalseNonReview();
 			} 
 			
 			else if ($this->input->post('groundtruth') == TRUE){ 
 				$data['title'] = 'All Checked Data';
-				$data['tweets'] = $this->model_tweets->getGroundTruthAll();
+				$data['tweets'] = $this->model_tweets_old->getGroundTruthAll();
 			} else if ($this->input->post('review') == TRUE){ 
 				$data['title'] = 'All Review Tweets';
-				$data['tweets'] = $this->model_tweets->getGroundTruthReview();
+				$data['tweets'] = $this->model_tweets_old->getGroundTruthReview();
 			} else if ($this->input->post('nonreview') == TRUE){ 
 				$data['title'] = 'All Non-review Tweets';
-				$data['tweets'] = $this->model_tweets->getGroundTruthNotReview();
+				$data['tweets'] = $this->model_tweets_old->getGroundTruthNotReview();
 			} else if ($this->input->post('positive') == TRUE){ 
 				$data['title'] = 'All Positive Reviews';
-				$data['tweets'] = $this->model_tweets->getGroundTruthPositive();
+				$data['tweets'] = $this->model_tweets_old->getGroundTruthPositive();
 			} else if ($this->input->post('negative') == TRUE){ 
 				$data['title'] = 'All Negative Reviews';
-				$data['tweets'] = $this->model_tweets->getGroundTruthNegative();
+				$data['tweets'] = $this->model_tweets_old->getGroundTruthNegative();
 			} else if ($this->input->post('all') == TRUE){ 
 				$data['title'] = 'All Tweets';
-				$data['tweets'] = $this->model_tweets->getAllTweets();
+				$data['tweets'] = $this->model_tweets_old->getAllTweets();
+			} 
+			
+			//fetch user's name
+			if ($this->input->cookie('abcmovies')){
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+				$data['name'] = $user[0]['name'];
+			} else $data['name'] = null;
+			
+			// calculate accuracy, recall, precision
+			$data['tp'] = sizeof($this->model_tweets_old->getTruePositive());
+			$data['tn'] = sizeof($this->model_tweets_old->getTrueNegative());
+			$data['fp'] = sizeof($this->model_tweets_old->getFalsePositive());
+			$data['fn'] = sizeof($this->model_tweets_old->getFalseNegative());
+			$data['accuracy'] = (($data['tn']+$data['tp'])*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+			$data['recall_pos'] = ($data['tp']*100) / ($data['tp']+$data['fn']);
+			$data['recall_neg'] = ($data['tn']*100) / ($data['tn']+$data['fp']);
+			$data['precision_pos'] = ($data['tp']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+			$data['precision_neg'] = ($data['tn']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+			
+			$data['review_tp'] = sizeof($this->model_tweets_old->getTrueReview());
+			$data['review_tn'] = sizeof($this->model_tweets_old->getTrueNonReview());
+			$data['review_fp'] = sizeof($this->model_tweets_old->getFalseReview());
+			$data['review_fn'] = sizeof($this->model_tweets_old->getFalseNonReview());
+			$data['review_accuracy'] = (($data['review_tn']+$data['review_tp'])*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+			$data['review_recall_pos'] = ($data['review_tp']*100) / ($data['review_tp']+$data['review_fn']);
+			$data['review_recall_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_fp']);
+			$data['review_precision_pos'] = ($data['review_tp']*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+			$data['review_precision_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+			
+			$this->load->view('includes/header', $data);
+			$this->load->view('admin/laporan_v1', $data);			
+		} else { // not admin, go back to login page
+			redirect('user/login');
+		}
+	}
+	
+	public function reportv2(){ // new twitter
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
+			$data['type'] = 'Positive';
+			$data['title'] = 'Laporan ';
+			$data['tweets'] = NULL;
+			
+			if ($this->input->post('true_pos')){
+				$data['title'] .= 'True Positive';
+				$data['tweets'] = $this->model_tweets_new->getTruePositive();
+			} else if ($this->input->post('true_neg')){
+				$data['title'] .= 'True Negative';
+				$data['tweets'] = $this->model_tweets_new->getTrueNegative();
+			} else if ($this->input->post('false_pos')){
+				$data['title'] .= 'False Positive';
+				$data['tweets'] = $this->model_tweets_new->getFalsePositive();
+			} else if ($this->input->post('false_neg')){
+				$data['title'] .= 'False Negative';
+				$data['tweets'] = $this->model_tweets_new->getFalseNegative();
+			} 
+			
+			else if ($this->input->post('true_review')){
+				$data['type'] = 'Review';
+				$data['title'] .= 'True Review';
+				$data['tweets'] = $this->model_tweets_new->getTrueReview();
+			} else if ($this->input->post('true_non')){
+				$data['type'] = 'Review';
+				$data['title'] .= 'True Non-Review';
+				$data['tweets'] = $this->model_tweets_new->getTrueNonReview();
+			} else if ($this->input->post('false_review')){
+				$data['type'] = 'Review';
+				$data['title'] .= 'False Review';
+				$data['tweets'] = $this->model_tweets_new->getFalseReview();
+			} else if ($this->input->post('false_non')){
+				$data['type'] = 'Review';
+				$data['title'] .= 'False Non-Review';
+				$data['tweets'] = $this->model_tweets_new->getFalseNonReview();
 			} 
 			
 			else if ($this->input->post('unchecked') == TRUE){ 
 				redirect('admin/unchecked');
-			}
-			
-			else { // load page as usual = load ground truth review
-				$data['title'] = 'Laporan';
-				$data['tweets'] = NULL;
 			}
 			
 			//fetch user's name
@@ -382,20 +450,20 @@ Class Admin extends Film {
 			} else $data['name'] = null;
 			
 			// calculate accuracy, recall, precision
-			$data['tp'] = sizeof($this->model_tweets->getTruePositive());
-			$data['tn'] = sizeof($this->model_tweets->getTrueNegative());
-			$data['fp'] = sizeof($this->model_tweets->getFalsePositive());
-			$data['fn'] = sizeof($this->model_tweets->getFalseNegative());
+			$data['tp'] = sizeof($this->model_tweets_new->getTruePositive()) + sizeof($this->model_tweets_old->getTruePositive());
+			$data['tn'] = sizeof($this->model_tweets_new->getTrueNegative()) + sizeof($this->model_tweets_old->getTrueNegative());
+			$data['fp'] = sizeof($this->model_tweets_new->getFalsePositive()) + sizeof($this->model_tweets_old->getFalsePositive());
+			$data['fn'] = sizeof($this->model_tweets_new->getFalseNegative()) + sizeof($this->model_tweets_old->getFalseNegative());
 			$data['accuracy'] = (($data['tn']+$data['tp'])*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
 			$data['recall_pos'] = ($data['tp']*100) / ($data['tp']+$data['fn']);
 			$data['recall_neg'] = ($data['tn']*100) / ($data['tn']+$data['fp']);
 			$data['precision_pos'] = ($data['tp']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
 			$data['precision_neg'] = ($data['tn']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
 			
-			$data['review_tp'] = sizeof($this->model_tweets->getTrueReview());
-			$data['review_tn'] = sizeof($this->model_tweets->getTrueNonReview());
-			$data['review_fp'] = sizeof($this->model_tweets->getFalseReview());
-			$data['review_fn'] = sizeof($this->model_tweets->getFalseNonReview());
+			$data['review_tp'] = sizeof($this->model_tweets_new->getTrueReview()) + sizeof($this->model_tweets_old->getTrueReview());
+			$data['review_tn'] = sizeof($this->model_tweets_new->getTrueNonReview()) + sizeof($this->model_tweets_old->getTrueNonReview());
+			$data['review_fp'] = sizeof($this->model_tweets_new->getFalseReview()) + sizeof($this->model_tweets_old->getFalseReview());
+			$data['review_fn'] = sizeof($this->model_tweets_new->getFalseNonReview()) + sizeof($this->model_tweets_old->getFalseNonReview());
 			$data['review_accuracy'] = (($data['review_tn']+$data['review_tp'])*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
 			$data['review_recall_pos'] = ($data['review_tp']*100) / ($data['review_tp']+$data['review_fn']);
 			$data['review_recall_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_fp']);
@@ -403,7 +471,7 @@ Class Admin extends Film {
 			$data['review_precision_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
 			
 			$this->load->view('includes/header', $data);
-			$this->load->view('admin/laporan', $data);			
+			$this->load->view('admin/laporan_v2', $data);			
 		} else { // not admin, go back to login page
 			redirect('user/login');
 		}

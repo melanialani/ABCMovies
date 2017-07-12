@@ -17,6 +17,308 @@ class Test extends WebSystem {
 		return $matches[0];
 	}
 
+	public function test(){
+		$this->load->model('model_tweets_old');
+		
+		// for rule-based system
+		$lexicon = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($lexicon, trim($activeLine));	
+		}
+		
+		$listPos = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($listPos, trim($activeLine));	
+		}
+		
+		$listNeg = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($listNeg, trim($activeLine));	
+		}
+		
+		$singkatan = []; $alay = []; $alay_replace = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/singkatan.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			array_push($alay, $temp[0]);
+			array_push($alay_replace, $temp[1]);
+			$singkatan[$temp[0]] = $temp[1];
+		}
+		
+		// train naive bayes classifier
+		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //training with positive data	
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_neg.txt', 'negative', 200); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_pos.txt', 'positive', 200); //training with positive data	
+		
+		// input data
+		$input = []; 
+		$film_id = []; 
+		$result = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/tweet_lama_nonreview.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			array_push($film_id, $temp[0]);
+			array_push($input, $temp[1]);
+		}
+		
+		for ($i=0; $i<sizeof($input); $i++){
+			$result[$i]['status'] = 2;
+			
+			$input[$i] = html_entity_decode($input[$i], ENT_QUOTES | ENT_XML1, 'UTF-8');
+			$editedResult = $input[$i];
+			$editedResult = preg_replace('/(.)\\1+/', '$1', $editedResult); // delete double characters in a word
+			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult);  // delete everything except a-z & 0-9
+			
+			$input[$i] = $editedResult;
+			
+			// replace bahasa alay
+			$words = $this->splitSentence($input[$i]);
+			for ($a=1; $a<=3; $a++){
+				if (array_intersect($alay, $words)) {
+					$intersectStr = null;
+					$intersectsWith = array_intersect($alay, $words);
+					for ($j=0; $j<sizeof($intersectsWith); $j++){
+						$arrayKey = key($intersectsWith);
+						$input[$i] = preg_replace('/\b'.$alay[$arrayKey].'\b/u', $alay_replace[$arrayKey], $input[$i]);
+						
+						if ($intersectStr == null)
+							$intersectStr = $alay[$arrayKey];
+						else 
+							$intersectStr .= ',' . $alay[$arrayKey];
+						
+						// get next key array
+						next($intersectsWith);
+					}
+				}
+			}
+			
+			// compare with lexicon data
+			$words = $this->splitSentence($input[$i]);
+			if (array_intersect($lexicon, $words)) {
+				$result[$i]['status'] = 1;
+				
+				$intersectStr = null;
+				$intersectsWith = array_intersect($lexicon, $words);
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					if ($intersectStr == null)
+						$intersectStr = $lexicon[$arrayKey];
+					else 
+						$intersectStr .= ',' . $lexicon[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+			}
+		}
+		
+		// !!! === !!! === begin naive bayes
+		for ($i=0; $i<sizeof($input); $i++){
+			if ($result[$i]['status'] == 1){
+				$sentimentAnalysisOfSentence = $sat->analyzeSentence($input[$i]);
+				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
+				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
+				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
+				
+				if ($resultofAnalyzingSentence == "positive")
+					$result[$i]['status'] = 1;
+					
+				$words = $this->splitSentence($input[$i]);
+				if (array_intersect($listPos, $words))
+					$result[$i]['status'] = 1;
+				else if (array_intersect($listNeg, $words))
+					$result[$i]['status'] = 0;
+			}
+			
+			if (!$this->model_tweets_old->getTweetByText($input[$i])){
+				$this->model_tweets_old->insertTweet($film_id[$i], $input[$i], $result[$i]['status'], 0,0);
+			}
+			
+			//echo
+		}
+		
+		// update film
+		$allMovies = $this->model_film->getAllFilm();
+		for ($i=0; $i<sizeof($allMovies); $i++){
+			$this->model_film->updateTwitterFilm($allMovies[$i]['id'], $this->model_tweets_old->getMovieCountNegTweet($allMovies[$i]['id']), $this->model_tweets_old->getMovieCountPosTweet($allMovies[$i]['id']));	
+		}		
+	}
+
+	public function test_resulting_in_71_percent(){
+		$this->load->model('model_tweets_new');
+		
+		// for rule-based system
+		$lexicon = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($lexicon, trim($activeLine));	
+		}
+		
+		$listPos = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($listPos, trim($activeLine));	
+		}
+		
+		$listNeg = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($listNeg, trim($activeLine));	
+		}
+		
+		$singkatan = []; $alay = []; $alay_replace = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/singkatan.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			array_push($alay, $temp[0]);
+			array_push($alay_replace, $temp[1]);
+			$singkatan[$temp[0]] = $temp[1];
+		}
+		
+		// train naive bayes classifier
+		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //training with positive data	
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_neg.txt', 'negative', 200); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_pos.txt', 'positive', 200); //training with positive data	
+		
+		$result = [];
+		$tweets = $this->model_tweets_new->getAllTweetsFrom('tweets_ori');
+		
+		// put into associative array
+		for ($i=0; $i<sizeof($tweets); $i++){
+			$result[$i]['film_id'] = $tweets[$i]['film_id'];
+			$result[$i]['twitter_id'] = $tweets[$i]['twitter_id'];
+			$result[$i]['text'] = strtolower($tweets[$i]['text']);
+			$result[$i]['created_at'] = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
+			$result[$i]['is_review'] = 0;
+			$result[$i]['is_positive'] = 0; 
+		}
+		
+		/* TEST DATA
+			$result[0]['film_id'] = '46';
+			$result[0]['twitter_id'] = '859301109927600128';
+			$result[0]['text'] = '@santiwelehweleh cah wingi sing isuk² gembel nyang rs.kartini????????';
+			$result[0]['created_at'] = date("Y-m-d H:i:s", strtotime('2017-05-02 06:58:44'));
+			$result[0]['is_review'] = 0;
+			$result[0]['is_positive'] = 0; 
+		*/
+		
+		for ($i=0; $i<sizeof($result); $i++){
+			// decode html characters
+			$result[$i]['text'] = html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+			
+			//echo '<br/><h3>'.$i.'</h3> after html_entity_decode - '.$result[$i]['text'].'<br/>';
+			
+			// feature reduction --> delete username, url, hashtag, punctuations
+			$movie = $this->model_film->getFilm($result[$i]['film_id']);
+			$title = $movie[0]['title'];
+			
+			$editedResult = $result[$i]['text'];
+			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
+			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
+			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
+			$editedResult = str_ireplace($title, 'JUDULFILM', $editedResult);
+			$editedResult = preg_replace('/(.)\\1+/', '$1', $editedResult); // delete double characters in a word
+			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult);  // delete everything except a-z & 0-9
+			
+			$result[$i]['text'] = $editedResult;
+			if (!$this->model_tweets_new->getTweetByOri('tweets_regex', $result[$i]['twitter_id'])){
+				$this->model_tweets_new->insertTweetRegex($result[$i]['twitter_id'], $result[$i]['text']);
+			}
+			
+			// replace bahasa alay
+			$words = $this->splitSentence($result[$i]['text']);
+			for ($a=1; $a<=3; $a++){
+				if (array_intersect($alay, $words)) {
+					$intersectStr = null;
+					$intersectsWith = array_intersect($alay, $words);
+					for ($j=0; $j<sizeof($intersectsWith); $j++){
+						$arrayKey = key($intersectsWith);
+						//$result[$i]['text'] = str_ireplace($alay[$arrayKey], $alay_replace[$arrayKey], $result[$i]['text']);
+						$result[$i]['text'] = preg_replace('/\b'.$alay[$arrayKey].'\b/u', $alay_replace[$arrayKey], $result[$i]['text']);
+						
+						if ($intersectStr == null)
+							$intersectStr = $alay[$arrayKey];
+						else 
+							$intersectStr .= ',' . $alay[$arrayKey];
+						
+						// get next key array
+						next($intersectsWith);
+					}
+					
+					if (!$this->model_tweets_new->getTweetByOri('tweets_replaced', $result[$i]['twitter_id'])){
+						$this->model_tweets_new->insertTweetReplaced($result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
+					}
+				}
+			}
+			
+			// compare with lexicon data
+			$words = $this->splitSentence($result[$i]['text']);
+			if (array_intersect($lexicon, $words)) {
+				$result[$i]['is_review'] = 1;
+				
+				$intersectStr = null;
+				$intersectsWith = array_intersect($lexicon, $words);
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					if ($intersectStr == null)
+						$intersectStr = $lexicon[$arrayKey];
+					else 
+						$intersectStr .= ',' . $lexicon[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+				
+				if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id'])){
+					$this->model_tweets_new->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
+				}
+			}
+			
+			//echo 'after compare with lexicon - '.$result[$i]['text'].'<br/>';
+		}
+		
+		// !!! === !!! === begin naive bayes
+		for ($i=0; $i<sizeof($result); $i++){
+			if ($result[$i]['is_review'] == 1){
+				$sentimentAnalysisOfSentence = $sat->analyzeSentence($result[$i]['text']);
+				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
+				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
+				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
+				
+				if ($resultofAnalyzingSentence == "positive")
+					$result[$i]['is_positive'] = 1;
+					
+				$words = $this->splitSentence($result[$i]['text']);
+				if (array_intersect($listPos, $words))
+					$result[$i]['is_positive'] = 1;
+				else if (array_intersect($listNeg, $words))
+					$result[$i]['is_positive'] = 0;
+			}
+			
+			if (!$this->model_tweets_new->getTweetByOri('tweets_final', $result[$i]['twitter_id'])){
+				if (!$this->model_tweets_new->getTweetByText('tweets_final', $result[$i]['text']))
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['film_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 0);
+				else 
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['film_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 1);
+			}
+			
+			//echo $i.' - '.$result[$i]['text'].'<br/>';
+		}
+		
+		// update film
+		$allMovies = $this->model_film->getAllFilm();
+		for ($i=0; $i<sizeof($allMovies); $i++){
+			$this->model_film->updateTwitterFilm($allMovies[$i]['id'], $this->model_tweets_old->getMovieCountNegTweet($allMovies[$i]['id']), $this->model_tweets_old->getMovieCountPosTweet($allMovies[$i]['id']));	
+		}		
+	}
+	
 	public function replaceSingkatan(){
 		// read singkatan from text file
 		$alay = [];
@@ -195,180 +497,6 @@ class Test extends WebSystem {
 			echo '<tr><td>'.$singkatan[$i].'</td><td>'.$result[$i]['is_review'].'</td><td>'.$result[$i]['is_positive'].'</td></tr><br/>';
 		}
 		echo '</table>';
-	}
-	
-	public function testDataTweetOri(){
-		// for rule-based system
-		$lexicon = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			array_push($lexicon, trim($activeLine));	
-		}
-		
-		$listPos = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			array_push($listPos, trim($activeLine));	
-		}
-		
-		$listNeg = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			array_push($listNeg, trim($activeLine));	
-		}
-		
-		$alay = [];
-		$alay_replace = [];
-		$singkatan = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/singkatan.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			$temp = explode(',', trim(strtolower($activeLine)));
-			array_push($alay, $temp[0]);
-			array_push($alay_replace, $temp[1]);
-			$singkatan[$temp[0]] = $temp[1];
-		}
-		
-		// train naive bayes classifier
-		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //training with positive data	
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_neg.txt', 'negative', 200); //training with negative data
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_pos.txt', 'positive', 200); //training with positive data	
-		
-		$result = [];
-		$tweets = $this->model_tweets->getAllTweetsFrom('tweets_ori');
-		
-		// put into associative array
-		for ($i=0; $i<sizeof($tweets); $i++){
-			$result[$i]['film_id'] = $tweets[$i]['film_id'];
-			$result[$i]['twitter_id'] = $tweets[$i]['twitter_id'];
-			$result[$i]['text'] = strtolower($tweets[$i]['text']);
-			$result[$i]['created_at'] = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
-			$result[$i]['is_review'] = 0;
-			$result[$i]['is_positive'] = 0; 
-		}
-		
-		/* TEST DATA
-			$result[0]['film_id'] = '46';
-			$result[0]['twitter_id'] = '859301109927600128';
-			$result[0]['text'] = '@santiwelehweleh cah wingi sing isuk² gembel nyang rs.kartini????????';
-			$result[0]['created_at'] = date("Y-m-d H:i:s", strtotime('2017-05-02 06:58:44'));
-			$result[0]['is_review'] = 0;
-			$result[0]['is_positive'] = 0; 
-		*/
-		
-		for ($i=0; $i<sizeof($result); $i++){
-			// decode html characters
-			$result[$i]['text'] = html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8');
-			
-			//echo '<br/><h3>'.$i.'</h3> after html_entity_decode - '.$result[$i]['text'].'<br/>';
-			
-			// feature reduction --> delete username, url, hashtag, punctuations
-			$movie = $this->model_film->getFilm($result[$i]['film_id']);
-			$title = $movie[0]['title'];
-			
-			$editedResult = $result[$i]['text'];
-			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
-			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
-			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
-			$editedResult = str_ireplace($title, 'JUDULFILM', $editedResult);
-			$editedResult = preg_replace('/(.)\\1+/', '$1', $editedResult); // delete double characters in a word
-			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult);  // delete everything except a-z & 0-9
-			
-			$result[$i]['text'] = $editedResult;
-			if (!$this->model_tweets->getTweetFRSLbyOri('tweets_regex', $result[$i]['twitter_id'])){
-				$this->model_tweets->insertTweetRegex($result[$i]['twitter_id'], $result[$i]['text']);
-			}
-			
-			//echo 'after feature reduction - '.$result[$i]['text'].'<br/>';
-			
-			// replace bahasa alay
-			$words = $this->splitSentence($result[$i]['text']);
-			for ($a=1; $a<=3; $a++){
-				if (array_intersect($alay, $words)) {
-					$intersectStr = null;
-					$intersectsWith = array_intersect($alay, $words);
-					for ($j=0; $j<sizeof($intersectsWith); $j++){
-						$arrayKey = key($intersectsWith);
-						//$result[$i]['text'] = str_ireplace($alay[$arrayKey], $alay_replace[$arrayKey], $result[$i]['text']);
-						$result[$i]['text'] = preg_replace('/\b'.$alay[$arrayKey].'\b/u', $alay_replace[$arrayKey], $result[$i]['text']);
-						
-						if ($intersectStr == null)
-							$intersectStr = $alay[$arrayKey];
-						else 
-							$intersectStr .= ',' . $alay[$arrayKey];
-						
-						// get next key array
-						next($intersectsWith);
-					}
-					
-					if (!$this->model_tweets->getTweetFRSLbyOri('tweets_replaced', $result[$i]['twitter_id'])){
-						$this->model_tweets->insertTweetRS('tweets_replaced', $result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
-					}
-				}
-			}
-			
-			//echo 'after replace bahasa alay - '.$result[$i]['text'].'<br/>';
-			
-			// compare with lexicon data
-			$words = $this->splitSentence($result[$i]['text']);
-			if (array_intersect($lexicon, $words)) {
-				$result[$i]['is_review'] = 1;
-				
-				$intersectStr = null;
-				$intersectsWith = array_intersect($lexicon, $words);
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					if ($intersectStr == null)
-						$intersectStr = $lexicon[$arrayKey];
-					else 
-						$intersectStr .= ',' . $lexicon[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
-				}
-				
-				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_lexicon', $result[$i]['twitter_id'])){
-					$this->model_tweets->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
-				}
-			}
-			
-			//echo 'after compare with lexicon - '.$result[$i]['text'].'<br/>';
-		}
-		
-		// !!! === !!! === begin naive bayes
-		for ($i=0; $i<sizeof($result); $i++){
-			if ($result[$i]['is_review'] == 1){
-				$sentimentAnalysisOfSentence = $sat->analyzeSentence($result[$i]['text']);
-				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
-				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
-				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
-				
-				if ($resultofAnalyzingSentence == "positive")
-					$result[$i]['is_positive'] = 1;
-					
-				$words = $this->splitSentence($result[$i]['text']);
-				if (array_intersect($listPos, $words))
-					$result[$i]['is_positive'] = 1;
-				else if (array_intersect($listNeg, $words))
-					$result[$i]['is_positive'] = 0;
-			}
-			
-			if (!$this->model_tweets->getTweetFRSLbyOri('tweets_final', $result[$i]['twitter_id'])){
-				if (!$this->model_tweets->getTweetFORSLbyText('tweets_final', $result[$i]['text']))
-					$this->model_tweets->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 0);
-				else 
-					$this->model_tweets->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 1);
-			}
-			
-			//echo $i.' - '.$result[$i]['text'].'<br/>';
-		}
-		
-		// update film
-		$allMovies = $this->model_film->getAllFilm();
-		for ($i=0; $i<sizeof($allMovies); $i++){
-			$this->model_film->updateTwitterFilm($allMovies[$i]['id'], $this->model_tweets->getMovieCountNegTweet($allMovies[$i]['id']), $this->model_tweets->getMovieCountPosTweet($allMovies[$i]['id']));	
-		}		
 	}
 	
 	public function testDataTweetOri1($start = 0){
@@ -814,4 +942,5 @@ class Test extends WebSystem {
 		    }
 		}
 	}
+
 }

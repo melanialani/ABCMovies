@@ -52,9 +52,7 @@
 		    <thead>
 		        <tr>
 		            <th>Tweet</th>
-		            <th>Status</th>
-		            <th>Yes Review</th>
-		            <th>Yes Positive</th>
+		            <th>Sentiment</th>
 		            <th>Action</th>
 		        </tr>
 		    </thead>
@@ -62,33 +60,19 @@
 		   		<?php 
 		   			for($i=0; $i<sizeof($tweets); $i++) {
 				    	echo "<tr>";
-				    		echo "<td>" . $tweets[$i]['tweet'] . "</td>";
+				    		echo "<td>" . $tweets[$i]['text'] . "</td>";
 					        echo "<td>";
-					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['status'].'</span>';
-					        	if ($tweets[$i]['status'] == 1) echo '<div title="Positif" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-plus"></span></div>';
-					        	else if ($tweets[$i]['status'] == 0) echo '<div title="Negatif" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-minus"></span></div>';
-					        echo "</td>";
-					        echo "<td>";
-					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['truth_rule'].'</span>';
-					        	if ($tweets[$i]['truth_rule'] == 1) echo '<div title="true" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-check"></span></div>';
-					        	else if ($tweets[$i]['truth_rule'] == 0) echo '<div title="false" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-times"></span></div>';
-					        echo "</td>";
-					        echo "<td>";
-					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['truth_naive'].'</span>';
-					        	if ($tweets[$i]['truth_naive'] == 1) echo '<div title="true" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-check"></span></div>';
-					        	else if ($tweets[$i]['truth_naive'] == 0) echo '<div title="false" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-times"></span></div>';
+					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['yes_positive'].'</span>';
+					        	if ($tweets[$i]['yes_positive'] == 1) echo '<div title="positive" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-plus"></span></div>';
+					        	else if ($tweets[$i]['yes_positive'] == 0) echo '<div title="negative" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-minus"></span></div>';
 					        echo "</td>";
 					        echo "<td>";
 				   				echo form_open('admin/detailTweets');
-				   					echo form_hidden('film_id', $film_id);
 				   					echo form_hidden('id', $tweets[$i]['id']);
-				   					echo form_hidden('status', $tweets[$i]['status']);
-				   					echo form_hidden('truth_rule', $tweets[$i]['truth_rule']);
-				   					echo form_hidden('truth_naive', $tweets[$i]['truth_naive']);
+				   					echo form_hidden('ori_id', $tweets[$i]['ori_id']);
+				   					echo form_hidden('yes_positive', $tweets[$i]['yes_positive']);
 				   					?>
-				   					<button type="submit" name="negate1" value="negate1" title="Negate value of Positive/Negative Status" class="btn btn-xs btn-default"><span class="fa fa-edit"></span></button>
-				   					<button type="submit" name="negate2" value="negate2" title="Negate value of Yes Review" class="btn btn-xs btn-primary"><span class="fa fa-edit"></span></button>
-				   					<button type="submit" name="negate3" value="negate3" title="Negate value of Yes Positive" class="btn btn-xs btn-info"><span class="fa fa-edit"></span></button>
+				   					<button type="submit" name="update" value="Update" title="Negate Status Review" class="btn btn-xs btn-info"><span class="fa fa-edit"></span></button>
 				   					<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
 				   					<?php
 				   				echo form_close();
@@ -106,9 +90,7 @@
 
 	<script type="text/javascript" language="javascript" class="init">
 	$(document).ready(function() {
-		$('#datatable').DataTable( {
-			"columnDefs": [{ "width": "18%", "targets": 4 }]
-		} );
+		$('#datatable').DataTable( { } );
 	} );
 	</script>
 

@@ -7,9 +7,6 @@ class WebSystem extends CI_Controller {
 	
 	function __construct() {
 		parent::__construct();
-		
-		$this->load->model('model_tweets');
-		$this->load->model('model_film');
 	}
 	
 	public function checkNewMovies(){
@@ -242,6 +239,11 @@ class WebSystem extends CI_Controller {
 		}
 	}
 	
+	private function splitSentence($words){
+		preg_match_all('/\w+/', $words, $matches);
+		return $matches;
+	}
+
 	public function getTweets($film_id = NULL){
 		$result = []; $index = 0;
 		
@@ -477,10 +479,6 @@ class WebSystem extends CI_Controller {
 		redirect('admin/detailTweets');
 	}
 	
-	private function splitSentence($words){
-		preg_match_all('/\w+/', $words, $matches);
-		return $matches;
-	}
 }
 
 ?>

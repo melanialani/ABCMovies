@@ -6,11 +6,6 @@ Class Film extends WebSystem {
 	
 	public function __construct(){
 		parent::__construct();
-		
-		$this->load->model('model_banner');
-		$this->load->model('model_film');
-		$this->load->model('model_review');
-		$this->load->model('model_user');
 	}
 	
 	public function index(){
