@@ -4,7 +4,7 @@
    <div class="span12">
    		<h4><?= $title; ?></h4>
         <div class="tooltip-demo">
-        	<?= form_open('admin/reportv2'); ?>
+        	<?= form_open('admin/report'); ?>
 	        <?= form_submit('true_pos','True Positive','class="btn btn-default"'); ?>
 	        <?= form_submit('true_neg','True Negative','class="btn btn-default"'); ?>
 	        <?= form_submit('false_pos','False Positive','class="btn btn-default"'); ?>
@@ -75,6 +75,7 @@
 		            <th>Tweet</th>
 		            <th><?= 'Is '.$type; ?></th>
 		            <th><?= 'Yes '.$type; ?></th>
+		            <th>Action</th>
 		        </tr>
 		    </thead>
 		   	<tbody>
@@ -93,6 +94,17 @@
 					        	if ($tweets[$i]['yes_true'] == 1) echo '<div title="true" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-check"></span></div>';
 					        	else if ($tweets[$i]['yes_true'] == 0) echo '<div title="false" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-times"></span></div>';
 					        echo "</td>";
+					        echo "<td>";
+				   				echo form_open('admin/report');
+				   					echo form_hidden('id', $tweets[$i]['id']);
+				   					echo form_hidden('ori_id', $tweets[$i]['ori_id']);
+				   					echo form_hidden('yes_true', $tweets[$i]['yes_true']);
+				   					?>
+				   					<button type="submit" name="update" value="Update" title="Negate Sentiment" class="btn btn-xs btn-info"><span class="fa fa-edit"></span></button>
+				   					<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
+				   					<?php
+				   				echo form_close();
+			   				echo "</td>";
 				        echo "</tr>";
 				    }
 		   		?>
@@ -106,7 +118,9 @@
 
 	<script type="text/javascript" language="javascript" class="init">
 	$(document).ready(function() {
-		$('#datatable').DataTable( {} );
+		$('#datatable').DataTable( {
+			"columnDefs": [{ "width": "10%", "targets": 4 }]
+		} );
 	} );
 	</script>
 

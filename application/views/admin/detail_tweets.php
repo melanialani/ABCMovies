@@ -39,18 +39,20 @@
 					</div>
 				</div><!-- row -->
    		<hr>
-   		<?php 
+   		<!--?php 
 	   		echo form_open('webSystem/calculateTweets');
 		   		echo form_hidden('film_id', $film_id);
 		   		echo form_submit('calculate','Calculate Tweets','class="btn btn-primary btn-lg btn-block"');
 	   		echo form_close(); 
-   		?>
+   		?-->
+   		<h4 style="text-align:center;" ><a href="<?= site_url('webSystem/getTweets/'.$film_id); ?>" class="btn btn-primary btn-lg btn-block">Get more Tweets</a></h4>
 		
 		<br /><br />
    
    		<table id="datatable" class="table table-striped table-bordered display">
 		    <thead>
 		        <tr>
+		            <th>Confirmed</th>
 		            <th>Tweet</th>
 		            <th>Sentiment</th>
 		            <th>Action</th>
@@ -58,8 +60,13 @@
 		    </thead>
 		   	<tbody>
 		   		<?php 
-		   			for($i=0; $i<sizeof($tweets); $i++) {
+		   		if (sizeof($tweets) > 1){
+					for($i=0; $i<sizeof($tweets); $i++) {
 				    	echo "<tr>";
+				    		echo "<td>";
+					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['confirmed'].'</span>';
+					        	if ($tweets[$i]['confirmed'] == 1) echo '<span title="Already checked" class="fa fa-check" style="margin-left:45%;"></span>';
+					        echo "</td>";
 				    		echo "<td>" . $tweets[$i]['text'] . "</td>";
 					        echo "<td>";
 					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['yes_positive'].'</span>';
@@ -72,13 +79,15 @@
 				   					echo form_hidden('ori_id', $tweets[$i]['ori_id']);
 				   					echo form_hidden('yes_positive', $tweets[$i]['yes_positive']);
 				   					?>
-				   					<button type="submit" name="update" value="Update" title="Negate Status Review" class="btn btn-xs btn-info"><span class="fa fa-edit"></span></button>
+				   					<button type="submit" name="pos" value="Positive" title="Mark as positive review" class="btn btn-xs btn-success"><span class="fa fa-plus"></span></button>
+				   					<button type="submit" name="neg" value="Negative" title="Mark as positive review" class="btn btn-xs btn-warning"><span class="fa fa-minus"></span></button>
 				   					<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
 				   					<?php
 				   				echo form_close();
 			   				echo "</td>";
 				        echo "</tr>";
 				    }
+				}
 		   		?>
 		   	</tbody>
 		</table>
@@ -90,7 +99,9 @@
 
 	<script type="text/javascript" language="javascript" class="init">
 	$(document).ready(function() {
-		$('#datatable').DataTable( { } );
+		$('#datatable').DataTable( { 
+			"columnDefs": [{ "width": "12%", "targets": 3 }]
+		} );
 	} );
 	</script>
 

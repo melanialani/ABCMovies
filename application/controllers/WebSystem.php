@@ -1,7 +1,12 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php 
+ini_set('max_execution_time', 0); 
+ini_set('memory_limit','2048M');
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 include_once( dirname(dirname(__FILE__)) . '/third_party/TwitterAPIExchange.php' );
 include_once( dirname(dirname(__FILE__)) . '/third_party/SentimentAnalyzer.php' );
+require_once( dirname(dirname(__FILE__)) . '/third_party/imdb.class.php' );
 
 class WebSystem extends CI_Controller {
 	
@@ -83,57 +88,57 @@ class WebSystem extends CI_Controller {
 						}
 					}
 					if (!$alreadyinDB){ // add it to database
-						// get movie's information from omdb api
-						$foundInImdb = FALSE;
-						for ($j=date('Y'); $j>(date('Y')-5); $j--){
-							$url = 'http://www.omdbapi.com/?t='.urlencode($getdata['title']).'&y='.$j.'&plot=full';
-							
-							//$json = file_get_contents($url);
-							$session = curl_init($url);
-						    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
-						    $json = curl_exec($session);
-						    $omdb =  json_decode($json); 
-							
-							if ($omdb->Response == "True"){
-								$foundInImdb = TRUE;
-								break;
-							}
-						}
-						
-						if ($foundInImdb){
-							$getdata['genre'] = $omdb->Genre;
-							$getdata['year'] = $omdb->Year;
-							$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
-							$getdata['length'] = $omdb->Runtime;
-							$getdata['director'] = $omdb->Director;
-							$getdata['writer'] = $omdb->Writer;
-							$getdata['actors'] = $omdb->Actors;
-							$getdata['poster'] = htmlspecialchars_decode($omdb->Poster);
-							$getdata['imdb_id'] = $omdb->imdbID;
-							$getdata['imdb_rating'] = $omdb->imdbRating;
-							$getdata['metascore'] = $omdb->Metascore;
-							
-							// translate movie's summary from omdb api
-							$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($omdb->Plot).'&lang=en-id';
-							$json = file_get_contents($url);
-							$yandex = json_decode($json);
-							$getdata['summary'] = $yandex->text[0];
-						} else {
-							$getdata['summary'] = NULL;
-							$getdata['genre'] = NULL;
-							$getdata['year'] = NULL;
-							$getdata['playing_date'] = NULL;
-							$getdata['length'] = NULL;
-							$getdata['director'] = NULL;
-							$getdata['writer'] = NULL;
-							$getdata['actors'] = NULL;
-							$getdata['imdb_id'] = NULL;
-							$getdata['imdb_rating'] = NULL;
-							$getdata['metascore'] = NULL;
-						}
-						
+						$getdata['summary'] = NULL;
+						$getdata['genre'] = NULL;
+						$getdata['year'] = NULL;
+						$getdata['playing_date'] = NULL;
+						$getdata['length'] = NULL;
+						$getdata['director'] = NULL;
+						$getdata['writer'] = NULL;
+						$getdata['actors'] = NULL;
+						$getdata['imdb_id'] = NULL;
+						$getdata['imdb_rating'] = NULL;
 						$getdata['trailer'] = NULL;
+						$getdata['metascore'] = NULL;
 						$getdata['status'] = 4;
+							
+						// get movie's information from imdb
+						$oIMDB = new IMDB($getdata['title']);
+						if ($oIMDB->isReady) {
+						    foreach ($oIMDB->getAll() as $aItem) {
+						    	//echo '<b>' . $aItem['name'] . '</b>: ' . $aItem['value'] . '<br><br>';
+						        if ($aItem['name'] == 'Cast')				$getdata['actors'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Director')		$getdata['director'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Plot')			$getdata['summary'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Poster')		$getdata['poster'] = htmlspecialchars_decode($aItem['value']);
+						        else if ($aItem['name'] == 'Rating')		$getdata['imdb_rating'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Runtime')		$getdata['length'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Writer')		$getdata['writer'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Year')			$getdata['year'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Genre')			$getdata['genre'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Trailer'){
+						        	// <iframe width="854" height="480" src="https://www.youtube.com/embed/G4VmJcZR0Yg" frameborder="0" allowfullscreen></iframe>
+						        	$getdata['trailer'] = htmlspecialchars_decode('<iframe width="894" height="520" src="'.$aItem['value'].'imdb/embed?autoplay=false&width=854" frameborder="0" allowfullscreen></iframe>');
+						        } else if ($aItem['name'] == 'Url'){
+						        	// ex: http://www.imdb.com/title/tt4981636/
+									$temp = explode('/', $aItem['value']);
+									$getdata['imdb_id'] = $temp[4];
+								} else if ($aItem['name'] == 'Release Date'){
+						        	$temp = $aItem['value'];
+						        	if (strpos($temp, '(') == TRUE){ // ex: 7 October 2016 (USA)
+										$temp = explode('(', $temp);
+										$temp = trim($temp[0]);
+									}
+									$getdata['playing_date'] = date("Y-m-d", strtotime($temp));	
+						        }
+						        
+								// translate movie's summary from imdb
+								$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($getdata['summary']).'&lang=en-id';
+								$json = file_get_contents($url);
+								$yandex = json_decode($json);
+								if ($yandex->code == 200) $getdata['summary'] = $yandex->text[0];
+						    }
+						} 
 						
 						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
 							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],NULL,$getdata['status']);
@@ -177,62 +182,60 @@ class WebSystem extends CI_Controller {
 				if (strpos($getdata['title'], '3D') == FALSE && strpos($getdata['title'], 'IMAX') == FALSE){
 					// check if title already exist in database
 					if (!$this->model_film->getFilmByTitle($getdata['title'])){
-						// get movie's information from omdb api
-						$foundInImdb = FALSE;
-						for ($j=date('Y'); $j>(date('Y')-5); $j--){
-							$url = 'http://www.omdbapi.com/?t='.urlencode($getdata['title']).'&y='.$j.'&plot=full';
-							
-							//$json = file_get_contents($url);
-							$session = curl_init($url);
-						    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
-						    $json = curl_exec($session);
-						    $omdb =  json_decode($json); 
-							
-							if ($omdb->Response == "True"){
-								$foundInImdb = TRUE;
-								break;
-							}
-						}
-						
-						if ($foundInImdb){
-							$getdata['genre'] = $omdb->Genre;
-							$getdata['year'] = $omdb->Year;
-							$getdata['playing_date'] = date("Y-m-d", strtotime($omdb->Released));
-							$getdata['length'] = $omdb->Runtime;
-							$getdata['director'] = $omdb->Director;
-							$getdata['writer'] = $omdb->Writer;
-							$getdata['actors'] = $omdb->Actors;
-							$getdata['poster'] = htmlspecialchars_decode($omdb->Poster);
-							$getdata['imdb_id'] = $omdb->imdbID;
-							$getdata['imdb_rating'] = $omdb->imdbRating;
-							$getdata['metascore'] = $omdb->Metascore;
-							
-							// translate movie's summary from omdb api
-							$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($omdb->Plot).'&lang=en-id';
-							$json = file_get_contents($url);
-							$yandex = json_decode($json);
-							$getdata['summary'] = $yandex->text[0];
-						} else {
-							$getdata['summary'] = NULL;
-							$getdata['genre'] = NULL;
-							$getdata['year'] = NULL;
-							$getdata['playing_date'] = NULL;
-							$getdata['length'] = NULL;
-							$getdata['director'] = NULL;
-							$getdata['writer'] = NULL;
-							$getdata['actors'] = NULL;
-							$getdata['imdb_id'] = NULL;
-							$getdata['imdb_rating'] = NULL;
-							$getdata['metascore'] = NULL;
-						}
-						
+						$getdata['summary'] = NULL;
+						$getdata['genre'] = NULL;
+						$getdata['year'] = NULL;
+						$getdata['playing_date'] = NULL;
+						$getdata['length'] = NULL;
+						$getdata['director'] = NULL;
+						$getdata['writer'] = NULL;
+						$getdata['actors'] = NULL;
+						$getdata['imdb_id'] = NULL;
+						$getdata['imdb_rating'] = NULL;
 						$getdata['trailer'] = NULL;
+						$getdata['metascore'] = NULL;
 						$getdata['status'] = 3;
+						
+						// get movie's information from imdb
+						$oIMDB = new IMDB($getdata['title']);
+						if ($oIMDB->isReady) {
+						    foreach ($oIMDB->getAll() as $aItem) {
+						    	//echo '<b>' . $aItem['name'] . '</b>: ' . $aItem['value'] . '<br><br>';
+						        if ($aItem['name'] == 'Cast')				$getdata['actors'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Director')		$getdata['director'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Plot')			$getdata['summary'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Poster')		$getdata['poster'] = htmlspecialchars_decode($aItem['value']);
+						        else if ($aItem['name'] == 'Rating')		$getdata['imdb_rating'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Runtime')		$getdata['length'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Writer')		$getdata['writer'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Year')			$getdata['year'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Genre')			$getdata['genre'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Trailer'){
+						        	// <iframe width="854" height="480" src="https://www.youtube.com/embed/G4VmJcZR0Yg" frameborder="0" allowfullscreen></iframe>
+						        	$getdata['trailer'] = htmlspecialchars_decode('<iframe width="894" height="520" src="'.$aItem['value'].'imdb/embed?autoplay=false&width=854" frameborder="0" allowfullscreen></iframe>');
+						        } else if ($aItem['name'] == 'Url'){
+						        	// ex: http://www.imdb.com/title/tt4981636/
+									$temp = explode('/', $aItem['value']);
+									$getdata['imdb_id'] = $temp[4];
+								} else if ($aItem['name'] == 'Release Date'){
+						        	$temp = $aItem['value'];
+						        	if (strpos($temp, '(') == TRUE){ // ex: 7 October 2016 (USA)
+										$temp = explode('(', $temp);
+										$temp = trim($temp[0]);
+									}
+									$getdata['playing_date'] = date("Y-m-d", strtotime($temp));	
+						        }
+						        
+								// translate movie's summary from imdb
+								$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($getdata['summary']).'&lang=en-id';
+								$json = file_get_contents($url);
+								$yandex = json_decode($json);
+								if ($yandex->code == 200) $getdata['summary'] = $yandex->text[0];
+						    }
+						}
 						
 						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
 							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],NULL,$getdata['status']);
-					
-						//echo $getdata['title'].'<br>';
 					} 
 				}
 		    }
@@ -241,7 +244,7 @@ class WebSystem extends CI_Controller {
 	
 	private function splitSentence($words){
 		preg_match_all('/\w+/', $words, $matches);
-		return $matches;
+		return $matches[0];
 	}
 
 	public function getTweets($film_id = NULL){
@@ -249,7 +252,7 @@ class WebSystem extends CI_Controller {
 		
 		$movie = $this->model_film->getFilm($film_id);
 		$title = $movie[0]['title'];
-		$param = trim(explode(',', $movie[0]['twitter_search']));
+		$param = explode(',', trim($movie[0]['twitter_search']));
 		
 		$url = 'https://api.twitter.com/1.1/search/tweets.json';
 		$requestMethod = 'GET';
@@ -274,8 +277,8 @@ class WebSystem extends CI_Controller {
 			$result[$index]['is_positive'] = 0;
 			
 			// if twitter id and text doesnt exist in db
-			if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id']) && !$this->model_tweets->getTweetFORSLbyText('tweets_ori', $result[$index]['text'])){
-				$this->model_tweets->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
+			if (!$this->model_tweets_new->getTweetByOri('tweets_ori',$result[$index]['twitter_id'])){
+				$this->model_tweets_new->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
 			} 
 			
 			$index ++;
@@ -289,14 +292,14 @@ class WebSystem extends CI_Controller {
 		
 		for ($i=0; $i<sizeof($response->statuses); $i++){ // put response into array
 			$result[$index]['twitter_id'] = $response->statuses[$i]->id;
-			$result[$index]['text'] = strtolower($response->statuses[$i]->text);
+			$result[$index]['text'] = strtolower($response->statuses[$i]->text);//$result[$index]['text'] = strtolower(html_entity_decode($response->statuses[$i]->text, ENT_QUOTES | ENT_XML1, 'UTF-8')); // decode html characters
 			$result[$index]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
 			$result[$index]['is_review'] = 0;
 			$result[$index]['is_positive'] = 0;
 			
-			if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id'])){
-				$this->model_tweets->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
-			} 
+			if (!$this->model_tweets_new->getTweetByOri('tweets_ori',$result[$index]['twitter_id'])){
+				$this->model_tweets_new->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
+			}
 			
 			$index ++;
 		}
@@ -315,18 +318,18 @@ class WebSystem extends CI_Controller {
 				$result[$index]['is_review'] = 0;
 				$result[$index]['is_positive'] = 0;
 				
-				if (!$this->model_tweets->getTweetOri($result[$index]['twitter_id'])){
-					$this->model_tweets->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
-				} 
+				if (!$this->model_tweets_new->getTweetByOri('tweets_ori',$result[$index]['twitter_id'])){
+					$this->model_tweets_new->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
+				}
 				
 				$index ++;
 			}
 		}
 		
-		return $result;
+		$this->calculateTweets($film_id);
 	}
 	
-	public function calculateTweets(){
+	public function calculateTweets($film_id){
 		// for rule-based system
 		$lexicon = [];
 		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon.txt', "r");
@@ -334,98 +337,100 @@ class WebSystem extends CI_Controller {
 			array_push($lexicon, trim($activeLine));	
 		}
 		
-		$stopword = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/stopword.txt', "r");
+		$listPos = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
-			array_push($stopword, trim($activeLine));	
+			array_push($listPos, trim($activeLine));	
 		}
 		
-		$alay = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/alay.txt', "r");
+		$listNeg = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
-			array_push($alay, trim($activeLine));	
+			array_push($listNeg, trim($activeLine));	
 		}
 		
-		$alay_replace = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/alay_arti.txt', "r");
+		$singkatan = []; $alay = []; $alay_replace = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/singkatan.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
-			array_push($alay_replace, trim($activeLine));	
+			$temp = explode(',', trim(strtolower($activeLine)));
+			array_push($alay, $temp[0]);
+			array_push($alay_replace, $temp[1]);
+			$singkatan[$temp[0]] = $temp[1];
 		}
 		
 		// train naive bayes classifier
 		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
 		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
-		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //trainign with positive data	
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //training with positive data	
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_neg.txt', 'negative', 200); //training with negative data
+		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_pos.txt', 'positive', 200); //training with positive data	
 		
-		// get movie's title
-		$film_id = $this->input->post('film_id', TRUE); 
-		$movie = $this->model_film->getFilm($film_id);
-		$title = $movie[0]['title'];
+		$result = [];
+		$tweets = $this->model_tweets_new->getAllOriTweetsByMovie($film_id);
 		
-		$result = $this->getTweets($film_id);
+		// put into associative array
+		for ($i=0; $i<sizeof($tweets); $i++){
+			$result[$i]['twitter_id'] = $tweets[$i]['twitter_id'];
+			$result[$i]['text'] = strtolower($tweets[$i]['text']);
+			$result[$i]['created_at'] = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
+			$result[$i]['is_review'] = 0;
+			$result[$i]['is_positive'] = 0; 
+		}
 		
-		// !!! === !!! === begin rule-based system === !!! === !!!
 		for ($i=0; $i<sizeof($result); $i++){
 			// decode html characters
 			$result[$i]['text'] = html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8');
 			
-			// split camel case words
-			$result[$i]['text'] = preg_split('/(?=[A-Z])/', $result[$i]['text']);
+			// feature reduction --> delete username, url, hashtag, punctuations
+			$movie = $this->model_film->getFilm($film_id);
+			$title = $movie[0]['title'];
 			
-			// split sentence
-			$target = $this->splitSentence($result[$i]['text']);
-			$target = $target[0];
+			$editedResult = $result[$i]['text'];
+			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
+			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
+			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
+			$editedResult = str_ireplace($title, 'JUDULFILM', $editedResult);
+			$editedResult = preg_replace('/(.)\\1+/', '$1', $editedResult); // delete double characters in a word
+			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult);  // delete everything except a-z & 0-9
 			
-			// replace bahasa alay
-			if (array_intersect($alay, $target)) {
-				$intersectStr = null;
-				$intersectsWith = array_intersect($alay, $target);
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					$result[$i]['text'] = str_ireplace($alay[$arrayKey], $alay_replace[$arrayKey], $result[$i]['text']);
-					
-					if ($intersectStr == null)
-						$intersectStr = $alay[$arrayKey];
-					else 
-						$intersectStr .= ',' . $alay[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
-				}
-				
-				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_replaced', $result[$i]['twitter_id'])){
-					$this->model_tweets->insertTweetRS('tweets_replaced', $result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
-				}
+			$result[$i]['text'] = $editedResult;
+			if (!$this->model_tweets_new->getTweetByOri('tweets_regex', $result[$i]['twitter_id'])){
+				$this->model_tweets_new->insertTweetRegex($result[$i]['twitter_id'], $result[$i]['text']);
 			}
 			
-			// delete stopword
-			if (array_intersect($stopword, $target)) {
-				$intersectStr = null;
-				$intersectsWith = array_intersect($stopword, $target);
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					$result[$i]['text'] = str_ireplace($stopword[$arrayKey], '', $result[$i]['text']);
+			// replace bahasa alay
+			$words = $this->splitSentence($result[$i]['text']); //echo '<hr>'; print_r($words); echo '<hr>'; print_r($alay);
+			for ($a=1; $a<=3; $a++){
+				if (array_intersect($alay, $words)) {
+					$intersectStr = null;
+					$intersectsWith = array_intersect($alay, $words);
+					for ($j=0; $j<sizeof($intersectsWith); $j++){
+						$arrayKey = key($intersectsWith);
+						//$result[$i]['text'] = str_ireplace($alay[$arrayKey], $alay_replace[$arrayKey], $result[$i]['text']);
+						$result[$i]['text'] = preg_replace('/\b'.$alay[$arrayKey].'\b/u', $alay_replace[$arrayKey], $result[$i]['text']);
+						
+						if ($intersectStr == null)
+							$intersectStr = $alay[$arrayKey];
+						else 
+							$intersectStr .= ',' . $alay[$arrayKey];
+						
+						// get next key array
+						next($intersectsWith);
+					}
 					
-					if ($intersectStr == null)
-						$intersectStr = $stopword[$arrayKey];
-					else 
-						$intersectStr .= ',' . $stopword[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
-				}
-				
-				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_stopword', $result[$i]['twitter_id'])){
-					$this->model_tweets->insertTweetRS('tweets_stopword', $result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
+					if (!$this->model_tweets_new->getTweetByOri('tweets_replaced', $result[$i]['twitter_id'])){
+						$this->model_tweets_new->insertTweetReplaced($result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
+					}
 				}
 			}
 			
 			// compare with lexicon data
-			if (array_intersect($lexicon, $target)) {
+			$words = $this->splitSentence($result[$i]['text']);
+			if (array_intersect($lexicon, $words)) {
 				$result[$i]['is_review'] = 1;
 				
 				$intersectStr = null;
-				$intersectsWith = array_intersect($lexicon, $target);
+				$intersectsWith = array_intersect($lexicon, $words);
 				for ($j=0; $j<sizeof($intersectsWith); $j++){
 					$arrayKey = key($intersectsWith);
 					if ($intersectStr == null)
@@ -437,22 +442,9 @@ class WebSystem extends CI_Controller {
 					next($intersectsWith);
 				}
 				
-				if (!$this->model_tweets->getTweetFRSLbyOri('tweets_lexicon', $result[$i]['twitter_id'])){
-					$this->model_tweets->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
+				if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id'])){
+					$this->model_tweets_new->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
 				}
-			}
-			
-			// feature reduction --> delete username, url, hashtag, punctuations
-			$editedResult = $result[$i]['text'];
-			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
-			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
-			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
-			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult); 
-			$editedResult = str_ireplace($title, 'JUDULFILM', $editedResult);
-			
-			$result[$i]['text'] = $editedResult;
-			if (!$this->model_tweets->getTweetFRSLbyOri('tweets_regex', $result[$i]['twitter_id'])){
-				$this->model_tweets->insertTweetRegex($result[$i]['twitter_id'], $result[$i]['text']);
 			}
 		}
 		
@@ -466,15 +458,24 @@ class WebSystem extends CI_Controller {
 				
 				if ($resultofAnalyzingSentence == "positive")
 					$result[$i]['is_positive'] = 1;
+					
+				$words = $this->splitSentence($result[$i]['text']);
+				if (array_intersect($listPos, $words))
+					$result[$i]['is_positive'] = 1;
+				else if (array_intersect($listNeg, $words))
+					$result[$i]['is_positive'] = 0;
 			}
 			
-			if (!$this->model_tweets->getTweetFRSLbyOri('tweets_final', $result[$i]['twitter_id'])){
-				$this->model_tweets->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive']);
+			if (!$this->model_tweets_new->getTweetByOri('tweets_final', $result[$i]['twitter_id'])){
+				if (!$this->model_tweets_new->getTweetByText('tweets_final', $result[$i]['text']))
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $film_id, $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 0);
+				else 
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $film_id, $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 1);
 			}
 		}
 		
 		// update film
-		$this->model_film->updateTwitterFilm($film_id, $this->model_tweets->getMovieCountNegTweet($film_id), $this->model_tweets->getMovieCountPosTweet($film_id));
+		$this->model_film->updateTwitterFilm($film_id, $this->model_tweets_old->getMovieCountNegTweet($film_id), $this->model_tweets_old->getMovieCountPosTweet($film_id));	
 		
 		redirect('admin/detailTweets');
 	}

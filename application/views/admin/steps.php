@@ -85,35 +85,36 @@
 		            <th>ID Twitter</th>
 		            <th>Langkah-langkah</th>
 		            <th>Keterangan</th>
-		            <th>Yes Review</th>
-		            <th>Yes Positive</th>
+		            <!--th>Yes Review</th>
+		            <th>Yes Positive</th-->
 		        </tr>
 		    </thead>
 		   	<tbody>
 		   		<?php
-		   			for($i=0; $i<sizeof($tweets); $i++) {
+		   		if (sizeof($tweets) > 1){
+					for($i=0; $i<sizeof($tweets); $i++) {
 				    	echo "<tr>";
-					        echo "<td rowspan='7'>" . $tweets[$i]['title'] . "</td>";
-					        echo "<td rowspan='7'>" . $tweets[$i]['ori_id'] . "</td>";
+					        echo "<td rowspan='6'>" . $tweets[$i]['title'] . "</td>";
+					        echo "<td rowspan='6'>" . $tweets[$i]['ori_id'] . "</td>";
 					        echo "<td>1. " . $tweets[$i]['text'] . "</td>";
 					        echo "<td></td>";
-					        echo "<td rowspan='7'>" . $tweets[$i]['yes_review'] . "</td>";
-					        echo "<td rowspan='7'>" . $tweets[$i]['yes_positive'] . "</td>";
+					        //echo "<td rowspan='6'>" . $tweets[$i]['yes_review'] . "</td>";
+					        //echo "<td rowspan='6'>" . $tweets[$i]['yes_positive'] . "</td>";
 					    echo "</tr>";
 					    echo "<tr>";
-					        echo "<td>2. " . $tweets[$i]['alay_text'] . "</td>";
-					        echo "<td>" . $tweets[$i]['alay_intersect'] . "</td>";
-					    echo "</tr>";
-					    echo "<tr>";
-					        echo "<td>3. " . $tweets[$i]['stop_text'] . "</td>";
-					        echo "<td>" . $tweets[$i]['stop_intersect'] . "</td>";
-					    echo "</tr>";
-					    echo "<tr>";
-					        echo "<td>4. " . $tweets[$i]['regex'] . "</td>";
+					        echo "<td>2. " . $tweets[$i]['regex'] . "</td>";
 					        echo "<td></td>";
 					    echo "</tr>";
+					    /*echo "<tr>";
+					        echo "<td>3. " . $tweets[$i]['stop_text'] . "</td>";
+					        echo "<td>" . $tweets[$i]['stop_intersect'] . "</td>";
+					    echo "</tr>";*/
 					    echo "<tr>";
-					    	echo "<td>5. " . $tweets[$i]['final_text'] . "</td>";
+					        echo "<td>3. " . $tweets[$i]['singkatan_text'] . "</td>";
+					        echo "<td>" . $tweets[$i]['singkatan_intersect'] . "</td>";
+					    echo "</tr>";
+					    echo "<tr>";
+					    	echo "<td>4. " . $tweets[$i]['final_text'] . "</td>";
 					        echo "<td>" . $tweets[$i]['lexicon'] . "</td>";
 					    echo "</tr>";
 					    echo "<tr>";
@@ -130,17 +131,16 @@
 					        echo form_open('admin/unchecked');
 					        echo form_hidden('id', $tweets[$i]['id']);
 				   			?>
-				   				<span>Review/Non-review:</span>
-				   				<button type="submit" name="review1" value="negate1" title="Merupakan review" class="btn btn-xs btn-info"><span class="fa fa-plus"></span></button>
-				   				<button type="submit" name="review0" value="negate2" title="Bukan review" class="btn btn-xs btn-warning"><span class="fa fa-minus"></span></button>
-				   				<span style='margin-left:50px;'>Positive/Negative:</span>
-				   				<button type="submit" name="positive1" value="negate3" title="Review Positive" class="btn btn-xs btn-success"><span class="fa fa-plus"></span></button>
-				   				<button type="submit" name="positive0" value="Delete" title="Review Negative" class="btn btn-xs btn-danger"><span class="fa fa-minus"></span></button>
+				   				<span>Action:</span>
+				   				<button type="submit" name="pos" value="pos" title="Set as positive review" class="btn btn-xs btn-success"><span class="fa fa-plus"></span></button>
+				   				<button type="submit" name="neg" value="neg" title="Set as negative review" class="btn btn-xs btn-warning"><span class="fa fa-minus"></span></button>
+				   				<button type="submit" name="delete" value="Delete" title="Mark as non-review" class="btn btn-xs btn-danger"><span class="fa fa-trash"></span></button>
 				   			<?php
 				   			echo form_close();
 				   			echo "</td>";
 				        echo "</tr>";
 				    }
+				}
 		   		?>
 		   	</tbody>
 		</table>

@@ -8,8 +8,7 @@ class Welcome extends CI_Controller {
 	}
 	
 	public function index(){
-		redirect('film/index');		
-		//redirect('test/test');		
+		redirect('film/index');			
 	}
 	
 }

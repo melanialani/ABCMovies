@@ -113,6 +113,7 @@ Class Model_tweets_new extends CI_Model {
 	*/
 	public function updateTweetFinal($id, $yes_positive){
 		$myArr = array(
+        	'yes_review' 	=> 1,
         	'yes_positive' 	=> $yes_positive,
         	'confirmed' 	=> 1
         );
@@ -152,6 +153,17 @@ Class Model_tweets_new extends CI_Model {
 	*/
 	public function getAllTweetsFrom($table_name){
         return $this->db->get($table_name)->result_array();
+	}
+	
+	/**
+	* Get all tweets from table tweets_ori where film_id = param
+	* @param int $film_id
+	* 
+	* @return
+	*/
+	public function getAllOriTweetsByMovie($film_id){
+		$this->db->where('film_id', $film_id);
+        return $this->db->get('tweets_ori')->result_array();
 	}
 	
 	/**
@@ -231,9 +243,10 @@ Class Model_tweets_new extends CI_Model {
 		$returnArray[$index]['is_positive'] = NULL;
 		$returnArray[$index]['yes_review'] = NULL;
 		$returnArray[$index]['yes_positive'] = NULL;
+		$returnArray[$index]['confirmed'] = NULL;
 		
 		// get all unconfirmed tweets_final
-		$this->db->select('fin.id as id, fin.ori_id as ori_id, fin.text as text, fin.is_review as is_review, fin.is_positive as is_positive, fin.yes_review as yes_review, fin.yes_positive as yes_positive', FALSE); 
+		$this->db->select('fin.id as id, fin.ori_id as ori_id, fin.text as text, fin.is_review as is_review, fin.is_positive as is_positive, fin.yes_review as yes_review, fin.yes_positive as yes_positive, fin.confirmed as confirmed', FALSE); 
 		$this->db->from('tweets_final as fin, tweets_ori as ori');
 		$this->db->where('fin.ori_id = ori.twitter_id');
 		$this->db->where('fin.confirmed', 0);
@@ -250,12 +263,13 @@ Class Model_tweets_new extends CI_Model {
 			$returnArray[$index]['is_positive']  = $hasil[$i]['is_positive'];
 			$returnArray[$index]['yes_review']   = $hasil[$i]['yes_review'];
 			$returnArray[$index]['yes_positive'] = $hasil[$i]['yes_positive'];
+			$returnArray[$index]['confirmed'] 	 = $hasil[$i]['confirmed'];
 			
 			$index++;
 		}
 		
-		// get all confirmed tweets_final with yes_review = 1
-		$this->db->select('fin.id as id, fin.ori_id as ori_id, fin.text as text, fin.is_review as is_review, fin.is_positive as is_positive, fin.yes_review as yes_review, fin.yes_positive as yes_positive', FALSE); 
+		// get all confirmed tweets_final
+		$this->db->select('fin.id as id, fin.ori_id as ori_id, fin.text as text, fin.is_review as is_review, fin.is_positive as is_positive, fin.yes_review as yes_review, fin.yes_positive as yes_positive, fin.confirmed as confirmed', FALSE); 
 		$this->db->from('tweets_final as fin, tweets_ori as ori');
 		$this->db->where('fin.ori_id = ori.twitter_id');
 		$this->db->where('fin.yes_review', 1);
@@ -273,6 +287,7 @@ Class Model_tweets_new extends CI_Model {
 			$returnArray[$index]['is_positive']  = $hasil[$i]['is_positive'];
 			$returnArray[$index]['yes_review']   = $hasil[$i]['yes_review'];
 			$returnArray[$index]['yes_positive'] = $hasil[$i]['yes_positive'];
+			$returnArray[$index]['confirmed'] 	 = $hasil[$i]['confirmed'];
 			
 			$index++;
 		}
@@ -290,6 +305,7 @@ Class Model_tweets_new extends CI_Model {
 				$returnArray[$index]['ori_id']		 = NULL;
 				$returnArray[$index]['is_review'] 	 = 1;
 				$returnArray[$index]['yes_review'] 	 = 1;
+				$returnArray[$index]['confirmed'] 	 = 1;
 				$returnArray[$index]['id']			 = $hasil[$i]['id'];
 				$returnArray[$index]['text']		 = $hasil[$i]['text'];				
 				$returnArray[$index]['is_positive']  = $hasil[$i]['status'];
@@ -339,15 +355,15 @@ Class Model_tweets_new extends CI_Model {
 			$returnArray[$i]['yes_positive'] = $final[$i]['yes_positive'];
 			$returnArray[$i]['confirmed']	 = $final[$i]['confirmed'];
 			
-			$hasil = $this->getTweetFRSLbyOri('tweets_lexicon', $returnArray[$i]['ori_id']);
+			$hasil = $this->getTweetByOri('tweets_lexicon', $returnArray[$i]['ori_id']);
 			if ($hasil) $returnArray[$i]['lexicon'] = $hasil[0]['intersect'];
 			else $returnArray[$i]['lexicon'] = ' - ';
 			
-			$hasil = $this->getTweetFRSLbyOri('tweets_regex', $returnArray[$i]['ori_id']);
+			$hasil = $this->getTweetByOri('tweets_regex', $returnArray[$i]['ori_id']);
 			if ($hasil) $returnArray[$i]['regex'] = $hasil[0]['text'];
 			else $returnArray[$i]['regex'] = ' - ';
 			
-			/*$hasil = $this->getTweetFRSLbyOri('tweets_stopword', $returnArray[$i]['ori_id']);
+			/*$hasil = $this->getTweetByOri('tweets_stopword', $returnArray[$i]['ori_id']);
 			if ($hasil){
 				$returnArray[$i]['stop_intersect'] = $hasil[0]['intersect'];
 				$returnArray[$i]['stop_text'] = $hasil[0]['text'];
@@ -356,7 +372,7 @@ Class Model_tweets_new extends CI_Model {
 				$returnArray[$i]['stop_text'] = ' -> tidak terdapat stopwords ';
 			}*/
 			
-			$hasil = $this->getTweetFRSLbyOri('tweets_replaced', $returnArray[$i]['ori_id']);
+			$hasil = $this->getTweetByOri('tweets_replaced', $returnArray[$i]['ori_id']);
 			if ($hasil){
 				$returnArray[$i]['singkatan_intersect'] = $hasil[0]['intersect'];
 				$returnArray[$i]['singkatan_text'] = $hasil[0]['text'];
@@ -365,7 +381,7 @@ Class Model_tweets_new extends CI_Model {
 				$returnArray[$i]['singkatan_text'] = ' - ';
 			}
 			
-			$hasil = $this->getTweetOri($returnArray[$i]['ori_id']);
+			$hasil = $this->getTweetByOri('tweets_ori', $returnArray[$i]['ori_id']);
 			$returnArray[$i]['text'] = $hasil[0]['text'];
 			
 			$this->db->where('id', $hasil[0]['film_id']);
@@ -482,6 +498,68 @@ Class Model_tweets_new extends CI_Model {
 		$this->db->where('fin.duplicate', 0);
 		$this->db->order_by('fin.film_id','desc');
 		return $this->db->get()->result_array();
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	* Get both tp, tn, fp, fn from both old & new tweet
+	* with param $type only accepts: tp, tn, fp, fn, tr, tnr, fr, fnr
+	* @param String $type
+	* 
+	* @return
+	*/
+	public function getBoth($type){
+		$index = 0;
+		$returnArray[$index]['id'] = NULL;
+		$returnArray[$index]['ori_id'] = NULL;
+		$returnArray[$index]['title'] = NULL;
+		$returnArray[$index]['text'] = NULL;
+		$returnArray[$index]['is_true'] = NULL;
+		$returnArray[$index]['yes_true'] = NULL;
+		
+		$hasil = NULL;
+		if ($type == 'tp')			$hasil = $this->getTruePositive();
+		else if ($type == 'tn')		$hasil = $this->getTrueNegative();
+		else if ($type == 'fp')		$hasil = $this->getFalsePositive();
+		else if ($type == 'fn') 	$hasil = $this->getFalseNegative();
+		else if ($type == 'tr')		$hasil = $this->getTrueReview();
+		else if ($type == 'tnr')	$hasil = $this->getTrueNonReview();
+		else if ($type == 'fr')		$hasil = $this->getFalseReview();
+		else if ($type == 'fnr')	$hasil = $this->getFalseNonReview();
+			
+		for ($i=0; $i<sizeof($hasil); $i++){
+			$returnArray[$index]['id']			 = $hasil[$i]['id'];
+			$returnArray[$index]['ori_id']		 = $hasil[$i]['ori_id'];
+			$returnArray[$index]['title']		 = $hasil[$i]['title'];
+			$returnArray[$index]['text']		 = $hasil[$i]['text'];
+			$returnArray[$index]['is_true'] 	 = $hasil[$i]['is_true'];
+			$returnArray[$index]['yes_true'] 	 = $hasil[$i]['yes_true'];
+			
+			$index++;
+		}
+		
+		$hasil = NULL;
+		if ($type == 'tp')			$hasil = $this->model_tweets_old->getTruePositive();
+		else if ($type == 'tn')		$hasil = $this->model_tweets_old->getTrueNegative();
+		else if ($type == 'fp')		$hasil = $this->model_tweets_old->getFalsePositive();
+		else if ($type == 'fn') 	$hasil = $this->model_tweets_old->getFalseNegative();
+		else if ($type == 'tr')		$hasil = $this->model_tweets_old->getTrueReview();
+		else if ($type == 'tnr')	$hasil = $this->model_tweets_old->getTrueNonReview();
+		else if ($type == 'fr')		$hasil = $this->model_tweets_old->getFalseReview();
+		else if ($type == 'fnr')	$hasil = $this->model_tweets_old->getFalseNonReview();
+		for ($i=0; $i<sizeof($hasil); $i++){
+			$returnArray[$index]['id']			 = $hasil[$i]['id'];
+			$returnArray[$index]['ori_id']		 = NULL;
+			$returnArray[$index]['title']		 = $hasil[$i]['title'];
+			$returnArray[$index]['text']		 = $hasil[$i]['tweet'];
+			$returnArray[$index]['is_true'] 	 = $hasil[$i]['status'];
+			$returnArray[$index]['yes_true'] 	 = $hasil[$i]['truth_naive'];
+			
+			$index++;
+		}
+		
+        return $returnArray;
 	}
 	
 }

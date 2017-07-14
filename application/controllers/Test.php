@@ -4,9 +4,9 @@ ini_set('memory_limit','2048M');
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require_once (dirname(__FILE__) . "/WebSystem.php");
+require_once( dirname(dirname(__FILE__)) . '/third_party/imdb.class.php' );
 
-class Test extends WebSystem {
+class Test extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
@@ -16,8 +16,54 @@ class Test extends WebSystem {
 		preg_match_all('/\w+/', $words, $matches);
 		return $matches[0];
 	}
-
+	
 	public function test(){
+		$temp = 'http://www.imdb.com/title/tt4981636/';
+		$temp = explode('/',$temp);
+		print_r($temp);
+		echo '<br>'.$temp[4];
+		
+		echo '<hr>';
+		
+		$getdata['summary'] = 'Devoted lifeguard Mitch Buchannon butts heads with a brash new recruit, as they uncover a criminal plot that threatens the future of the bay.';
+								$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($getdata['summary']).'&lang=en-id';
+							    $session = curl_init($url);
+							    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+							    $json = curl_exec($session);
+							    $yandex = json_decode($json);
+							    //if ($yandex->code[0] == '200') $getdata['summary'] = $yandex->text[0];
+							    
+							    echo '<br>'.$url.'<br><br>';
+							    var_dump($json);
+							    echo '<br><br>';
+							    var_dump($yandex);
+		echo '<hr>';					    
+							    
+							$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($getdata['summary']).'&lang=en-id';
+							$json = file_get_contents($url);
+							$yandex = json_decode($json);
+							$getdata['summary'] = $yandex->text[0];
+							
+							var_dump($yandex);
+							 echo '<br><br>';
+							    print_r($yandex);
+							    echo '<br><br>'.$yandex->text[0];
+							    echo '<br><br>'.$yandex->code;
+							    if ($yandex->code == 200) echo '  haha';
+	}
+
+	public function newImdbLibrary(){
+		$oIMDB = new IMDB('MIDDLE SCHOOL: THE WORST YEARS OF MY LIFE');
+		if ($oIMDB->isReady) {
+		    foreach ($oIMDB->getAll() as $aItem) {
+		        echo '<b>' . $aItem['name'] . '</b>: ' . $aItem['value'] . '<br><br>';
+		    }
+		}
+		else 
+		 	echo '<b>Movie not found</b>: ' . 'MIDDLE SCHOOL: THE WORST YEARS OF MY LIFE';
+	}
+	
+	public function testDataTweetLama(){
 		$this->load->model('model_tweets_old');
 		
 		// for rule-based system
