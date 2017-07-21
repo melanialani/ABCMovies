@@ -415,6 +415,11 @@ Class Admin extends Film {
 			$data['type'] = 'Positive';
 			$data['title'] = 'Laporan ';
 			$data['tweets'] = NULL;
+			$data['input'] = NULL;
+			$data['result_is_review'] = 2;
+			$data['result_is_positive'] = 2;
+			$data['result_psrsen_pos'] = NULL;
+			$data['result_psrsen_neg'] = NULL;
 			
 			if ($this->input->post('delete')){ // mark a tweet as a non-review
 				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
@@ -434,7 +439,15 @@ Class Admin extends Film {
 				// update count post & neg tweet
 				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
 				redirect('admin/detailTweets');
-			}
+			} else if ($this->input->post('test')){
+				$data['input'] = $this->input->post('input', TRUE);
+				///////////////// !!!!! ////////// !!!!!! //////// !!!! ////// !!!! TAMPILKAN STEP" NYA DI HASIL !!!!! ////// !!!!! /////// !!!! /////////
+				$data['result_is_review'] = NULL;
+				$data['result_is_positive'] = NULL;
+				$data['result_psrsen_pos'] = NULL;
+				$data['result_psrsen_neg'] = NULL;
+				redirect('admin/detailTweets');
+			} 
 			
 			else if ($this->input->post('true_pos')){
 				$data['title'] .= 'True Positive';
@@ -484,24 +497,16 @@ Class Admin extends Film {
 			$data['fp'] = sizeof($this->model_tweets_new->getBoth('fp'));
 			$data['fn'] = sizeof($this->model_tweets_new->getBoth('fn'));
 			$data['accuracy'] = (($data['tn']+$data['tp'])*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
-			$data['recall_pos'] = ($data['tp']*100) / ($data['tp']+$data['fn']);
-			$data['recall_neg'] = ($data['tn']*100) / ($data['tn']+$data['fp']);
-			$data['precision_pos'] = ($data['tp']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
-			$data['precision_neg'] = ($data['tn']*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+			$data['precision'] = $data['tp']*100/($data['tp']+$data['fp']);
+			$data['recall'] = $data['tp']*100/($data['tp']+$data['fn']);
 			
-			//$data['review_tp'] = sizeof($this->model_tweets_old->getTrueReview()); //sizeof($this->model_tweets_new->getBoth('tr'));
-			//$data['review_tn'] = sizeof($this->model_tweets_old->getTrueNonReview()); //sizeof($this->model_tweets_new->getBoth('tnr'));
-			//$data['review_fp'] = sizeof($this->model_tweets_old->getFalseReview()); //sizeof($this->model_tweets_new->getBoth('fr'));
-			//$data['review_fn'] = sizeof($this->model_tweets_old->getFalseNonReview()); //sizeof($this->model_tweets_new->getBoth('fnr'));
 			$data['review_tp'] = sizeof($this->model_tweets_new->getBoth('tr'));
 			$data['review_tn'] = sizeof($this->model_tweets_new->getBoth('tnr'));
 			$data['review_fp'] = sizeof($this->model_tweets_new->getBoth('fr'));
 			$data['review_fn'] = sizeof($this->model_tweets_new->getBoth('fnr'));
 			$data['review_accuracy'] = (($data['review_tn']+$data['review_tp'])*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
-			$data['review_recall_pos'] = ($data['review_tp']*100) / ($data['review_tp']+$data['review_fn']);
-			$data['review_recall_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_fp']);
-			$data['review_precision_pos'] = ($data['review_tp']*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
-			$data['review_precision_neg'] = ($data['review_tn']*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+			$data['review_precision'] = $data['review_tp']*100/($data['review_tp']+$data['review_fp']);
+			$data['review_recall'] = $data['review_tp']*100/($data['review_tp']+$data['review_fn']);
 			
 			$this->load->view('includes/header', $data);
 			$this->load->view('admin/laporan_v2', $data);			

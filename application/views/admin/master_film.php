@@ -76,8 +76,8 @@
 		   		?>
 		   	</tbody>
 		</table>
-		<br/><br/>
-		<a href="<?php echo site_url('admin/report'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Lihat laporan review twitter</span></a>
+		<!--br/><br/>
+		<a href="<?php echo site_url('admin/report'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Lihat laporan review twitter</span></a-->
 	</div>	<!--/.main-->
 	
   </div>

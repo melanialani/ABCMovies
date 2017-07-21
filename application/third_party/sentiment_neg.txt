@@ -1,8 +1,13 @@
-﻿2
+﻿kasihan
+memilukan
+pilu
+malas
+2
 3
 4
 5
-6
+ok
+lumayan
 biasa
 bodoh
 bosan
@@ -17,6 +22,10 @@ jelek
 jijik
 kapok
 kebodohan
+buang waktu
+buang uang
+buang
+kekecewaan
 kecewa
 kejelekan
 kelemahan
@@ -39,6 +48,7 @@ negatifnya
 paksa
 payah
 ringan
+bingung
 rugi
 sadis
 sakit
@@ -50,3 +60,35 @@ tidak asyik
 tidak jelas
 tidak menarik
 tidur
+mudah ditebak
+mudah diprediksi
+mudah
+dapat ditebak
+bisa ditebak
+dapat diprediksi
+bisa diprediksi
+hancur
+menyeramkan
+seram
+capek
+tercengang
+kaget
+ngeri
+sayangnya
+heran
+mengerikan
+mengecewakan
+Memusingkan
+Menegangkan
+Membingungkan
+pusing
+Tegang
+kesalahan
+penyesalan
+gagal
+stres
+depresi
+berkhayal
+kelelahan
+menangis
+jahat

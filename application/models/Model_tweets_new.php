@@ -329,8 +329,6 @@ Class Model_tweets_new extends CI_Model {
 		$returnArray[0]['text'] = NULL;
 		$returnArray[0]['singkatan_text'] = NULL;
 		$returnArray[0]['singkatan_intersect'] = NULL;
-		//$returnArray[0]['stop_text'] = NULL;
-		//$returnArray[0]['stop_intersect'] = NULL;
 		$returnArray[0]['regex'] = NULL;
 		$returnArray[0]['lexicon'] = NULL;
 		$returnArray[0]['final_text'] = NULL;
@@ -362,15 +360,6 @@ Class Model_tweets_new extends CI_Model {
 			$hasil = $this->getTweetByOri('tweets_regex', $returnArray[$i]['ori_id']);
 			if ($hasil) $returnArray[$i]['regex'] = $hasil[0]['text'];
 			else $returnArray[$i]['regex'] = ' - ';
-			
-			/*$hasil = $this->getTweetByOri('tweets_stopword', $returnArray[$i]['ori_id']);
-			if ($hasil){
-				$returnArray[$i]['stop_intersect'] = $hasil[0]['intersect'];
-				$returnArray[$i]['stop_text'] = $hasil[0]['text'];
-			} else {
-				$returnArray[$i]['stop_intersect'] = NULL;
-				$returnArray[$i]['stop_text'] = ' -> tidak terdapat stopwords ';
-			}*/
 			
 			$hasil = $this->getTweetByOri('tweets_replaced', $returnArray[$i]['ori_id']);
 			if ($hasil){

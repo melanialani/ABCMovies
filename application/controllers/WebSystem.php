@@ -331,10 +331,32 @@ class WebSystem extends CI_Controller {
 	
 	public function calculateTweets($film_id){
 		// for rule-based system
+		$commonWordsOrdinary = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/common-words-review.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			array_push($commonWordsOrdinary, trim($activeLine));	
+		}
+		
+		$commonWords = []; $commonWordsValue = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/common-words-value.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			array_push($commonWords, $temp[0]);
+			array_push($commonWordsValue, $temp[1]);
+		}
+		
 		$lexicon = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon.txt', "r");
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon-minus-common_words_review.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
 			array_push($lexicon, trim($activeLine));	
+		}
+		
+		$singkatan = []; $singkatan_replace = [];
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/singkatan.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			array_push($singkatan, $temp[0]);
+			array_push($singkatan_replace, $temp[1]);
 		}
 		
 		$listPos = [];
@@ -347,15 +369,6 @@ class WebSystem extends CI_Controller {
 		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
 			array_push($listNeg, trim($activeLine));	
-		}
-		
-		$singkatan = []; $alay = []; $alay_replace = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/singkatan.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			$temp = explode(',', trim(strtolower($activeLine)));
-			array_push($alay, $temp[0]);
-			array_push($alay_replace, $temp[1]);
-			$singkatan[$temp[0]] = $temp[1];
 		}
 		
 		// train naive bayes classifier
@@ -377,6 +390,7 @@ class WebSystem extends CI_Controller {
 			$result[$i]['is_positive'] = 0; 
 		}
 		
+		// !!! === !!! === begin feature-reduction & mapping data
 		for ($i=0; $i<sizeof($result); $i++){
 			// decode html characters
 			$result[$i]['text'] = html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8');
@@ -398,21 +412,20 @@ class WebSystem extends CI_Controller {
 				$this->model_tweets_new->insertTweetRegex($result[$i]['twitter_id'], $result[$i]['text']);
 			}
 			
-			// replace bahasa alay
-			$words = $this->splitSentence($result[$i]['text']); //echo '<hr>'; print_r($words); echo '<hr>'; print_r($alay);
-			for ($a=1; $a<=3; $a++){
-				if (array_intersect($alay, $words)) {
+			// replace bahasa bukan baku
+			for ($a=1; $a<=3; $a++){ // cek bahasa bukan 3x
+				$words = $this->splitSentence($result[$i]['text']);
+				$intersectsWith = array_intersect($singkatan, $words);
+				if ($intersectsWith) {
 					$intersectStr = null;
-					$intersectsWith = array_intersect($alay, $words);
 					for ($j=0; $j<sizeof($intersectsWith); $j++){
 						$arrayKey = key($intersectsWith);
-						//$result[$i]['text'] = str_ireplace($alay[$arrayKey], $alay_replace[$arrayKey], $result[$i]['text']);
-						$result[$i]['text'] = preg_replace('/\b'.$alay[$arrayKey].'\b/u', $alay_replace[$arrayKey], $result[$i]['text']);
+						$result[$i]['text'] = preg_replace('/\b'.$singkatan[$arrayKey].'\b/u', $singkatan_replace[$arrayKey], $result[$i]['text']);
 						
 						if ($intersectStr == null)
-							$intersectStr = $alay[$arrayKey];
+							$intersectStr = $singkatan[$arrayKey];
 						else 
-							$intersectStr .= ',' . $alay[$arrayKey];
+							$intersectStr .= ',' . $singkatan[$arrayKey];
 						
 						// get next key array
 						next($intersectsWith);
@@ -423,14 +436,18 @@ class WebSystem extends CI_Controller {
 					}
 				}
 			}
+		}
+		
+		// !!! === !!! === begin rule-based
+		for ($i=0; $i<sizeof($result); $i++){
+			$value = 0;
+			$intersectStr = null;
+			$words = $this->splitSentence($result[$i]['text']);
 			
 			// compare with lexicon data
-			$words = $this->splitSentence($result[$i]['text']);
-			if (array_intersect($lexicon, $words)) {
-				$result[$i]['is_review'] = 1;
-				
-				$intersectStr = null;
-				$intersectsWith = array_intersect($lexicon, $words);
+			$intersectsWith = array_intersect($lexicon, $words);
+			if ($intersectsWith) {
+				$value += sizeof($intersectsWith); // if intersect with lexicon, give 1 for every word
 				for ($j=0; $j<sizeof($intersectsWith); $j++){
 					$arrayKey = key($intersectsWith);
 					if ($intersectStr == null)
@@ -441,10 +458,44 @@ class WebSystem extends CI_Controller {
 					// get next key array
 					next($intersectsWith);
 				}
-				
-				if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id'])){
-					$this->model_tweets_new->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
+			}
+			
+			// compare with ordinary common words data
+			$intersectsWith = array_intersect($commonWordsOrdinary, $words);
+			if ($intersectsWith) {
+				$value += sizeof($intersectsWith); // if intersect with ordinary common words, give 1 for every word
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					if ($intersectStr == null)
+						$intersectStr = $commonWordsOrdinary[$arrayKey];
+					else 
+						$intersectStr .= ',' . $commonWordsOrdinary[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
 				}
+			}
+			
+			// compare with valued common words data
+			$intersectsWith = array_intersect($commonWords, $words);
+			if ($intersectsWith) {
+				for ($j=0; $j<sizeof($intersectsWith); $j++){
+					$arrayKey = key($intersectsWith);
+					$value += $commonWordsValue[$arrayKey];
+					
+					if ($intersectStr == null)
+						$intersectStr = $commonWords[$arrayKey];
+					else 
+						$intersectStr .= ',' . $commonWords[$arrayKey];
+					
+					// get next key array
+					next($intersectsWith);
+				}
+			}
+			
+			if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id']) && $value >= 8){
+				$result[$i]['is_review'] = 1;
+				$this->model_tweets_new->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
 			}
 		}
 		
@@ -456,13 +507,17 @@ class WebSystem extends CI_Controller {
 				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
 				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
 				
-				if ($resultofAnalyzingSentence == "positive")
-					$result[$i]['is_positive'] = 1;
-					
+				// compare with common words also	
 				$words = $this->splitSentence($result[$i]['text']);
 				if (array_intersect($listPos, $words))
+					$probabilityofSentenceBeingPositive += sizeof(array_intersect($listPos, $words))*0.25;
+				if (array_intersect($listNeg, $words))
+					$probabilityofSentenceBeingNegative += sizeof(array_intersect($listNeg, $words))*0.25;
+				
+				// set is_positive value
+				if ($resultofAnalyzingSentence == "positive" || $probabilityofSentenceBeingPositive > $probabilityofSentenceBeingNegative)
 					$result[$i]['is_positive'] = 1;
-				else if (array_intersect($listNeg, $words))
+				else 
 					$result[$i]['is_positive'] = 0;
 			}
 			

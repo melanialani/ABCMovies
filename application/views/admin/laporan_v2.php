@@ -21,27 +21,51 @@
         <br /><br />
         <table class="table table-striped table-bordered display">
 		    <tr>
+		    	<td colspan="2"><h5>Test string</h5></td>
+		    </tr>
+		    <tr>
+		    	<?= form_open('admin/report'); ?>
+		   		<td><input type="text" id="input" name="input" placeholder="ini film kok agak ga jelas ya sob" value="<?= $input; ?>" required class="form-control" style="width:80%"/></td>
+		   		<td><?= form_submit('test','Test!','class="btn btn-info"'); ?></td>
+		   		<?= form_close(); ?>
+		   	</tr>
+		    <tr>
+		   		<td><b>Hasil test: </b></td>
+		   		<td>
+		   			<?php 
+		   				echo '<b>Review: </b>';
+			        	if ($result_is_review == 1) echo '<span title="Review" class="fa fa-check"></span>';
+			        	else if ($result_is_review == 0) echo '<span title="Bukan review" class="fa fa-minus"></span>';
+
+			        	echo " <span style='margin-left:50px;'><b>Positive: </b></span> ";
+			        	if ($result_is_positive == 1) echo '<span title="Positive review" class="fa fa-check"></span>';
+			        	else if ($result_is_positive == 0) echo '<span title="Negative review" class="fa fa-minus"></span>'
+		   			?>
+		   		</td>
+		   	</tr>
+		   	<tr>
+		   		<td><b>Persentase hasil test: </b></td>
+		   		<td><b>Positive: </b><? $result_psrsen_pos;  ?>
+		   			<span style='margin-left:50px;'><b>Negative: </b></span><? $result_psrsen_neg; ?>
+		   		</td>
+		   	</tr>
+		</table>
+        <br /><br />
+        <table class="table table-striped table-bordered display">
+		    <tr>
 		    	<td colspan="2"><h5>Review positif/negatif</h5></td>
 		    </tr>
 		    <tr>
-		   		<td>Berapa persen prediksi benar (accuracy)</td>
+		   		<td>Accuracy</td>
 		   		<td><?= round($accuracy,2).'%'; ?></td>
 		   	</tr>
 		   	<tr>
 		   		<td>Berapa persen dari data positif yang benar positif (recall)</td>
-		   		<td><?= round($recall_pos,2).'%'; ?></td>
-		   	</tr>
-		   	<tr>
-		   		<td>Berapa persen dari data negatif yang benar negatif (recall)</td>
-		   		<td><?= round($recall_neg,2).'%'; ?></td>
+		   		<td><?= round($recall,2).'%'; ?></td>
 		   	</tr>
 		   	<tr>
 		   		<td>Berapa persen dari prediksi positif yang benar (precision)</td>
-		   		<td><?= round($precision_pos,2).'%'; ?></td>
-		   	</tr>
-		   	<tr>
-		   		<td>Berapa persen dari prediksi negatif yang benar (precision)</td>
-		   		<td><?= round($precision_neg,2).'%'; ?></td>
+		   		<td><?= round($precision,2).'%'; ?></td>
 		   	</tr>
 		   	<tr>
 		    	<td colspan="2"><h5>Benar merupakan review/bukan</h5></td>
@@ -52,19 +76,11 @@
 		   	</tr>
 		   	<tr>
 		   		<td>Berapa persen dari data review yang benar review (recall)</td>
-		   		<td><?= round($review_recall_pos,2).'%'; ?></td>
-		   	</tr>
-		   	<tr>
-		   		<td>Berapa persen dari prediksi non-review yang benar (recall)</td>
-		   		<td><?= round($review_recall_neg,2).'%'; ?></td>
+		   		<td><?= round($review_recall,2).'%'; ?></td>
 		   	</tr>
 		   	<tr>
 		   		<td>Berapa persen dari prediksi review yang benar (precision)</td>
-		   		<td><?= round($review_precision_pos,2).'%'; ?></td>
-		   	</tr>
-		   	<tr>
-		   		<td>Berapa persen dari data non-review yang benar non-review (precision)</td>
-		   		<td><?= round($review_precision_neg,2).'%'; ?></td>
+		   		<td><?= round($review_precision,2).'%'; ?></td>
 		   	</tr>
 		</table>
         <br /><br />

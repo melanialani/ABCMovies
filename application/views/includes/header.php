@@ -50,14 +50,15 @@
 				</form-->
 				
 				<ul id="topMenu" class="nav pull-right">
-					<li><a href="<?php echo site_url('film/catalog/now'); ?>" style="color: white;">Now Playing</a></li>
-					<li><a href="<?php echo site_url('film/catalog/soon'); ?>" style="color: white;">Coming Soon</a></li>
-					<li><a href="<?php echo site_url('film/catalog/old'); ?>" style="color: white;">Old Movies</a></li>
+					<li><a href="<?php echo site_url('film/catalog/now'); ?>" style="color: white; margin-right: -5px;">Now Playing</a></li>
+					<li><a href="<?php echo site_url('film/catalog/soon'); ?>" style="color: white; margin-right: -5px;">Coming Soon</a></li>
+					<li><a href="<?php echo site_url('film/catalog/old'); ?>" style="color: white; margin-right: -5px;">Old Movies</a></li>
 					<?php
 					// if admin, show master film
 					if ($is_admin){
-						echo '<li><a href="'.site_url('admin/masterFilm').'" style="color: white;">Master Film</a></li>';
-						echo '<li><a href="'.site_url('admin/masterBanner').'" style="color: white;">Master Banner</a></li>';
+						echo '<li><a href="'.site_url('admin/masterFilm').'" style="color: white; ">Master Film</a></li>';
+						echo '<li><a href="'.site_url('admin/masterBanner').'" style="color: white; margin-right: -5px;">Master Banner</a></li>';
+						echo '<li><a href="'.site_url('admin/report').'" style="color: white; margin-right: 15px;">Report</a></li>';
 					}
 					// show login-register or profile-logout
 					if ($this->input->cookie('abcmovies')){
