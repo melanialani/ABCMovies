@@ -1,0 +1,891 @@
+bagus,10
+jelek,10
+keren,10
+lucu,10
+imut,10
+kocak,10
+kecewa,10
+gemas,10
+menggemaskan,10
+suka,10
+menyukai,10
+biasa,10
+epik,10
+asyik,10
+seru,10
+cinta,10
+bingung,10
+kesayangan,10
+buruk,10
+hancur,10
+enak,10
+unik,10
+konyol,10
+favorit,10
+terbaik,10
+indah,10
+hebat,10
+menarik,10
+mengena,10
+menyeramkan,10
+seram,10
+ketiduran,10
+capek,10
+tidur,10
+kagum,10
+bosan,10
+apik,10
+memanjakan,10
+menghibur,10
+puas,10
+ngeri,10
+kelemahan,10
+membosankan,10
+sayangnya,10
+menyesal,10
+rugi lihat,10
+jangan lihat,10
+heran,10
+mengerikan,10
+mengecewakan,10
+tertawa,10
+tertidur,10
+terbagus,10
+tersentuh,10
+terharu,10
+terindah,10
+Terpesona,10
+menginspirasi,10
+direkomendasikan,10
+Memusingkan,10
+kelelahan,10
+Menakjubkan,10
+Menegangkan,10
+rugi dilihat,10
+jangan dilihat,10
+keindahan,10
+mengagumkan,10
+mengejutkan,10
+Membingungkan,10
+penyesalan,10
+kapok,10
+mengasyikan,10
+mengasyikkan,10
+paling direkomendasikan,10
+pantas dilihat,10
+pantas lihat,10
+patut dilihat,10
+patut lihat,10
+layak lihat,10
+layak dilihat,10
+jelek sungguh,10
+jelek sangat,10
+terlalu jelek,10
+sangat jelek,10
+sungguh jelek,10
+cukup jelek,10
+cukup bagus,10
+terlalu bagus,10
+sangat bagus,10
+sungguh bagus,10
+kurang bagus,10
+sedikit bagus,10
+bagus parah,10
+jelek parah,10
+sedikit jelek,10
+kurang jelek,10
+lumayan bagus,10
+lumayan jelek,10
+harus lihat,10
+harus dilihat,10
+harus ditonton,10
+patut ditonton,10
+layak ditonton,10
+pantas ditonton,10
+setengah bagus,10
+setengah jelek,10
+paling bagus,10
+paling jelek,10
+mengantuk,8
+mempesona,8
+sayang,8
+tercengang,8
+kaget,8
+gila,8
+menyenangkan,8
+menangis,8
+memilukan,8
+memaksa,8
+dipaksa,8
+dilihat,8
+edukatif,8
+kesalahan,8
+tersenyum,8
+menyegarkan,8
+gagal,8
+pusing,8
+tertawa,8
+Tegang,8
+fantastis,8
+Fenomenal,8
+dipaksakan,8
+terpaksa,8
+berkhayal,8
+kebodohan,8
+kejelekan,8
+pencerahan,6
+inspirasi,6
+terutama,6
+terinspirasi,6
+direkomendasi,6
+rekomendasi,6
+rekomendasikan,6
+penikmat,6
+menikmati,6
+nikmati,6
+dinikmati,6
+menghargai,6
+saran,6
+kesan,6
+pesan,6
+moral,6
+pencinta,6
+pecinta,6
+mengapresiasi,6
+penghargaan,6
+memenangkan,6
+mampu,6
+melebihi,6
+terbesar,6
+berlebihan,6
+ganteng,5
+cakep,5
+cantik,5
+tampan,5
+tegas,5
+seksi,5
+sabar,5
+berani,5
+pemalas,5
+bodoh,5
+cengeng,5
+penakut,5
+takut,5
+elegan,5
+lemah,5
+kuat,5
+pemberani,5
+pintar,5
+sedih,5
+malas,5
+marah,5
+bahagia,5
+cerdas,5
+cupu,5
+elite,5
+tenang,5
+aneh,5
+banci,5
+asing,5
+melankolis,5
+lola,5
+cermat,5
+tercantik,5
+terganteng,5
+emosi,5
+emosional,5
+Empati,5
+karismatik,5
+kasihan,5
+jijik,5
+jujur,5
+jenius,5
+menyinggung,4
+tersinggung,4
+berhasil,4
+sukses,4
+apresiasi,4
+ekspetasi,4
+juara,6
+jahat,6
+stres,6
+depresi,4
+ekspektasi,4
+terpengaruh,4
+makin,4
+semakin,4
+musikal,4
+baik,4
+manis,4
+hangat,4
+pengaruh,4
+kesimpulan,4
+film,4
+mafia,4
+3d,4
+cgi,4
+efek,4
+kameraman,4
+cameraman,4
+kreatif,4
+visual,4
+kartun,4
+horor,4
+drama,4
+aksi,4
+humor,4
+lagu,4
+cerita,4
+plot,4
+twist,4
+alur,4
+alasan,4
+kisah,4
+kedua,4
+karya,4
+karakter,4
+tokoh,4
+parodi,4
+rating,4
+suara,4
+klasik,4
+topik,4
+akting,4
+aktor,4
+aktris,4
+Animasi,4
+artistik,4
+arus,4
+autobiografi,4
+bahasa,4
+Barat,4
+biografi,4
+bioskop,4
+bollywood,4
+Subplot,4
+subyek,4
+teater,4
+Teatrikal,4
+Thriller,4
+Thrillride,4
+tragedi,4
+petualangan,4
+Stereotip,4
+Stop-motion,4
+tema,4
+amanah,4
+antagonis,4
+dialog,4
+diedit,4
+editan,4
+dokumenter,4
+dramatis,4
+dramatisir,4
+Edit,4
+fiksi,4
+fantasi,4
+grafis,4
+hadirin,4
+historis,4
+Hollywood,4
+ilustrasi,4
+imajinatif,4
+Improvisasi,4
+Inspirasional,4
+diprediksi,4
+romantis,4
+komedi,4
+lawak,4
+Sinematik,4
+Sinematografi,4
+skenario,4
+kameramen,4
+ironi,4
+ironis,4
+Melodramatis,4
+makna,4
+ulasan,4
+visualisasi,4
+mempengaruhi,4
+memperhatikan,4
+menceritakan,4
+Mendramatisasi,4
+mendramatisir,4
+sekuel,4
+scifi,4
+sejarah,4
+sedap,4
+Prekuel,4
+positifnya,4
+mengilustrasikan,4
+mengesankan,4
+Remake,4
+review,4
+peran,4
+negatifnya,4
+seri,4
+pemirsa,4
+penonton,4
+Misteri,4
+motivasi,4
+metafora,4
+musik,4
+tragis,3
+kritik,3
+penyelesaian,3
+konflik,3
+kacau,3
+populer,3
+kesal,3
+pro,3
+hati,3
+cara,3
+hubungan,3
+berakhir,3
+perang,3
+sensasi,3
+candaan,3
+menjanjikan,3
+dukung,3
+mendukung,3
+sesat,3
+menyesatkan,3
+lawan,3
+mengagumi,3
+antusias,3
+remeh,3
+sulit,3
+realistis,3
+benci,3
+kebencian,3
+rusak,3
+kalah,3
+bangga,3
+berkualitas,3
+sempurna,3
+segar,3
+murung,3
+pemenang,3
+kusut,3
+positif,3
+negatif,3
+sakit,3
+dimengerti,3
+futuristik,3
+radikal,3
+fobia,3
+rasisme,3
+rasis,3
+obsesi,3
+moments,3
+halangan,3
+tantangan,3
+persahabatan,3
+kompak,3
+kelucuan,3
+kebajikan,3
+kebaikan,3
+kejahatan,3
+asli,3
+berpikir,3
+berujung,3
+pertunjukan,3
+Petualang,3
+Direktur,3
+suasana,3
+aliran,3
+struktur,3
+tahap,3
+pendukung,3
+akhir,3
+utama,3
+sutradara,3
+Syuting,3
+esensi,3
+budaya,3
+klimaks,3
+Klise,3
+jelas,3
+menari,3
+menerapkan,3
+mengekspresikan,3
+mengembangkan,3
+membalikkan,3
+menebak,3
+menebak-nebak,3
+manipulasi,3
+Memanipulasi,3
+percintaan,3
+menggairahkan,3
+menggambarkan,3
+menghayati,3
+meniru,3
+mengingatkan,3
+mengilhami,3
+nada,3
+naratif,3
+Narator,3
+naskah,3
+nilai,3
+pandangan,3
+penulis,3
+penutupan,3
+Percakapan,3
+sederhana,2
+bakat,2
+bimbang,2
+malu,2
+gentle,2
+rapuh,2
+basi,2
+rendah,2
+penindas,2
+keberanian,2
+sampah,2
+pesona,2
+busuk,2
+meyakinkan,2
+merencanakan,2
+menyusup,2
+menganggap,2
+khawatir,2
+selamat,2
+berjanji,2
+menyelamatkan,2
+menghancurkan,2
+berwawasan,2
+penjahat,2
+pelakunya,2
+pelaku,2
+bercanda,2
+pendendam,2
+menyakiti,2
+membuat,2
+negeri,2
+nasional,2
+mitos,2
+lupa,2
+muntah,2
+sesak,2
+najis,2
+dilema,2
+menghina,2
+buta,2
+percaya,2
+iri,2
+totalitas,2
+totalitasnya,2
+dimensi,2
+Dinilai,2
+anggun,2
+bingkai,2
+interpretasi,2
+diputar,2
+Disalin,2
+Ditangkap,2
+ditebak,2
+Diresapi,2
+efektif,2
+eksekusi,2
+eksplor,2
+eksplorasi,2
+ekspresi,2
+elemen,2
+interaksi,2
+gaya,2
+halus,2
+hambar,2
+hampa,2
+ingat,2
+ingin,2
+Intelektual,2
+intens,2
+intensif,2
+intensitas,2
+keaslian,2
+keasyikan,2
+kecepatan,2
+kedalaman,2
+kegagalan,2
+kemajuan,2
+kematangan,2
+kengerian,2
+kepekaan,2
+ketegangan,2
+kompilasi,2
+kompleks,2
+konsep,2
+konseptual,2
+konteks,2
+kontroversi,2
+kontroversial,2
+simbol,2
+simbolisme,2
+Typecast,2
+memori,2
+Mengganggu,2
+menggelisahkan,2
+menggelitik,2
+Menghidupkan,2
+premier,2
+menyoroti,2
+misi,2
+sentimentil,2
+sentuhan,2
+ambisius,1
+pemenang penghargaan,1
+Diakui,1
+mengherankan,1
+Avant-garde,1
+berdasarkan,1
+cemerlang,1
+Indah difilmkan,1
+Ditembak dengan indah,1
+Anggaran besar,1
+Serebral,1
+Karakter-driven,1
+koheren,1
+Penuh warna,1
+komik,1
+kontemplatif,1
+kontemporer,1
+dalam,1
+Sangat bijaksana,1
+Terlibat,1
+yg mengasyikkan,1
+Diakui secara kritis,1
+kultus,1
+fasih,1
+Resonan emosional,1
+Penuh teka-teki,1
+Menggugah,1
+Keluarga-ramah,1
+cairan,1
+sangat indah,1
+Cepat,1
+merasa baik,1
+mencengkeram,1
+Sangat asli,1
+Sangat berbakat,1
+Difilmkan,1
+Difilmkan hidup,1
+penuh semangat,1
+penting,1
+secara mendalam,1
+mawas diri,1
+intuitif,1
+Inventif,1
+Diedit secara kreatif,1
+Secara intelektual menyegarkan,1
+Berlapis,1
+legendaris,1
+periang,1
+mistik,1
+Magnetik,1
+Mudah diingat,1
+Bertiup pikiran,1
+modern,1
+bergerak,1
+harus melihat,1
+Memprovokasi,1
+murni,1
+ampuh,1
+nonstop,1
+Offbeat,1
+Plot-driven,1
+bergairah,1
+ceria,1
+relevan,1
+mendalam,1
+banyak akal,1
+Mengungkapkan,1
+kaya,1
+berdaya,1
+satiris,1
+meriah,1
+Well-mondar-mandir,1
+bermanfaat,1
+bawah tanah,1
+Tak terlupakan,1
+Visioner,1
+Anggaran kecil,1
+Bertabur bintang,1
+Mendebarkan,1
+Anggaran,1
+kamera,1
+melemparkan,1
+Karakter sentral,1
+kontinuitas,1
+kostum,1
+Manfaat artistik,1
+penggambaran,1
+Pelarian penonton,1
+Respon penonton,1
+Waktu komedi,1
+Aktor karakter,1
+Kimia karakter,1
+pengembangan karakter,1
+kreativitas,1
+awak kapal,1
+Dualitas,1
+Memimpin perempuan,1
+kritik film,1
+membuat film,1
+pertumbuhan,1
+pahlawan,1
+pahlawan wanita,1
+wawasan,1
+Seluk beluk,1
+mengibaskan,1
+Bayangan,1
+format,1
+dampak,1
+perjalanan,1
+penjajaran,1
+labirin,1
+penerangan,1
+Garis,1
+Cinta bunga,1
+Dibuat untuk TV,1
+sihir,1
+Memoar,1
+pemimpin pria,1
+penguasaan,1
+hasil karya,1
+metode,1
+Wanita terkemuka,1
+Pria terkemuka,1
+sindiran,1
+tempat kejadian,1
+layar,1
+Mengatur desain,1
+Pengaturan,1
+tembakan,1
+layar perak,1
+Sitkom,1
+efek khusus,1
+penulis skenario,1
+Bagian,1
+bintang,1
+pernyataan,1
+Sensualitas,1
+Alur cerita,1
+Materi pelajaran,1
+aktor Pendukung,1
+transformasi,1
+kisah nyata,1
+Pengertian,1
+Penggunaan bahasa,1
+Kendaraan untuk,1
+teknik,1
+jempolan,1
+sudut pandang,1
+penglihatan,1
+pengisi suara,1
+Well cast,1
+ditulis dengan baik,1
+kebijaksanaan,1
+kerja,1
+perumpamaan,1
+paradoks,1
+gairah,1
+persepsi,1
+Kinerja,1
+penampil,1
+perspektif,1
+filsafat,1
+twist plot,1
+potret,1
+Premis,1
+Sambutan hangat,1
+jumlah pembaca,1
+lukisan,1
+Presisi,1
+produsen,1
+produksi,1
+tokoh utama,1
+refleksi,1
+Roller coaster,1
+Rendition,1
+perwakilan,1
+resolusi,1
+resonansi,1
+ulasan film,1
+bintang film,1
+Penonton film,1
+Skor musik,1
+nuansa,1
+pengamatan,1
+Benang naratif,1
+Suara naratif,1
+menyerap,1
+jalan masuk,1
+meningkatkan,1
+berkembang,1
+memeriksa,1
+merangsang,1
+pengalaman,1
+Jelajahi,1
+Dibawa masuk,1
+langsung,1
+menyulap,1
+memikat hati,1
+muncul,1
+mengangkut,1
+gema,1
+mencirikan,1
+Muse on,1
+memperkenalkan,1
+mendekatkan,1
+lapisan,1
+Membuat satu berpikir,1
+Membuat sebuah titik,1
+merasa,1
+menjalin,1
+selesai,1
+menirukan,1
+menyempurnakan,1
+pertanda,1
+Berikan hidup,1
+menghasut,1
+menyelaraskan,1
+Memukul rumah,1
+menjelaskan,1
+membenamkan,1
+jelatang,1
+menawarkan,1
+Mengatur,1
+garis besar,1
+cat,1
+paralel,1
+melakukan,1
+mewujudkan,1
+mengumpulkan,1
+kekesalan,1
+Beresonansi,1
+Mainkan,1
+memberikan,1
+mewakili,1
+menyelidiki,1
+menghasilkan,1
+pertanyaan,1
+menyadari,1
+Menciptakan kembali,1
+Mendefinisikan ulang,1
+mencerminkan,1
+menembak,1
+menunjukkan,1
+Stat,1
+menggerakkan,1
+menenun,1
+menggoda,1
+beristirahat,1
+mengubah,1
+menyiksa,1
+menyentuh,1
+malapetaka,1
+Kekanak-kanakan,1
+Rata-rata,1
+umum,1
+Dibikin,1
+Bom di bioskop,1
+Rumus,1
+Panik,1
+Membuat frustrasi,1
+Menarik perhatian,1
+kisi,1
+Sulit untuk diikuti,1
+Sangat cacat,1
+Lubang di plot,1
+berongga,1
+kosong,1
+bertanggal,1
+muram,1
+kering,1
+Terputus-putus,1
+menjemukan,1
+lamban,1
+Tidak masuk akal,1
+Dalam rasa malang,1
+Tidak konsisten,1
+Tidak relevan,1
+Menjengkelkan,1
+remaja,1
+Sentimentalized,1
+Kurang berbakat,1
+lambat,1
+tak bernyawa,1
+Sedikit pengembangan karakter,1
+anggaran yang rendah,1
+tak berarti,1
+mekanis,1
+Biasa saja,1
+Terserap,1
+Tindakan tanpa berpikir,1
+salah informasi,1
+Tidak perlu,1
+Perlu diedit,1
+Begitu-begitu,1
+Sophomoric,1
+serangan,1
+Karakter satu dimensi,1
+Overact,1
+Terlalu rumit,1
+Terlalu sentimental,1
+Terlalu berlebihan,1
+Plot kertas tipis,1
+pejalan kaki,1
+Akting yang buruk,1
+Mondar mandir,1
+Kurang dipahami,1
+Kurang diarahkan,1
+Kurang dieksekusi,1
+Kurang difilmkan,1
+Diproduksi dengan buruk,1
+Ditulis dengan buruk,1
+Berkhotbah,1
+Dapat diprediksi,1
+megah,1
+Bertele-tele,1
+mubazir,1
+steril,1
+Stock plot,1
+Langsung ke DVD,1
+tipis,1
+melelahkan,1
+terlalu panjang,1
+Belum terselesaikan,1
+Transparan,1
+Trendi,1
+sepele,1
+Buang waktu,1
+Tidak sempurna,1
+Tidak meyakinkan,1
+Underwhelming,1
+Tidak imajinatif,1
+tidak penting,1
+Tidak cerdas,1
+sepa,1
+Tidak orisinil,1
+tidak dipersiapkan,1
+tidak berbakat,1
+Perkembangan kerangka,1
+Miring,1
+Film fitur,1
+Film noir,1
+Indie,1
+anak-anak',1
+B film,1
+Pornografi,1
+hitam dan putih,1
+keluaran terbaru,1
+Drama perang,1
+komedi romantis,1
+Sci-fi,1
+fiksi ilmiah,1
+Film bisu,1
+Sketsa komedi,1
+Skin flick,1
+dagelan,1
+Minat khusus,1
+Olahraga,1

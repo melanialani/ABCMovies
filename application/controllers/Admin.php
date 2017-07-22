@@ -411,15 +411,11 @@ Class Admin extends Film {
 	
 	public function report(){ // new twitter
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
-			$data['is_admin'] = TRUE;
-			$data['type'] = 'Positive';
-			$data['title'] = 'Laporan ';
-			$data['tweets'] = NULL;
-			$data['input'] = NULL;
-			$data['result_is_review'] = 2;
-			$data['result_is_positive'] = 2;
-			$data['result_psrsen_pos'] = NULL;
-			$data['result_psrsen_neg'] = NULL;
+			$data['is_admin'] 	= TRUE;
+			$data['type'] 		= 'Positive';
+			$data['title'] 		= 'Laporan ';
+			$data['tweets'] 	= NULL;
+			$data['result'] 	= NULL;
 			
 			if ($this->input->post('delete')){ // mark a tweet as a non-review
 				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
@@ -429,7 +425,7 @@ Class Admin extends Film {
 				
 				// update count post & neg tweet
 				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailTweets');
+				redirect('admin/report');
 			} else if ($this->input->post('negate')){ // negate a tweet's yes_positive
 				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
 					$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), !$this->input->post('yes_true', TRUE));
@@ -438,15 +434,20 @@ Class Admin extends Film {
 					
 				// update count post & neg tweet
 				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailTweets');
+				redirect('admin/report');
 			} else if ($this->input->post('test')){
-				$data['input'] = $this->input->post('input', TRUE);
-				///////////////// !!!!! ////////// !!!!!! //////// !!!! ////// !!!! TAMPILKAN STEP" NYA DI HASIL !!!!! ////// !!!!! /////// !!!! /////////
-				$data['result_is_review'] = NULL;
-				$data['result_is_positive'] = NULL;
-				$data['result_psrsen_pos'] = NULL;
-				$data['result_psrsen_neg'] = NULL;
-				redirect('admin/detailTweets');
+				$data['result'] 				= $this->model_function->calculateTweetWithoutMovieId($this->input->post('input', TRUE));
+				$data['result']['input'] 		= $data['result'][0]['input'];
+				$data['result']['text'] 		= $data['result'][0]['text'];
+				$data['result']['replaced'] 	= $data['result'][0]['replaced'];
+				$data['result']['common'] 		= $data['result'][0]['common'];
+				$data['result']['regex'] 		= $data['result'][0]['regex'];
+				$data['result']['lexicon'] 		= $data['result'][0]['lexicon'];
+				$data['result']['score'] 		= $data['result'][0]['score'];
+				$data['result']['is_review'] 	= $data['result'][0]['is_review'];
+				$data['result']['is_positive'] 	= $data['result'][0]['is_positive'];
+				$data['result']['persen_pos'] 	= $data['result'][0]['persen_pos']*100;
+				$data['result']['persen_neg'] 	= $data['result'][0]['persen_neg']*100;
 			} 
 			
 			else if ($this->input->post('true_pos')){

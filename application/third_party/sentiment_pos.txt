@@ -74,7 +74,7 @@ seru
 kesayangan
 enak
 unik
-konyol
+harus tonton
 favorit
 indah
 hebat
@@ -99,3 +99,48 @@ menyegarkan
 dilihat
 lihat
 menyenangkan
+harus ditonton
+patut ditonton
+layak ditonton
+pantas ditonton
+setengah bagus
+paling bagus
+cukup bagus
+terlalu bagus
+sangat bagus
+sungguh bagus
+lumayan bagus
+sedikit bagus
+bagus parah
+paling direkomendasikan
+pantas dilihat
+pantas lihat
+layak lihat
+layak dilihat
+menginspirasi
+direkomendasikan
+ratingnya besar
+ratingnya tinggi
+rating tinggi
+rating besar
+bagus banget
+asik
+buagus
+highly recomended
+tersentuh hati
+fun
+menyesal melewatkan film ini
+melebihi ekspektasi
+aku hargai
+melebihi ekspetasi
+bagus reviewnya
+suruh nonton
+suruh lihat
+recommended
+keren sumpah
+bagus sumpah
+keren parah
+sumpah keren
+sumpah bagus
+parah kerennya
+parah bagusnya
