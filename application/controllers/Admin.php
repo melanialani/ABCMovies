@@ -1,9 +1,6 @@
-
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once (dirname(__FILE__) . "/Film.php");
-
-Class Admin extends Film {
+Class Admin extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
@@ -24,7 +21,8 @@ Class Admin extends Film {
 				$this->model_film->deleteFilm($data['id']);
 				redirect('admin/masterFilm');
 			} else if ($this->input->post('detail') == TRUE){ 
-				$this->detail($data['id']);
+				set_cookie(array('name' => 'abcmovies_movie_id', 'value' => $data['id'], 'expire' => 0 ));
+				redirect('film/detail');
 			} else if ($this->input->post('tweets') == TRUE){ 
 				set_cookie(array('name' => 'abcmovies_movie_id', 'value' => $data['id'], 'expire' => 0 ));
 				redirect('admin/detailTweets');
@@ -524,15 +522,15 @@ Class Admin extends Film {
 			
 			if ($this->input->post('pos')){
 				$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), 1);
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				$this->model_film->updateTwitterFilm($this->input->post('film_id', TRUE), $this->model_tweets_old->getMovieCountNegTweet($this->input->post('film_id', TRUE)), $this->model_tweets_old->getMovieCountPosTweet($this->input->post('film_id', TRUE)));
 				redirect('admin/unchecked');
 			} else if ($this->input->post('neg')){
 				$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), 0);
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				$this->model_film->updateTwitterFilm($this->input->post('film_id', TRUE), $this->model_tweets_old->getMovieCountNegTweet($this->input->post('film_id', TRUE)), $this->model_tweets_old->getMovieCountPosTweet($this->input->post('film_id', TRUE)));
 				redirect('admin/unchecked');
 			} else if ($this->input->post('delete')){
 				$this->model_tweets_new->deleteTweetFinal($this->input->post('id', TRUE), 1);
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				$this->model_film->updateTwitterFilm($this->input->post('film_id', TRUE), $this->model_tweets_old->getMovieCountNegTweet($this->input->post('film_id', TRUE)), $this->model_tweets_old->getMovieCountPosTweet($this->input->post('film_id', TRUE)));
 				redirect('admin/unchecked');
 			}
 			

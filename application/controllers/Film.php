@@ -56,6 +56,13 @@ Class Film extends WebSystem {
 				$data['name'] = $user[0]['name'];
 			} else $data['name'] = null;
 			
+			// extract id film with explode or from session
+			if ($id == NULL) $id = $this->input->cookie('abcmovies_movie_id');
+			else {
+				$temp = explode('-', $id);
+				$id = $temp[0];
+			}
+			
 			// get film's informations
 			$dataFilm = $this->model_film->getFilm($id);
 			$data['id'] = $dataFilm[0]['id'];

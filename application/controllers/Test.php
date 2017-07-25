@@ -74,7 +74,7 @@ class Test extends CI_Controller {
 		echo '</table>';
 	}
 	
-	public function test(){
+	public function testAllAbove70(){
 		// for rule-based system
 		$commonWords = []; $idx = 0;
 		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/common-words.txt', "r");

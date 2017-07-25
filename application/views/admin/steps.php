@@ -71,6 +71,7 @@
 					    	echo "<td colspan='2'>";
 					        echo form_open('admin/unchecked');
 					        echo form_hidden('id', $tweets[$i]['id']);
+					        echo form_hidden('film_id', $tweets[$i]['film_id']);
 				   			?>
 				   				<span>Action:</span>
 				   				<button type="submit" name="pos" value="pos" title="Set as positive review" class="btn btn-xs btn-success"><span class="fa fa-plus"></span></button>

@@ -58,7 +58,7 @@
 						</tr>
 						<tr>
 							<td align="right"><b style="margin-right: 20px;">Trailer</b></td>
-							<td><input type="text" id="trailer" name="trailer" placeholder="YouTube Embed Code" class="form-control" style="width:95%"/></td>
+							<td><input type="text" id="trailer" name="trailer" placeholder="Trailer Embed Code" class="form-control" style="width:95%"/></td>
 						</tr>
 					</table>
 					</fieldset>

@@ -14,11 +14,11 @@
 		   						'.form_hidden('id', $movies[$i]['id']).'
 								<img src="'.$movies[$i]['poster'].'" width="260" height="350" style="max-width: 260px; max-height: 350px;"/>
 								<div class="caption">';
-						if (strlen($movies[$i]['title']) < 28) echo '<h5>'.$movies[$i]['title'].'<br/><br/></h5>';
+						if (strlen(trim($movies[$i]['title'])) < 28) echo '<h5>'.$movies[$i]['title'].'<br/><br/></h5>';
 							else echo '<h5>'.$movies[$i]['title'].'</h5>';
 						echo '
 									<!--h4 style="text-align:center; margin-bottom: -30px;">'.form_submit('detail','Detail','class="btn btn-primary" ').'</h4-->
-									<h4 style="text-align:center; margin-bottom: -30px;" ><a href="'.site_url('film/detail/'.$movies[$i]['id']).'" class="btn btn-primary" style="width:90%;">Detail</a></h4>
+									<h4 style="text-align:center; margin-bottom: -30px;" ><a href="'.site_url('film/detail/'.$movies[$i]['id'].'-'.str_ireplace(' ','-',$movies[$i]['title'])).'" class="btn btn-primary" style="width:90%;">Detail</a></h4>
 									
 								</div>
 							</div>

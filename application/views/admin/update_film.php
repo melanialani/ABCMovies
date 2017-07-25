@@ -73,7 +73,7 @@
 							</td>
 						</tr>
 						<tr>
-							<td align="right"><b style="margin-right: 20px;">YouTube Embed Code</b></td>
+							<td align="right"><b style="margin-right: 20px;">Trailer Embed Code</b></td>
 							<td><input type="text" id="trailer" name="trailer" value='<?= $trailer; ?>' class="form-control" style="width:95%"/></td>
 						</tr>
 					</table>

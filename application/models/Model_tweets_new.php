@@ -326,6 +326,8 @@ Class Model_tweets_new extends CI_Model {
 		$returnArray[0]['title'] = NULL;
 		$returnArray[0]['id'] = NULL;
 		$returnArray[0]['ori_id'] = NULL;
+		$returnArray[0]['film_id'] = NULL;
+		$returnArray[0]['title'] = NULL;
 		$returnArray[0]['text'] = NULL;
 		$returnArray[0]['singkatan_text'] = NULL;
 		$returnArray[0]['singkatan_intersect'] = NULL;
@@ -346,12 +348,20 @@ Class Model_tweets_new extends CI_Model {
 		for ($i=0; $i<sizeof($final); $i++){
 			$returnArray[$i]['id']			 = $final[$i]['id'];
 			$returnArray[$i]['ori_id']		 = $final[$i]['ori_id'];
+			$returnArray[$i]['film_id']		 = $final[$i]['film_id'];
 			$returnArray[$i]['final_text']	 = $final[$i]['text'];
 			$returnArray[$i]['is_review'] 	 = $final[$i]['is_review'];
 			$returnArray[$i]['is_positive']  = $final[$i]['is_positive'];
 			$returnArray[$i]['yes_review']   = $final[$i]['yes_review'];
 			$returnArray[$i]['yes_positive'] = $final[$i]['yes_positive'];
 			$returnArray[$i]['confirmed']	 = $final[$i]['confirmed'];
+			
+			$this->db->where('id', $returnArray[$i]['film_id']);
+			$hasil = $this->db->get('film')->result_array();
+			$returnArray[$i]['title'] = $hasil[0]['title'];
+			
+			$hasil = $this->getTweetByOri('tweets_ori', $returnArray[$i]['ori_id']);
+			$returnArray[$i]['text'] = $hasil[0]['text'];
 			
 			$hasil = $this->getTweetByOri('tweets_lexicon', $returnArray[$i]['ori_id']);
 			if ($hasil) $returnArray[$i]['lexicon'] = $hasil[0]['intersect'];
@@ -369,13 +379,6 @@ Class Model_tweets_new extends CI_Model {
 				$returnArray[$i]['singkatan_intersect'] = NULL;
 				$returnArray[$i]['singkatan_text'] = ' - ';
 			}
-			
-			$hasil = $this->getTweetByOri('tweets_ori', $returnArray[$i]['ori_id']);
-			$returnArray[$i]['text'] = $hasil[0]['text'];
-			
-			$this->db->where('id', $hasil[0]['film_id']);
-			$hasil = $this->db->get('film')->result_array();
-			$returnArray[$i]['title'] = $hasil[0]['title'];
 		}
 		
         return $returnArray;
