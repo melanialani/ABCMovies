@@ -15,11 +15,6 @@ class WebSystem extends CI_Controller {
 	}
 	
 	public function checkNewMovies(){
-		// old code YQL
-		$BASE_URL = "http://query.yahooapis.com/v1/public/yql";
-	    $yql_query = "select * from html where url='http://www.21cineplex.com/nowplaying/'";
-	    $yql_query_url = $BASE_URL . "?q=" . urlencode($yql_query) . "&format=json";
-	    
 		// new code YQL
 		$site = "http://www.21cineplex.com/nowplaying/";
 		$yql = "select * from htmlstring where url='" . $site . "'";
@@ -40,7 +35,6 @@ class WebSystem extends CI_Controller {
 	    $playing = $phpObj->query->results->result;
 		$playing = explode('<div id="playing">', $playing);
 		$playing = explode('</div>', $playing[1]);
-		//echo $playing[0].'<hr>';
 	   	
 	   	$nowPlaying = [];
 	   	
@@ -145,8 +139,6 @@ class WebSystem extends CI_Controller {
 					} else { // already in db, just change status
 						$this->model_film->updateStatusFilm($inDB_id, 1);
 					}
-					
-					//echo $getdata['title'].'<br>';
 				}
 		    }
 		}
@@ -158,7 +150,6 @@ class WebSystem extends CI_Controller {
 	    $coming = $phpObj->query->results->result;
 		$coming = explode('<div id="coming">', $coming);
 		$coming = explode('</div>', $coming[1]);
-		//echo $coming[0].'<hr>';
 	   	
 	   	$comingSoon = [];
 	   	
@@ -273,8 +264,6 @@ class WebSystem extends CI_Controller {
 			$result[$index]['twitter_id'] = $response->statuses[$i]->id;
 			$result[$index]['text'] = strtolower($response->statuses[$i]->text);
 			$result[$index]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
-			$result[$index]['is_review'] = 0;
-			$result[$index]['is_positive'] = 0;
 			
 			// if twitter id and text doesnt exist in db
 			if (!$this->model_tweets_new->getTweetByOri('tweets_ori',$result[$index]['twitter_id'])){
@@ -294,8 +283,6 @@ class WebSystem extends CI_Controller {
 			$result[$index]['twitter_id'] = $response->statuses[$i]->id;
 			$result[$index]['text'] = strtolower($response->statuses[$i]->text);//$result[$index]['text'] = strtolower(html_entity_decode($response->statuses[$i]->text, ENT_QUOTES | ENT_XML1, 'UTF-8')); // decode html characters
 			$result[$index]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
-			$result[$index]['is_review'] = 0;
-			$result[$index]['is_positive'] = 0;
 			
 			if (!$this->model_tweets_new->getTweetByOri('tweets_ori',$result[$index]['twitter_id'])){
 				$this->model_tweets_new->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
@@ -315,8 +302,6 @@ class WebSystem extends CI_Controller {
 				$result[$index]['twitter_id'] = $response->statuses[$i]->id;
 				$result[$index]['text'] = strtolower($response->statuses[$i]->text);
 				$result[$index]['created_at'] = date("Y-m-d H:i:s", strtotime($response->statuses[$i]->created_at));
-				$result[$index]['is_review'] = 0;
-				$result[$index]['is_positive'] = 0;
 				
 				if (!$this->model_tweets_new->getTweetByOri('tweets_ori',$result[$index]['twitter_id'])){
 					$this->model_tweets_new->insertTweetOri($film_id, $result[$index]['twitter_id'], $result[$index]['text'], $result[$index]['created_at']);
@@ -331,18 +316,22 @@ class WebSystem extends CI_Controller {
 	
 	public function calculateTweets($film_id){
 		// for rule-based system
-		$commonWordsOrdinary = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/common-words-review.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			array_push($commonWordsOrdinary, trim($activeLine));	
-		}
-		
-		$commonWords = []; $commonWordsValue = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/common-words-value.txt', "r");
+		$commonWords = []; $idx = 0;
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/common-words.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
 			$temp = explode(',', trim(strtolower($activeLine)));
-			array_push($commonWords, $temp[0]);
-			array_push($commonWordsValue, $temp[1]);
+			$commonWords[$idx]['text'] = $temp[0];
+			$commonWords[$idx]['score'] = $temp[1];
+			$idx++;
+		}
+		
+		$nonReview = []; $idx = 0;
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/common-words-nonreview.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			$nonReview[$idx]['text'] = $temp[0];
+			$nonReview[$idx]['score'] = $temp[1];
+			$idx++;
 		}
 		
 		$lexicon = [];
@@ -351,24 +340,13 @@ class WebSystem extends CI_Controller {
 			array_push($lexicon, trim($activeLine));	
 		}
 		
-		$singkatan = []; $singkatan_replace = [];
+		$singkatan = []; $idx = 0;
 		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/singkatan.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
 			$temp = explode(',', trim(strtolower($activeLine)));
-			array_push($singkatan, $temp[0]);
-			array_push($singkatan_replace, $temp[1]);
-		}
-		
-		$listPos = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			array_push($listPos, trim($activeLine));	
-		}
-		
-		$listNeg = [];
-		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
-		while ($activeLine = fgets($fileLocation)){
-			array_push($listNeg, trim($activeLine));	
+			$singkatan[$idx]['short'] = $temp[0];
+			$singkatan[$idx]['long'] = $temp[1];
+			$idx++;
 		}
 		
 		// train naive bayes classifier
@@ -399,101 +377,69 @@ class WebSystem extends CI_Controller {
 			$movie = $this->model_film->getFilm($film_id);
 			$title = $movie[0]['title'];
 			
-			$editedResult = $result[$i]['text'];
-			$editedResult = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $editedResult);
-			$editedResult = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $editedResult);
-			$editedResult = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $editedResult);
-			$editedResult = str_ireplace($title, 'JUDULFILM', $editedResult);
-			$editedResult = preg_replace('/(.)\\1+/', '$1', $editedResult); // delete double characters in a word
-			$editedResult = preg_replace('/[^A-Za-z0-9]/', ' ', $editedResult);  // delete everything except a-z & 0-9
+			$result[$i]['text'] = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $result[$i]['text']);
+			$result[$i]['text'] = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $result[$i]['text']);
+			$result[$i]['text'] = preg_replace('/@([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'USERNAME', $result[$i]['text']);
+			$result[$i]['text'] = str_ireplace($title, 'JUDULFILM', $result[$i]['text']);
+			$result[$i]['text'] = preg_replace('/(.)\\1+/', '$1', $result[$i]['text']); // delete double characters in a word
+			$result[$i]['text'] = preg_replace('/[^A-Za-z0-9]/', ' ', $result[$i]['text']);  // delete everything except a-z & 0-9
 			
-			$result[$i]['text'] = $editedResult;
 			if (!$this->model_tweets_new->getTweetByOri('tweets_regex', $result[$i]['twitter_id'])){
 				$this->model_tweets_new->insertTweetRegex($result[$i]['twitter_id'], $result[$i]['text']);
 			}
 			
 			// replace bahasa bukan baku
-			for ($a=1; $a<=3; $a++){ // cek bahasa bukan 3x
-				$words = $this->splitSentence($result[$i]['text']);
-				$intersectsWith = array_intersect($singkatan, $words);
-				if ($intersectsWith) {
-					$intersectStr = null;
-					for ($j=0; $j<sizeof($intersectsWith); $j++){
-						$arrayKey = key($intersectsWith);
-						$result[$i]['text'] = preg_replace('/\b'.$singkatan[$arrayKey].'\b/u', $singkatan_replace[$arrayKey], $result[$i]['text']);
-						
-						if ($intersectStr == null)
-							$intersectStr = $singkatan[$arrayKey];
-						else 
-							$intersectStr .= ',' . $singkatan[$arrayKey];
-						
-						// get next key array
-						next($intersectsWith);
-					}
-					
-					if (!$this->model_tweets_new->getTweetByOri('tweets_replaced', $result[$i]['twitter_id'])){
-						$this->model_tweets_new->insertTweetReplaced($result[$i]['twitter_id'], $result[$i]['text'], $intersectStr);
-					}
+			$originalStr = NULL;
+			for ($j=0; $j<sizeof($singkatan); $j++){
+				//if (preg_match('/\b'.$singkatan[$j]['short'].'\b/', $result[$i]['text'])) { // if matched
+				if (strpos($result[$i]['text'], ' '.$singkatan[$j]['short'].' ') == TRUE || strpos($result[$i]['text'], ' '.$singkatan[$j]['short']) == TRUE || strpos($result[$i]['text'], $singkatan[$j]['short'].' ') == TRUE){
+					$result[$i]['text'] = preg_replace('/\b'.$singkatan[$j]['short'].'\b/', $singkatan[$j]['long'], $result[$i]['text']);
+					if ($originalStr == NULL) $originalStr = $singkatan[$j]['short'];
+					else $originalStr .= ',' . $singkatan[$j]['short'];
 				}
+			}
+			
+			if (!$this->model_tweets_new->getTweetByOri('tweets_replaced', $result[$i]['twitter_id']) && $originalStr != NULL){
+				$this->model_tweets_new->insertTweetReplaced($result[$i]['twitter_id'], $result[$i]['text'], $originalStr);
 			}
 		}
 		
 		// !!! === !!! === begin rule-based
 		for ($i=0; $i<sizeof($result); $i++){
 			$value = 0;
-			$intersectStr = null;
-			$words = $this->splitSentence($result[$i]['text']);
+			$intersectStr = NULL;
 			
 			// compare with lexicon data
-			$intersectsWith = array_intersect($lexicon, $words);
-			if ($intersectsWith) {
-				$value += sizeof($intersectsWith); // if intersect with lexicon, give 1 for every word
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					if ($intersectStr == null)
-						$intersectStr = $lexicon[$arrayKey];
-					else 
-						$intersectStr .= ',' . $lexicon[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
+			for ($j=0; $j<sizeof($lexicon); $j++){
+				//if (preg_match('/\b'.$lexicon[$j].'\b/', $result[$i]['text'])) { // if matched
+				if (strpos($result[$i]['text'], ' '.$lexicon[$j].' ') == TRUE || strpos($result[$i]['text'], ' '.$lexicon[$j]) == TRUE || strpos($result[$i]['text'], $lexicon[$j].' ') == TRUE){
+					$value++; // for every matched words, give 1
+					if ($intersectStr == NULL) $intersectStr = $lexicon[$j];
+					else $intersectStr .= ',' . $lexicon[$j];
 				}
 			}
 			
-			// compare with ordinary common words data
-			$intersectsWith = array_intersect($commonWordsOrdinary, $words);
-			if ($intersectsWith) {
-				$value += sizeof($intersectsWith); // if intersect with ordinary common words, give 1 for every word
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					if ($intersectStr == null)
-						$intersectStr = $commonWordsOrdinary[$arrayKey];
-					else 
-						$intersectStr .= ',' . $commonWordsOrdinary[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
+			// compare with non-review common words data
+			for ($j=0; $j<sizeof($nonReview); $j++){
+				//if (preg_match('/\b'.$nonReview[$j]['text'].'\b/', $result[$i]['text'])) { // if matched
+				if (strpos($result[$i]['text'], ' '.$nonReview[$j]['text'].' ') == TRUE || strpos($result[$i]['text'], ' '.$nonReview[$j]['text']) == TRUE || strpos($result[$i]['text'], $nonReview[$j]['text'].' ') == TRUE){
+					$value += $nonReview[$j]['score'];
+					if ($intersectStr == NULL) $intersectStr = '-'.$nonReview[$j]['text'];
+					else $intersectStr .= ',-' . $nonReview[$j]['text'];
 				}
 			}
 			
-			// compare with valued common words data
-			$intersectsWith = array_intersect($commonWords, $words);
-			if ($intersectsWith) {
-				for ($j=0; $j<sizeof($intersectsWith); $j++){
-					$arrayKey = key($intersectsWith);
-					$value += $commonWordsValue[$arrayKey];
-					
-					if ($intersectStr == null)
-						$intersectStr = $commonWords[$arrayKey];
-					else 
-						$intersectStr .= ',' . $commonWords[$arrayKey];
-					
-					// get next key array
-					next($intersectsWith);
+			// compare with common words data
+			for ($j=0; $j<sizeof($commonWords); $j++){
+				//if (preg_match('/\b'.$commonWords[$j]['text'].'\b/', $result[$i]['text'])) { // if matched
+				if (strpos($result[$i]['text'], ' '.$commonWords[$j]['text'].' ') == TRUE || strpos($result[$i]['text'], ' '.$commonWords[$j]['text']) == TRUE || strpos($result[$i]['text'], $commonWords[$j]['text'].' ') == TRUE){
+					$value += $commonWords[$j]['score'];
+					if ($intersectStr == NULL) $intersectStr = $commonWords[$j]['text'];
+					else $intersectStr .= ',' . $commonWords[$j]['text'];
 				}
 			}
 			
-			if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id']) && $value >= 8){
+			if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id']) && $value >= 10){
 				$result[$i]['is_review'] = 1;
 				$this->model_tweets_new->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
 			}
@@ -507,13 +453,6 @@ class WebSystem extends CI_Controller {
 				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
 				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
 				
-				// compare with common words also	
-				$words = $this->splitSentence($result[$i]['text']);
-				if (array_intersect($listPos, $words))
-					$probabilityofSentenceBeingPositive += sizeof(array_intersect($listPos, $words))*0.25;
-				if (array_intersect($listNeg, $words))
-					$probabilityofSentenceBeingNegative += sizeof(array_intersect($listNeg, $words))*0.25;
-				
 				// set is_positive value
 				if ($resultofAnalyzingSentence == "positive" || $probabilityofSentenceBeingPositive > $probabilityofSentenceBeingNegative)
 					$result[$i]['is_positive'] = 1;
@@ -523,9 +462,9 @@ class WebSystem extends CI_Controller {
 			
 			if (!$this->model_tweets_new->getTweetByOri('tweets_final', $result[$i]['twitter_id'])){
 				if (!$this->model_tweets_new->getTweetByText('tweets_final', $result[$i]['text']))
-					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $film_id, $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 0);
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['film_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 0);
 				else 
-					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $film_id, $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 1);
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['film_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 1);
 			}
 		}
 		

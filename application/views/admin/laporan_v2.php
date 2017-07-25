@@ -34,9 +34,9 @@
 		   	if ($result != NULL){
 		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Input</p></td><td>'.$result['input'].'</td></tr>';
 		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Feature reduction</p></td><td>'.$result['regex'].'</td></tr>';
-		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Mapping</p></td><td>'.$result['replaced'].'</td></tr>';
-		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Rule-based Lexicon</p></td><td>'.$result['lexicon'].'</td></tr>';
-		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Rule-based Common words</p></td><td>'.$result['common'].'</td></tr>';
+		   		//echo '<tr><td><p style="text-align: right; font-weight: bold;">Mapping</p></td><td>'.$result['replaced'].'</td></tr>';
+		   		//echo '<tr><td><p style="text-align: right; font-weight: bold;">Rule-based Lexicon</p></td><td>'.$result['lexicon'].'</td></tr>';
+		   		//echo '<tr><td><p style="text-align: right; font-weight: bold;">Rule-based Common words</p></td><td>'.$result['common'].'</td></tr>';
 		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Final text</p></td><td>'.$result['text'].'</td></tr>';
 		   		
 		   		echo '<tr><td width="35%"><p style="text-align: right; font-weight: bold;">Hasil test</p></td>';
@@ -49,7 +49,7 @@
 				    else if ($result['is_positive'] == 0) echo '<span title="Negative review" class="fa fa-minus"></span>';
 				echo '</td></tr>';
 				
-				echo '<tr><td>Details</td><td>Score: '.$result['score'].' | Pos: '.round($result['persen_pos'],2).'% | Neg: '.round($result['persen_neg'],2).'%</td><tr>';
+				//echo '<tr><td>Details</td><td>Score: '.$result['score'].' | Pos: '.round($result['persen_pos'],2).'% | Neg: '.round($result['persen_neg'],2).'%</td><tr>';
 			}
 		   	?>
 		</table>

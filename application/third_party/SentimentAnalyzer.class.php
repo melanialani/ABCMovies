@@ -136,6 +136,29 @@
 			}
 			$positivity = $sentimentScores['positive'] / ($sentimentScores['positive'] + $sentimentScores['negative']);
 			$negativity = $sentimentScores['negative'] / ($sentimentScores['positive'] + $sentimentScores['negative']);
+			
+			// compare with common words also	
+			$listPos = [];
+			$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
+			while ($activeLine = fgets($fileLocation)){
+				array_push($listPos, trim($activeLine));	
+			}
+			$listNeg = [];
+			$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
+			while ($activeLine = fgets($fileLocation)){
+				array_push($listNeg, trim($activeLine));	
+			}
+			for ($j=0; $j<sizeof($listPos); $j++){
+				if (strpos($sentence, $listPos[$j]) == TRUE)
+					$positivity += 0.25;
+				
+			}
+			for ($j=0; $j<sizeof($listNeg); $j++){
+				if (strpos($sentence, $listNeg[$j]) == TRUE)
+					$negativity += 0.25;
+				
+			}
+			
 			if (in_array(round($bayesDifference, 1), $this->arrBayesDifference))
 			{
 				$sentiment = 'Neutral';
