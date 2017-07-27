@@ -15,6 +15,8 @@ class WebSystem extends CI_Controller {
 	}
 	
 	public function checkNewMovies(){
+		$newMovie = FALSE;
+		
 		// new code YQL
 		$site = "http://www.21cineplex.com/nowplaying/";
 		$yql = "select * from htmlstring where url='" . $site . "'";
@@ -159,6 +161,8 @@ class WebSystem extends CI_Controller {
 						
 						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
 							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['param'],$getdata['status']);
+					
+						$newMovie = TRUE;
 					}
 				}
 		    }
@@ -296,10 +300,14 @@ class WebSystem extends CI_Controller {
 						
 						$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
 							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['param'],$getdata['status']);
+					
+						$newMovie = TRUE;
 					} 
 				}
 		    }
 		}
+		
+		return $newMovie;
 	}
 	
 	public function getTweets($film_id = NULL){
@@ -516,15 +524,17 @@ class WebSystem extends CI_Controller {
 	      	// try send mail ant if not able print debug
 	      	if ( ! $this->email->send()){
 	        	echo "Email not sent \n".$this->email->print_debugger();
-	        	return FALSE;
 	      	} else { // successfull message
 				echo "Email was successfully sent to $email";
-				return TRUE;
 			}
 	    } else {
 	    	echo "Email address ($email) is not correct. Please try again</a>";
-	    	return FALSE;
 	    }
+	}
+	
+	public function automateJob(){
+		$newMovie = $this->checkNewMovies();
+		if ($newMovie) $this->sendEmail();
 	}
 }
 ?>

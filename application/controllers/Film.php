@@ -9,7 +9,7 @@ Class Film extends WebSystem {
 	}
 	
 	public function index(){
-		$this->checkNewMovies();
+		$this->automateJob();
 		
 		// check if admin
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
