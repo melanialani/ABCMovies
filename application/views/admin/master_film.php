@@ -88,7 +88,7 @@
 	$(document).ready(function() {
 		$('#datatable').DataTable( {
 			"order": [[ 6, "desc" ]],
-			"columnDefs": [{ "width": "17%", "targets": 7 }, { "width": "15%", "targets": 1 }]
+			"columnDefs": [{ "width": "20%", "targets": 7 }, { "width": "15%", "targets": 1 }]
 		} );
 	} );
 	</script>

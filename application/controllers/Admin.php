@@ -192,7 +192,7 @@ Class Admin extends CI_Controller {
 					'upload_path'     => "./pictures/banner/",
 					'allowed_types'   => "gif|jpg|png|jpeg", //gif|jpg|png|jpeg
 					'overwrite'       => TRUE,
-					'file_name'       => $data['name']
+					'file_name'       => $data['banner_name']
 				);
 				
 				$this->upload->initialize($config);
@@ -285,7 +285,7 @@ Class Admin extends CI_Controller {
 				} else $data['name'] = null;
 				
 				// get information from database
-				$data['tweets'] = $this->model_tweets_new->getAllTweetByMovie($data['film_id']);
+				$data['tweets'] = $this->model_tweets_new->getAllTweetByMovieConfirmed($data['film_id']);
 				$data['movie'] = $this->model_film->getFilm($data['film_id']);
 				
 				$this->load->view('includes/header', $data);

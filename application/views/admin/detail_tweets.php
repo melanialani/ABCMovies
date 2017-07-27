@@ -52,7 +52,7 @@
    		<table id="datatable" class="table table-striped table-bordered display">
 		    <thead>
 		        <tr>
-		            <th>Confirmed</th>
+		            <!--th>Confirmed</th-->
 		            <th>Tweet</th>
 		            <th>Sentiment</th>
 		            <th>Action</th>
@@ -63,10 +63,10 @@
 		   		if (sizeof($tweets) > 1){
 					for($i=0; $i<sizeof($tweets); $i++) {
 				    	echo "<tr>";
-				    		echo "<td>";
+				    		/*echo "<td>";
 					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['confirmed'].'</span>';
 					        	if ($tweets[$i]['confirmed'] == 1) echo '<span title="Already checked" class="fa fa-check" style="margin-left:45%;"></span>';
-					        echo "</td>";
+					        echo "</td>";*/
 				    		echo "<td>" . $tweets[$i]['text'] . "</td>";
 					        echo "<td>";
 					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['yes_positive'].'</span>';
@@ -77,11 +77,10 @@
 				   				echo form_open('admin/detailTweets');
 				   					echo form_hidden('id', $tweets[$i]['id']);
 				   					echo form_hidden('ori_id', $tweets[$i]['ori_id']);
-				   					echo form_hidden('yes_positive', $tweets[$i]['yes_positive']);
 				   					?>
 				   					<button type="submit" name="pos" value="Positive" title="Mark as positive review" class="btn btn-xs btn-success"><span class="fa fa-plus"></span></button>
 				   					<button type="submit" name="neg" value="Negative" title="Mark as positive review" class="btn btn-xs btn-warning"><span class="fa fa-minus"></span></button>
-				   					<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
+				   					<button type="submit" name="delete" value="Delete" title="Mark as non-review" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
 				   					<?php
 				   				echo form_close();
 			   				echo "</td>";

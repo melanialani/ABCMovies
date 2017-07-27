@@ -1,5 +1,7 @@
 <?php
 
+include_once( dirname(dirname(__FILE__)) . '/third_party/SentimentAnalyzer.php' );
+
 Class Model_function extends CI_Model {
 
 	public function __construct(){

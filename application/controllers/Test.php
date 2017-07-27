@@ -19,6 +19,60 @@ class Test extends CI_Controller {
 		return $matches[0];
 	}
 	
+	public function updateMetacriticImdb(){
+		//$site = "http://www.metacritic.com/movie/dunkirk";
+		//$site = "http://www.metacritic.com/movie/guardians-of-the-galaxy-vol-2";
+		
+		$movies = $this->model_film->getAllFilm();
+		for ($i=0; $i<sizeof($movies); $i++){
+			$title = strtolower(trim($movies[$i]['title']));
+			$title = preg_replace('/[^A-Za-z0-9]/', ' ', $title);
+			$title = str_ireplace('  ', '-', $title);
+			$title = str_ireplace(' ', '-', $title);
+			
+			$site = "http://www.metacritic.com/movie/".$title;
+			$yql = "select * from htmlstring where url='" . $site . "'";
+			$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+		    
+		    // make call with cURL
+		    $session = curl_init($resturl);
+		    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+		    $json = curl_exec($session);
+		    
+		    // convert JSON to PHP object
+		    $phpObj =  json_decode($json); 
+		    
+		    //echo '<pre>'; print_r($phpObj); echo '<pre>';
+		    
+			$arrku = (array) $phpObj->query->diagnostics->url[1];
+			if (!array_key_exists('http-status-code', $arrku)){ // page not found
+				$result = $phpObj->query->results->result;
+				if (strpos($result, 'ratingValue') == TRUE){
+					$result = explode('ratingValue" : "', $result);
+					$result = explode('"', $result[1]);
+					echo '<hr>'.$result[0].' - '.$site.'<hr>';
+					$this->model_film->updateMetascoreFilm($movies[$i]['id'], $result[0]);
+				}
+			} else echo $site.'<br/>';
+			
+			$oIMDB = new IMDB($movies[$i]['title']);
+			if ($oIMDB->isReady) {
+				$id = NULL; $rating = NULL;
+			    foreach ($oIMDB->getAll() as $aItem) {
+			        if ($aItem['name'] == 'Rating') $rating = $aItem['value'];
+			        else if ($aItem['name'] == 'Url' && strpos($aItem['name'], 'imdb') == TRUE){
+						$temp = explode('/', $aItem['value']);
+						$id = $temp[4];
+					} 
+			    }
+			    
+			    $this->model_film->updateIMDBFilm($movies[$i]['title'],$id,$rating);
+			} else 
+			 	echo '<b>Movie not found</b>: ' . $movies[$i]['title'].'<br>';
+		}
+		
+	}
+	
 	public function calculation(){
 		$data['tp'] = sizeof($this->model_tweets_new->getBoth('tp'));
 		$data['tn'] = sizeof($this->model_tweets_new->getBoth('tn'));

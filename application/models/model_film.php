@@ -195,6 +195,40 @@ Class Model_film extends CI_Model {
 	}
 	
 	/**
+	* Update id and rating IMDB
+	* @param int $id
+	* @param string $imdb_id
+	* @param double $imdb_rating
+	* 
+	* @return
+	*/
+	public function updateIMDBFilm($id, $imdb_id, $imdb_rating){
+		$myArr = array(
+			'imdb_id' 			=> $imdb_id,
+			'imdb_rating' 		=> $imdb_rating
+        );
+		$this->db->where('id', $id);
+		$this->db->update('film', $myArr);
+		return $this->db->affected_rows();
+	}
+	
+	/**
+	* Update metacritic
+	* @param int $id
+	* @param int $metascore
+	* 
+	* @return
+	*/
+	public function updateMetascoreFilm($id, $metascore){
+		$myArr = array(
+			'metascore' 		=> $metascore
+        );
+		$this->db->where('id', $id);
+		$this->db->update('film', $myArr);
+		return $this->db->affected_rows();
+	}
+	
+	/**
 	 * Delete film (by id)
 	 * @param int $id
 	 */

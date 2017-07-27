@@ -234,6 +234,126 @@ Class Model_tweets_new extends CI_Model {
 		return $this->db->get($table_name)->result_array();
 	}
 	
+	/**
+	* Return all unconfirmed tweets
+	* @param int $film_id
+	* 
+	* @return
+	*/
+	public function getAllTweetByMovieUnconfirmed($film_id){
+		$index = 0;
+		$returnArray[$index]['id'] = NULL;
+		$returnArray[$index]['ori_id'] = NULL;
+		$returnArray[$index]['text'] = NULL;
+		$returnArray[$index]['is_review'] = NULL;
+		$returnArray[$index]['is_positive'] = NULL;
+		$returnArray[$index]['yes_review'] = NULL;
+		$returnArray[$index]['yes_positive'] = NULL;
+		$returnArray[$index]['confirmed'] = NULL;
+		
+		// get all unconfirmed tweets_final
+		$this->db->select('fin.id as id, fin.ori_id as ori_id, fin.text as text, fin.is_review as is_review, fin.is_positive as is_positive, fin.yes_review as yes_review, fin.yes_positive as yes_positive, fin.confirmed as confirmed', FALSE); 
+		$this->db->from('tweets_final as fin, tweets_ori as ori');
+		$this->db->where('fin.ori_id = ori.twitter_id');
+		$this->db->where('fin.confirmed', 0);
+		$this->db->where('fin.duplicate', 0);
+		$this->db->where('ori.film_id', $film_id);
+		$this->db->order_by('fin.ori_id','desc');
+		$hasil = $this->db->get()->result_array();
+		
+		for ($i=0; $i<sizeof($hasil); $i++){
+			$returnArray[$index]['id']			 = $hasil[$i]['id'];
+			$returnArray[$index]['ori_id']		 = $hasil[$i]['ori_id'];
+			$returnArray[$index]['text']		 = $hasil[$i]['text'];
+			$returnArray[$index]['is_review'] 	 = $hasil[$i]['is_review'];
+			$returnArray[$index]['is_positive']  = $hasil[$i]['is_positive'];
+			$returnArray[$index]['yes_review']   = $hasil[$i]['yes_review'];
+			$returnArray[$index]['yes_positive'] = $hasil[$i]['yes_positive'];
+			$returnArray[$index]['confirmed'] 	 = $hasil[$i]['confirmed'];
+			
+			$index++;
+		}
+		
+        return $returnArray;
+	}
+	
+	/**
+	* Return all tweets that has been confirmed true by admin
+	* @param int $film_id
+	* 
+	* @return
+	*/
+	public function getAllTweetByMovieConfirmed($film_id){
+		$index = 0;
+		$returnArray[$index]['id'] = NULL;
+		$returnArray[$index]['ori_id'] = NULL;
+		$returnArray[$index]['text'] = NULL;
+		$returnArray[$index]['is_review'] = NULL;
+		$returnArray[$index]['is_positive'] = NULL;
+		$returnArray[$index]['yes_review'] = NULL;
+		$returnArray[$index]['yes_positive'] = NULL;
+		$returnArray[$index]['confirmed'] = NULL;
+		
+		// get all confirmed tweets_final
+		$this->db->select('fin.id as id, fin.ori_id as ori_id, fin.text as text, fin.is_review as is_review, fin.is_positive as is_positive, fin.yes_review as yes_review, fin.yes_positive as yes_positive, fin.confirmed as confirmed', FALSE); 
+		$this->db->from('tweets_final as fin, tweets_ori as ori');
+		$this->db->where('fin.ori_id = ori.twitter_id');
+		$this->db->where('fin.yes_review', 1);
+		$this->db->where('fin.confirmed', 1);
+		$this->db->where('fin.duplicate', 0);
+		$this->db->where('ori.film_id', $film_id);
+		$this->db->order_by('fin.ori_id','desc');
+		$hasil = $this->db->get()->result_array();
+		
+		for ($i=0; $i<sizeof($hasil); $i++){
+			$returnArray[$index]['id']			 = $hasil[$i]['id'];
+			$returnArray[$index]['ori_id']		 = $hasil[$i]['ori_id'];
+			$returnArray[$index]['text']		 = $hasil[$i]['text'];
+			$returnArray[$index]['is_review'] 	 = $hasil[$i]['is_review'];
+			$returnArray[$index]['is_positive']  = $hasil[$i]['is_positive'];
+			$returnArray[$index]['yes_review']   = $hasil[$i]['yes_review'];
+			$returnArray[$index]['yes_positive'] = $hasil[$i]['yes_positive'];
+			$returnArray[$index]['confirmed'] 	 = $hasil[$i]['confirmed'];
+			
+			$index++;
+		}
+		
+		// get old tweets and merge it with the new ones
+		$this->db->select('t.id as id, t.tweet as text, t.status as status, t.truth_rule as truth_rule, t.truth_naive as truth_naive', FALSE);
+		$this->db->from('tweets as t, film as f');
+		$this->db->where('t.film_id = f.id');
+		$this->db->where('t.film_id', $film_id);
+		$this->db->order_by('t.timestamp', 'desc');
+		$hasil = $this->db->get()->result_array();
+		
+		for ($i=0; $i<sizeof($hasil); $i++){
+			if ($hasil[$i]['truth_rule'] == 1 && ($hasil[$i]['status'] == 1 || $hasil[$i]['status'] == 0)){
+				$returnArray[$index]['ori_id']		 = NULL;
+				$returnArray[$index]['is_review'] 	 = 1;
+				$returnArray[$index]['yes_review'] 	 = 1;
+				$returnArray[$index]['confirmed'] 	 = 1;
+				$returnArray[$index]['id']			 = $hasil[$i]['id'];
+				$returnArray[$index]['text']		 = $hasil[$i]['text'];				
+				$returnArray[$index]['is_positive']  = $hasil[$i]['status'];
+				
+				if ($hasil[$i]['truth_naive'] == 1)
+					$returnArray[$index]['yes_positive']  = $hasil[$i]['status'];
+				else
+					$returnArray[$index]['yes_positive']  = !$hasil[$i]['status'];
+				
+				$index++;
+			}
+		}
+		
+        return $returnArray;
+	}
+	
+	/**
+	* Return both confirmed and unconfirmed tweets
+	* @param int $film_id
+	* 
+	* @return
+	*/
 	public function getAllTweetByMovie($film_id){
 		$index = 0;
 		$returnArray[$index]['id'] = NULL;
@@ -341,7 +461,7 @@ Class Model_tweets_new extends CI_Model {
 		$returnArray[0]['confirmed'] = NULL;
 		
 		// get all unconfirmed tweets_final
-		$this->db->limit(5);
+		//$this->db->limit(5);
 		$this->db->where('confirmed', 0);
 		$this->db->order_by('ori_id', 'desc');
 		$final = $this->db->get('tweets_final')->result_array();
