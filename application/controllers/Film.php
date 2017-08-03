@@ -9,8 +9,6 @@ Class Film extends WebSystem {
 	}
 	
 	public function index(){
-		$this->automateJob();
-		
 		// check if admin
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
 		else $data['is_admin'] = FALSE;

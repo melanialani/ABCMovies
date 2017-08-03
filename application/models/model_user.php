@@ -80,6 +80,18 @@ Class Model_user extends CI_Model {
 	}
 	
 	/**
+	* Return all email of any admin found in database
+	* 
+	* @return
+	*/
+	public function getAdminEmail(){
+		$this->db->select('email');
+		$this->db->from('user');
+		$this->db->where('role', 0);
+		return $this->db->get()->result_array();
+	}
+	
+	/**
 	* Insert User (REGISTER)
 	* @param string $email
 	* @param string(max 32) $password

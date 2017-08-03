@@ -32,6 +32,18 @@ Class Model_film extends CI_Model {
 	}
 	
 	/**
+	* Get spesific checked movie's informations
+	* @param string $title
+	* 
+	* @return
+	*/
+	public function getFilmByTitleChecked($title){
+		$this->db->where('title', $title);
+		$this->db->where('status <> 3 AND status <> 4');
+		return $this->db->get('film')->result_array();
+	}
+	
+	/**
 	 * Get all 'Coming Soon' movies
 	 */
 	public function getComingSoonMovies(){

@@ -19,6 +19,396 @@ class Test extends CI_Controller {
 		return $matches[0];
 	}
 	
+	public function checkNewMovies(){
+		$newMovie = NULL; $idx = 0;
+		
+		// new code YQL
+		$site = "http://www.21cineplex.com/nowplaying/";
+		$yql = "select * from htmlstring where url='" . $site . "'";
+		$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+	    
+	    // make call with cURL
+	    $session = curl_init($resturl);
+	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+	    $json = curl_exec($session);
+	    
+	    // convert JSON to PHP object
+	    $phpObj =  json_decode($json); 
+	    
+	    /***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** CHECK NOW PLAYING ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****/
+	     
+	    $playing = $phpObj->query->results->result;
+		$playing = explode('<div id="playing">', $playing);
+		$playing = explode('</div>', $playing[1]);
+	   	
+	   	$nowPlaying = [];
+	   	
+	   	$title = explode('title', $playing[0]);
+	   	$img = explode('src', $playing[0]);
+		for ($i=1; $i<sizeof($title); $i++){
+			$trueTitle = explode('"', $title[$i]);
+			$trueImg = explode('"', $img[$i]);
+			$nowPlaying[$i]['title'] = $trueTitle[1];
+			$nowPlaying[$i]['img'] = $trueImg[1];
+		}
+	    
+	    if ($nowPlaying != NULL){
+			// if there's a title in db with status NOW PLAYING, but doesnt exist in the data we got from 21, then change the movie's status into OLD
+			$moviesinDB = $this->model_film->getOnGoingMovies();	
+			for ($j=0; $j<sizeof($moviesinDB); $j++){
+				$isStillPlaying = FALSE;
+				for ($i=1; $i<sizeof($nowPlaying); $i++){
+					//if (mb_strtolower(preg_replace('/[^A-Za-z0-9]/', ' ', $nowPlaying[$i]['title'])) == mb_strtolower(preg_replace('/[^A-Za-z0-9]/', ' ', $moviesinDB[$j]['title']))){
+					if (mb_strtolower(html_entity_decode($nowPlaying[$i]['title'], ENT_QUOTES | ENT_XML1, 'UTF-8')) == mb_strtolower($moviesinDB[$j]['title'])){
+						$isStillPlaying = TRUE;
+						break;
+					}
+			    }
+				if (!$isStillPlaying) // if not exist, change status into old
+					$this->model_film->updateStatusFilm($moviesinDB[$j]['id'], 2);
+			}
+			
+			// explode each movie to get informations
+			for ($i=1; $i<sizeof($nowPlaying); $i++){
+				$getdata['title'] = html_entity_decode($nowPlaying[$i]['title'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+				$getdata['poster'] = htmlspecialchars_decode(str_replace('100x147','300x430',$nowPlaying[$i]['img']));
+				
+				// so if the movie title has any 3D or IMAX in it, we dismiss it (because it's definitely a double)
+				if (strpos($getdata['title'], '3D') == FALSE && strpos($getdata['title'], 'IMAX') == FALSE){
+					$inDB = $this->model_film->getFilmByTitleChecked($getdata['title']);
+					if ($inDB){ // already in db, just change status
+						$this->model_film->updateStatusFilm($inDB[0]['id'], 1);
+					} else { // not in db, add it
+						$getdata['summary'] = NULL;
+						$getdata['genre'] = NULL;
+						$getdata['year'] = NULL;
+						$getdata['playing_date'] = NULL;
+						$getdata['length'] = NULL;
+						$getdata['director'] = NULL;
+						$getdata['writer'] = NULL;
+						$getdata['actors'] = NULL;
+						$getdata['imdb_id'] = NULL;
+						$getdata['imdb_rating'] = NULL;
+						$getdata['trailer'] = NULL;
+						$getdata['metascore'] = NULL;
+						$getdata['param'] = '#'.str_replace(' ', '', $getdata['title']).','.$getdata['title'];
+						$getdata['status'] = 4;
+						
+						// get movie's information from imdb
+						$oIMDB = new IMDB($getdata['title']);
+						if ($oIMDB->isReady) {
+						    foreach ($oIMDB->getAll() as $aItem) {
+						    	//echo '<b>' . $aItem['name'] . '</b>: ' . $aItem['value'] . '<br><br>';
+						        if ($aItem['name'] == 'Cast')				$getdata['actors'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Director')		$getdata['director'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Plot')			$getdata['summary'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Poster')		$getdata['poster'] = htmlspecialchars_decode($aItem['value']);
+						        else if ($aItem['name'] == 'Rating')		$getdata['imdb_rating'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Runtime')		$getdata['length'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Writer')		$getdata['writer'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Year')			$getdata['year'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Genre')			$getdata['genre'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Trailer'){
+						        	// <iframe width="854" height="480" src="https://www.youtube.com/embed/G4VmJcZR0Yg" frameborder="0" allowfullscreen></iframe>
+						        	$getdata['trailer'] = htmlspecialchars_decode('<iframe width="894" height="520" src="'.$aItem['value'].'imdb/embed?autoplay=false&width=854" frameborder="0" allowfullscreen></iframe>');
+						        } else if ($aItem['name'] == 'Url' && strpos($aItem['name'], 'imdb') == TRUE){
+						        	// ex: http://www.imdb.com/title/tt4981636/
+									$temp = explode('/', $aItem['value']);
+									$getdata['imdb_id'] = $temp[4];
+								} else if ($aItem['name'] == 'Release Date'){
+						        	$temp = $aItem['value'];
+						        	if (strpos($temp, '(') == TRUE){ // ex: 7 October 2016 (USA)
+										$temp = explode('(', $temp);
+										$temp = trim($temp[0]);
+									}
+									$getdata['playing_date'] = date("Y-m-d", strtotime($temp));	
+						        }
+						        
+								// translate movie's summary from imdb
+								if ($getdata['summary'] != NULL && $getdata['summary'] != ''){
+									$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($getdata['summary']).'&lang=en-id';
+									$json = file_get_contents($url);
+									$yandex = json_decode($json);
+									if ($yandex->code == 200) $getdata['summary'] = $yandex->text[0];
+								}
+						    }
+						} 
+						
+						// get metascore
+						$title = strtolower(trim($getdata['title']));
+						$title = preg_replace('/[^A-Za-z0-9]/', ' ', $title);
+						$title = str_ireplace('  ', '-', $title);
+						$title = str_ireplace(' ', '-', $title);
+						
+						$site = "http://www.metacritic.com/movie/".$title;
+						$yql = "select * from htmlstring where url='" . $site . "'";
+						$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+						
+						// make call with cURL
+						$session = curl_init($resturl);
+						curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+						$json = curl_exec($session);
+						
+						// convert JSON to PHP object
+						$phpObj =  json_decode($json); 
+						
+						$arrku = (array) $phpObj->query->diagnostics->url[1];
+						if (!array_key_exists('http-status-code', $arrku)){ 
+							$result = $phpObj->query->results->result;
+							if (strpos($result, 'ratingValue') == TRUE){
+								$result = explode('ratingValue" : "', $result);
+								$result = explode('"', $result[1]);
+								$getdata['metascore'] = $result[0];
+							} // else : not rated
+						} // else : page not found
+						
+						if (!$this->model_film->getFilmByTitle($getdata['title']))
+							$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
+							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['param'],$getdata['status']);
+					
+						$newMovie[$idx]['title'] = $getdata['title'];
+						$newMovie[$idx]['status'] = 'Now Playing';
+						$idx++;
+					}
+				}
+		    }
+		}
+		
+		/***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** CHECK COMING SOON ***** ***** ***** ***** ***** ***** ***** ***** *****
+	     ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** ***** *****/
+	    
+	    // new code YQL
+		$site = "http://www.21cineplex.com/comingsoon/";
+		$yql = "select * from htmlstring where url='" . $site . "'";
+		$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+	    
+	    // make call with cURL
+	    $session = curl_init($resturl);
+	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+	    $json = curl_exec($session);
+	    
+	    // convert JSON to PHP object
+	    $phpObj =  json_decode($json); 
+	    
+	    $coming = $phpObj->query->results->result;
+		$coming = explode('pdata=[', $coming);
+		$coming = explode('movieTitle":"', $coming[1]); // explode to get each movie
+		//echo '<pre>'; print_r($coming); echo '</pre>';
+		
+		$comingSoon = [];
+		
+		// explode each movie to get informations
+		for ($i=1; $i<sizeof($coming); $i++){
+			$info = explode('","movieImage":"', $coming[$i]);				
+			$comingSoon[$i-1]['title'] = $info[0];									
+			
+			$info = explode('","movieTrailerFile":', $info[1]);				
+			$info = explode('.', $info[0]);
+			$comingSoon[$i-1]['img'] = 'http://www.21cineplex.com/data/gallery/pictures/'.$info[0].'_300x430.jpg';
+		}
+	    
+	    /*$coming = $phpObj->query->results->result;
+		$coming = explode('<div id="coming">', $coming);
+		$coming = explode('</div>', $coming[1]);
+	   	
+	   	$comingSoon = [];
+	   	
+	   	$title = explode('title', $coming[0]);
+	   	$img = explode('src', $coming[0]);
+		for ($i=1; $i<sizeof($title); $i++){
+			$trueTitle = explode('"', $title[$i]);
+			$trueImg = explode('"', $img[$i]);
+			$comingSoon[$i]['title'] = $trueTitle[1];
+			$comingSoon[$i]['img'] = $trueImg[1];
+		}*/
+	    
+	    if ($comingSoon != NULL){
+	    	// if there's a title in db with status COMING SOON, but doesnt exist in the data we got from 21, then change the movie's status into OLD
+			$moviesinDB = $this->model_film->getComingSoonMovies();	
+			for ($j=0; $j<sizeof($moviesinDB); $j++){
+				$isComingSoon = FALSE;
+				for ($i=1; $i<sizeof($nowPlaying); $i++){
+					//if (mb_strtolower(preg_replace('/[^A-Za-z0-9]/', ' ', $nowPlaying[$i]['title'])) == mb_strtolower(preg_replace('/[^A-Za-z0-9]/', ' ', $moviesinDB[$j]['title']))){
+					if (mb_strtolower(html_entity_decode($comingSoon[$i]['title'], ENT_QUOTES | ENT_XML1, 'UTF-8')) == mb_strtolower($moviesinDB[$j]['title'])){
+						$isComingSoon = TRUE;
+						break;
+					}
+			    }
+				if (!$isComingSoon) // if not exist, change status into old
+					$this->model_film->updateStatusFilm($moviesinDB[$j]['id'], 2);
+			}
+			
+			// explode each movie to get informations
+			for ($i=1; $i<sizeof($comingSoon); $i++){
+				$getdata['title'] = html_entity_decode($comingSoon[$i]['title'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+				$getdata['poster'] = htmlspecialchars_decode($comingSoon[$i]['img']);
+				
+				// so if the movie title has any 3D or IMAX in it, we dismiss it (because it's definitely a double)
+				if (strpos($getdata['title'], '3D') == FALSE && strpos($getdata['title'], 'IMAX') == FALSE){
+					// check if title already exist in database
+					$inDB = $this->model_film->getFilmByTitleChecked($getdata['title']);
+					if ($inDB){ // already in db, just change status
+						$this->model_film->updateStatusFilm($inDB[0]['id'], 0);
+					} else { // not in db, add it
+						$getdata['summary'] = NULL;
+						$getdata['genre'] = NULL;
+						$getdata['year'] = NULL;
+						$getdata['playing_date'] = NULL;
+						$getdata['length'] = NULL;
+						$getdata['director'] = NULL;
+						$getdata['writer'] = NULL;
+						$getdata['actors'] = NULL;
+						$getdata['imdb_id'] = NULL;
+						$getdata['imdb_rating'] = NULL;
+						$getdata['trailer'] = NULL;
+						$getdata['metascore'] = NULL;
+						$getdata['param'] = '#'.str_replace(' ', '', $getdata['title']).','.$getdata['title'];
+						$getdata['status'] = 3;
+						
+						// get movie's information from imdb
+						$oIMDB = new IMDB($getdata['title']);
+						if ($oIMDB->isReady) {
+						    foreach ($oIMDB->getAll() as $aItem) {
+						    	//echo '<b>' . $aItem['name'] . '</b>: ' . $aItem['value'] . '<br><br>';
+						        if ($aItem['name'] == 'Cast')				$getdata['actors'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Director')		$getdata['director'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Plot')			$getdata['summary'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Poster')		$getdata['poster'] = htmlspecialchars_decode($aItem['value']);
+						        else if ($aItem['name'] == 'Rating')		$getdata['imdb_rating'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Runtime')		$getdata['length'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Writer')		$getdata['writer'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Year')			$getdata['year'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Genre')			$getdata['genre'] = $aItem['value'];
+						        else if ($aItem['name'] == 'Trailer'){
+						        	// <iframe width="854" height="480" src="https://www.youtube.com/embed/G4VmJcZR0Yg" frameborder="0" allowfullscreen></iframe>
+						        	$getdata['trailer'] = htmlspecialchars_decode('<iframe width="894" height="520" src="'.$aItem['value'].'imdb/embed?autoplay=false&width=854" frameborder="0" allowfullscreen></iframe>');
+						        } else if ($aItem['name'] == 'Url' && strpos($aItem['name'], 'imdb') == TRUE){
+						        	// ex: http://www.imdb.com/title/tt4981636/
+									$temp = explode('/', $aItem['value']);
+									$getdata['imdb_id'] = $temp[4];
+								} else if ($aItem['name'] == 'Release Date'){
+						        	$temp = $aItem['value'];
+						        	if (strpos($temp, '(') == TRUE){ // ex: 7 October 2016 (USA)
+										$temp = explode('(', $temp);
+										$temp = trim($temp[0]);
+									}
+									$getdata['playing_date'] = date("Y-m-d", strtotime($temp));	
+						        }
+						        
+								// translate movie's summary from imdb
+								if ($getdata['summary'] != NULL && $getdata['summary'] != ''){
+									$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($getdata['summary']).'&lang=en-id';
+									$json = file_get_contents($url);
+									$yandex = json_decode($json);
+									if ($yandex->code == 200) $getdata['summary'] = $yandex->text[0];
+								}
+						    }
+						}
+						
+						// get metascore
+						$title = strtolower(trim($getdata['title']));
+						$title = preg_replace('/[^A-Za-z0-9]/', ' ', $title);
+						$title = str_ireplace('  ', '-', $title);
+						$title = str_ireplace(' ', '-', $title);
+						
+						$site = "http://www.metacritic.com/movie/".$title;
+						$yql = "select * from htmlstring where url='" . $site . "'";
+						$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+						
+						// make call with cURL
+						$session = curl_init($resturl);
+						curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+						$json = curl_exec($session);
+						
+						// convert JSON to PHP object
+						$phpObj =  json_decode($json); 
+						
+						$arrku = (array) $phpObj->query->diagnostics->url[1];
+						if (!array_key_exists('http-status-code', $arrku)){ 
+							$result = $phpObj->query->results->result;
+							if (strpos($result, 'ratingValue') == TRUE){
+								$result = explode('ratingValue" : "', $result);
+								$result = explode('"', $result[1]);
+								$getdata['metascore'] = $result[0];
+							} // else : not rated
+						} // else : page not found
+						
+						if (!$this->model_film->getFilmByTitle($getdata['title']))
+							$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],
+							$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['param'],$getdata['status']);
+					
+						$newMovie[$idx]['title'] = $getdata['title'];
+						$newMovie[$idx]['status'] = 'Coming Soon';
+						$idx++;
+					} 
+				}
+		    }
+		}
+		
+		return $newMovie;
+	}
+	
+	public function checkComingSoon(){
+		// new code YQL
+		$site = "http://www.21cineplex.com/comingsoon/";
+		$yql = "select * from htmlstring where url='" . $site . "'";
+		$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+	    
+	    // make call with cURL
+	    $session = curl_init($resturl);
+	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+	    $json = curl_exec($session);
+	    
+	    // convert JSON to PHP object
+	    $phpObj =  json_decode($json); 
+	    
+	    $coming = $phpObj->query->results->result;
+		$coming = explode('pdata=[', $coming);
+		$coming = explode('movieTitle":"', $coming[1]); // explode to get each movie
+		//echo '<pre>'; print_r($coming); echo '</pre>';
+		
+		// explode each movie to get informations
+		for ($i=1; $i<sizeof($coming); $i++){
+			$info = explode('","movieImage":"', $coming[$i]);				//echo '<pre>'; print_r($info); echo '</pre>';
+			$getdata['title'] = $info[0];									echo $i.' - '.$getdata['title'].'<br/>';
+			
+			$info = explode('","movieTrailerFile":', $info[1]);				//echo '<pre>'; print_r($info); echo '</pre>';
+			$info = explode('.', $info[0]);
+			$getdata['poster'] = htmlspecialchars_decode('http://www.21cineplex.com/data/gallery/pictures/'.$info[0].'_300x430.jpg'); echo $i.' - '.$getdata['poster'].'<br/><br/>';
+		}
+	}
+	
+	public function checkNowPlaying(){
+		// new code YQL
+		$site = "http://www.21cineplex.com/nowplaying/";
+		$yql = "select * from htmlstring where url='" . $site . "'";
+		$resturl = "http://query.yahooapis.com/v1/public/yql?q=" . urlencode($yql) . "&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+	    
+	    // make call with cURL
+	    $session = curl_init($resturl);
+	    curl_setopt($session, CURLOPT_RETURNTRANSFER,true);
+	    $json = curl_exec($session);
+	    
+	    // convert JSON to PHP object
+	    $phpObj =  json_decode($json); 
+		
+		$playing = $phpObj->query->results->result;
+		$playing = explode('<div id="playing">', $playing);
+		$playing = explode('</div>', $playing[1]);
+	   	
+	   	$title = explode('title', $playing[0]);
+	   	$img = explode('src', $playing[0]);
+		for ($i=1; $i<sizeof($title); $i++){
+			$trueTitle = explode('"', $title[$i]);
+			$trueImg = explode('"', $img[$i]);
+			$nowPlaying[$i]['title'] = $trueTitle[1];		echo $nowPlaying[$i]['title'].'<br/>';
+			$nowPlaying[$i]['img'] = $trueImg[1];
+		}
+	}
+	
 	public function updateMetacriticImdb(){
 		//$site = "http://www.metacritic.com/movie/dunkirk";
 		//$site = "http://www.metacritic.com/movie/guardians-of-the-galaxy-vol-2";
