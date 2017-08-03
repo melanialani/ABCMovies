@@ -63,16 +63,16 @@ class WebSystem extends CI_Controller {
 	    
 	    if ($nowPlaying != NULL){
 			// if there's a title in db with status NOW PLAYING, but doesnt exist in the data we got from 21, then change the movie's status into OLD
-			for ($j=0; $j<sizeof($moviesinDB); $j++){
-				$isStillPlaying = FALSE;
-				for ($i=1; $i<sizeof($nowPlaying); $i++){
+			for ($i=1; $i<sizeof($nowPlaying); $i++){
+				$isStillPlaying = FALSE; $id = NULL;
+				for ($j=0; $j<sizeof($moviesinDB); $j++){
 					// if ongoing movies & title is the same then
 					if ($moviesinDB[$j]['status'] == 1 && mb_strtolower($moviesinDB[$j]['title']) == mb_strtolower(html_entity_decode($nowPlaying[$i]['title'], ENT_QUOTES | ENT_XML1, 'UTF-8'))){
-						$isStillPlaying = TRUE; break;
-					}
-			    }
+						$isStillPlaying = TRUE; $id = $moviesinDB[$j]['id']; break;
+					}	
+				}
 				if (!$isStillPlaying) // if not exist, change status into old
-					$this->model_film->updateStatusFilm($moviesinDB[$j]['id'], 2);
+					$this->model_film->updateStatusFilm($id, 2);
 			}
 			
 			// explode each movie to get informations
@@ -157,16 +157,16 @@ class WebSystem extends CI_Controller {
 	    
 	    if ($comingSoon != NULL){
 	    	// if there's a title in db with status COMING SOON, but doesnt exist in the data we got from 21, then change the movie's status into OLD
-			for ($j=0; $j<sizeof($moviesinDB); $j++){
-				$isComingSoon = FALSE;
-				for ($i=1; $i<sizeof($comingSoon); $i++){
+			for ($i=1; $i<sizeof($comingSoon); $i++){
+				$isComingSoon = FALSE; $id = NULL;
+				for ($j=0; $j<sizeof($moviesinDB); $j++){
 					// if coming soon movies & title is the same then
 					if ($moviesinDB[$j]['status'] == 0 && mb_strtolower($moviesinDB[$j]['title']) == mb_strtolower(html_entity_decode($comingSoon[$i]['title'], ENT_QUOTES | ENT_XML1, 'UTF-8'))){
-						$isComingSoon = TRUE; break;
+						$isComingSoon = TRUE; $id = $moviesinDB[$j]['id']; break;
 					}
-			    }
-				if (!$isComingSoon) // if not exist, change status into old
-					$this->model_film->updateStatusFilm($moviesinDB[$j]['id'], 2);
+				}
+				if (!$isComingSoon) // change status into old
+					$this->model_film->updateStatusFilm($id, 2);
 			}
 			
 			// explode each movie to get informations
