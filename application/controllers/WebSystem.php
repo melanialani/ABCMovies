@@ -109,8 +109,7 @@ class WebSystem extends CI_Controller {
 						}
 						
 						// add to array new movie (send to email)
-						$newMovie[$idxNew]['title'] = $getdata['title'];
-						$newMovie[$idxNew]['status'] = 'Now Playing';
+						$newMovie[$idxNew] = $getdata['title'];
 						$idxNew++;
 					}
 				}
@@ -204,8 +203,7 @@ class WebSystem extends CI_Controller {
 						}
 						
 						// add to array new movie (send email)
-						$newMovie[$idxNew]['title'] = $getdata['title'];
-						$newMovie[$idxNew]['status'] = 'Coming Soon';
+						$newMovie[$idxNew] = $getdata['title'];
 						$idxNew++;
 					} 
 				}
@@ -504,33 +502,40 @@ class WebSystem extends CI_Controller {
 	}
 	
 	public function sendEmail($newMovie = NULL){
-		//read parameters from $_POST using input class
-	    $allAdmin = $this->model_user->getAdminEmail();
+		$allAdmin = $this->model_user->getAdminEmail();
 	    
 	    for ($j=0; $j<sizeof($allAdmin); $j++){
-			$this->email->mailtype = 'html';
-			
 			$email = $allAdmin[$j]['email'];
 		    if (valid_email($email)){  // check is email addrress valid or no
-		      	// compose email
-		      	$this->email->from($email , 'Admin of ABC Movies');
-		      	$this->email->to($email); 
-		      	$this->email->subject('Film baru ditemukan');
-		      	
-		      	$message  = 'Hai admin, ada film baru lho di website Cinema 21. Tolong cek ya di master film. <br/><br/>';
+				$config['protocol'] = "smtp";
+				$config['smtp_host'] = "ssl://smtp.gmail.com";
+				$config['smtp_port'] = "465";
+				$config['smtp_user'] = "adm.abcmovies@gmail.com"; 
+				$config['smtp_pass'] = "adminadminadmin";
+				$config['charset'] = "utf-8";
+				$config['mailtype'] = "html";
+				$config['newline'] = "\r\n";
+				
+				$this->email->initialize($config);
+				
+				$this->email->from('adm.abcmovies@gmail.com', 'Admin of ABC Movies');
+				$this->email->to($email);
+				$this->email->subject('Film baru ditemukan');
+				
+				$message  = 'Hai admin, ada film baru lho di website Cinema 21. Tolong cek ya di master film. <br/><br/>';
 		      	$message .= 'Daftar film baru yang ditemukan: <br/>';
 		      	for ($i=0; $i<sizeof($newMovie); $i++){
 					$message .= ($i+1).'. '.$newMovie[$i]['title'].' - '.$newMovie[$i]['status'].'<br/>';
 				}
 		      	
-		      	$this->email->message($message);  
-		      
+		      	$this->email->message($message);
+				
 		      	// try send mail ant if not able print debug
 		      	if ( ! $this->email->send()){
 		        	echo "<hr>Email not sent <br/>".$this->email->print_debugger().'<hr>';
 		      	} else echo "Email successfully sent to ($email) <br/>";
 		    } else echo "Email address ($email) not correct <br/>";
-		}    
+		}   
 	}
 	
 	public function automateJob(){
@@ -538,14 +543,14 @@ class WebSystem extends CI_Controller {
 		
 		$check = $this->checkNowPlaying();
 		for ($i=0; $i<sizeof($check); $i++){
-			$newMovie[$idx]['title'] = $check[$idx]['title'];		
+			$newMovie[$idx]['title'] = $check[$i];		
 			$newMovie[$idx]['status'] = 'Now Playing';				echo $idx.'. '.$newMovie[$idx]['title'].' - '.$newMovie[$idx]['status'].'<br/>';
 			$idx++;
 		}
 		
 		$check = $this->checkComingSoon();
 		for ($i=0; $i<sizeof($check); $i++){
-			$newMovie[$idx]['title'] = $check[$idx]['title'];
+			$newMovie[$idx]['title'] = $check[$i];
 			$newMovie[$idx]['status'] = 'Coming Soon';				echo $idx.'. '.$newMovie[$idx]['title'].' - '.$newMovie[$idx]['status'].'<br/>';
 			$idx++;
 		}

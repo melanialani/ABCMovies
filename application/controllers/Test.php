@@ -19,6 +19,43 @@ class Test extends CI_Controller {
 		return $matches[0];
 	}
 	
+	public function testEmail($newMovie = NULL){
+		$allAdmin = $this->model_user->getAdminEmail();
+	    
+	    for ($j=0; $j<sizeof($allAdmin); $j++){
+			$email = $allAdmin[$j]['email'];
+		    if (valid_email($email)){  // check is email addrress valid or no
+				$config['protocol'] = "smtp";
+				$config['smtp_host'] = "ssl://smtp.gmail.com";
+				$config['smtp_port'] = "465";
+				$config['smtp_user'] = "adm.abcmovies@gmail.com"; 
+				$config['smtp_pass'] = "adminadminadmin";
+				$config['charset'] = "utf-8";
+				$config['mailtype'] = "html";
+				$config['newline'] = "\r\n";
+				
+				$this->email->initialize($config);
+				
+				$this->email->from('adm.abcmovies@gmail.com', 'Admin of ABC Movies');
+				$this->email->to($email);
+				$this->email->subject('Film baru ditemukan');
+				
+				$message  = 'Hai admin, ada film baru lho di website Cinema 21. Tolong cek ya di master film. <br/><br/>';
+		      	$message .= 'Daftar film baru yang ditemukan: <br/>';
+		      	for ($i=0; $i<sizeof($newMovie); $i++){
+					$message .= ($i+1).'. '.$newMovie[$i]['title'].' - '.$newMovie[$i]['status'].'<br/>';
+				}
+		      	
+		      	$this->email->message($message);
+				
+		      	// try send mail ant if not able print debug
+		      	if ( ! $this->email->send()){
+		        	echo "<hr>Email not sent <br/>".$this->email->print_debugger().'<hr>';
+		      	} else echo "Email successfully sent to ($email) <br/>";
+		    } else echo "Email address ($email) not correct <br/>";
+		}    
+	}
+	
 	public function checkNewMovies(){
 		$newMovie = NULL; $idx = 0;
 		
