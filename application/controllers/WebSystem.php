@@ -261,13 +261,13 @@ class WebSystem extends CI_Controller {
 					$getdata['playing_date'] = date("Y-m-d", strtotime($temp));	
 				}
 				   
-				/*/ === !!! === !!! === !!! === !!! === !!! === !!! === TRANSLATE MOVIE'S SUMMARY FROM IMDB
+				// === !!! === !!! === !!! === !!! === !!! === !!! === TRANSLATE MOVIE'S SUMMARY FROM IMDB
 				if ($getdata['summary'] != NULL && $getdata['summary'] != ''){
 					$url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20170416T090412Z.f7b776234bccb994.6d705805d1d4deee728d68550f617a3f8be6c15c&text='.urlencode($getdata['summary']).'&lang=en-id';
 					$json = file_get_contents($url);
 					$yandex = json_decode($json);
 					if ($yandex->code == 200) $getdata['summary'] = $yandex->text[0];
-				}*/
+				}
 			}
 		} 
 		
