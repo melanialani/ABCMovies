@@ -178,7 +178,7 @@ Class Film extends WebSystem {
 				$data['movie'] = $this->model_film->getFilm($data['film_id']);
 				
 				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_tweets', $data);
+				$this->load->view('detail_tweets', $data);
 			}
 			
 		} else {
@@ -195,7 +195,7 @@ Class Film extends WebSystem {
 			$data['movie'] = $this->model_film->getFilm($data['film_id']);
 			
 			$this->load->view('includes/header', $data);
-			$this->load->view('admin/detail_tweets', $data);
+			$this->load->view('detail_tweets', $data);
 		}
 	}
 
