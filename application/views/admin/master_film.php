@@ -33,7 +33,8 @@
 		   	<tbody>
 		   		<?php 
 		   			for($i=0; $i<sizeof($movies); $i++) {
-				    	echo "<tr>";
+				    	if ($movies[$i]['status'] == 3 || $movies[$i]['status'] == 4) echo "<tr class='info'>";
+				    	else echo "<tr>";
 					        //echo "<td>" . $movies[$i]['id'] . "</td>";
 					        echo "<td>" . $movies[$i]['title'] . "</td>";
 					        //echo "<td>" . $movies[$i]['summary'] . "</td >";
@@ -67,7 +68,7 @@
 									<button type="submit" name="detail" value="Detail" title="Detail" class="btn btn-xs btn-info"><span class="fa fa-film"></span></button>
 									<button type="submit" name="update" value="Update" title="Update" class="btn btn-xs btn-success"><span class="fa fa-edit"></span></button>
 									<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
-									<button type="submit" name="tweets" value="Tweets" title="See Twitter Sentiment" class="btn btn-xs btn-primary"><span class="fa fa-twitter"></span></button>
+									<!--button type="submit" name="tweets" value="Tweets" title="See Twitter Sentiment" class="btn btn-xs btn-primary"><span class="fa fa-twitter"></span></button-->
 				   					<?php
 				   				echo form_close();
 			   				echo "</th>";
@@ -88,7 +89,7 @@
 	$(document).ready(function() {
 		$('#datatable').DataTable( {
 			"order": [[ 6, "desc" ]],
-			"columnDefs": [{ "width": "20%", "targets": 7 }, { "width": "15%", "targets": 1 }]
+			"columnDefs": [{ "width": "15%", "targets": 7 }, { "width": "15%", "targets": 1 }]
 		} );
 	} );
 	</script>

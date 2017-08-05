@@ -18,7 +18,7 @@
 							else echo '<h5>'.$movies[$i]['title'].'</h5>';
 						echo '
 									<!--h4 style="text-align:center; margin-bottom: -30px;">'.form_submit('detail','Detail','class="btn btn-primary" ').'</h4-->
-									<h4 style="text-align:center; margin-bottom: -30px;" ><a href="'.site_url('film/detail/'.$movies[$i]['id'].'-'.str_ireplace(' ','-',$movies[$i]['title'])).'" class="btn btn-primary" style="width:90%;">Detail</a></h4>
+									<h4 style="text-align:center; margin-bottom: -30px;" ><a href="'.site_url('film/detail/'.$movies[$i]['id'].'-'.preg_replace('/[^A-Za-z0-9]/','',$movies[$i]['title'])).'" class="btn btn-primary" style="width:90%;">Detail</a></h4>
 									
 								</div>
 							</div>

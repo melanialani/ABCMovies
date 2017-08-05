@@ -23,9 +23,6 @@ Class Admin extends CI_Controller {
 			} else if ($this->input->post('detail') == TRUE){ 
 				set_cookie(array('name' => 'abcmovies_movie_id', 'value' => $data['id'], 'expire' => 0 ));
 				redirect('film/detail');
-			} else if ($this->input->post('tweets') == TRUE){ 
-				set_cookie(array('name' => 'abcmovies_movie_id', 'value' => $data['id'], 'expire' => 0 ));
-				redirect('admin/detailTweets');
 			}
 			
 			// load page as usual
@@ -235,61 +232,6 @@ Class Admin extends CI_Controller {
 				
 				$this->load->view('includes/header', $data);
 				$this->load->view('admin/master_banner', $data);
-			}
-			
-		} else { // not admin, go back to login page
-			redirect('user/login');
-		}
-	}
-	
-	public function detailTweets(){
-		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
-			$data['is_admin'] = TRUE;
-			$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
-			
-			if ($this->input->post('pos')){ // mark a tweet as correct
-				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
-					$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), 1);
-				else // then old tweet
-					$this->model_tweets_old->updateTruthNaiveTweet($this->input->post('id', TRUE), 1);
-					
-				// update count post & neg tweet
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailTweets');
-			} else if ($this->input->post('neg')){ // negate a tweet's yes_positive
-				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
-					$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), 0);
-				else // then old tweet
-					$this->model_tweets_old->updateTruthNaiveTweet($this->input->post('id', TRUE), 0);
-					
-				// update count post & neg tweet
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailTweets');
-			} else if ($this->input->post('delete')){ // mark a tweet as a non-review
-				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
-					$this->model_tweets_new->deleteTweetFinal($this->input->post('id', TRUE));
-				else // then old tweet
-					$this->model_tweets_old->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('yes_true', TRUE));
-				
-				// update count post & neg tweet
-				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
-				redirect('admin/detailTweets');
-			}
-			
-			// load page as usual
-			else {
-				//fetch user's name
-				if ($this->input->cookie('abcmovies')){
-					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-					$data['name'] = $user[0]['name'];
-				} else $data['name'] = null;
-				
-				// get information from database
-				$data['tweets'] = $this->model_tweets_new->getAllTweetByMovieConfirmed($data['film_id']);
-				$data['movie'] = $this->model_film->getFilm($data['film_id']);
-				
-				$this->load->view('includes/header', $data);
-				$this->load->view('admin/detail_tweets', $data);
 			}
 			
 		} else { // not admin, go back to login page

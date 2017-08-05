@@ -33,6 +33,39 @@ Class Film extends WebSystem {
 		}
 	}
 	
+	public function catalog($time){
+		// check if admin
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
+		else $data['is_admin'] = FALSE;
+		
+		// fetch user's name
+		if ($this->input->cookie('abcmovies')){
+			$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+			$data['name'] = $user[0]['name'];
+		} else $data['name'] = null;
+		
+		// get information from database
+		if ($time == 'now'){
+			$data['movies'] = $this->model_film->getOnGoingMovies();
+			$data['title'] = 'Now Playing';
+		} else if ($time == 'soon'){
+			$data['movies'] = $this->model_film->getComingSoonMovies();
+			$data['title'] = 'Coming Soon';
+		} else if ($time == 'old'){
+			$data['movies'] = $this->model_film->getOldMovies();
+			$data['title'] = 'Not Playing Anymore';
+		}
+		
+		// detail button on click 
+		if ($this->input->post('detail') == TRUE){ 
+			$this->detail($this->input->post('id', TRUE));
+		} else { // load page as usual
+			$this->load->view('includes/header', $data);
+			$this->load->view('catalog', $data);
+			$this->load->view('includes/footer');
+		}
+	}
+	
 	public function detail($id = NULL){
 		// check if admin
 		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
@@ -45,6 +78,11 @@ Class Film extends WebSystem {
 		// update button on click -> go to update_review page
 		else if ($this->input->post('update') == TRUE){ 
 			$this->updateReview($this->input->post('id', TRUE),$this->input->post('film_id', TRUE));
+		}
+		// see all checked twitter sentiment
+		else if ($this->input->post('tweets') == TRUE){ 
+			set_cookie(array('name' => 'abcmovies_movie_id', 'value' => $this->input->post('id', TRUE), 'expire' => 0 ));
+			redirect('film/detailTweets');
 		}
 		// load page as usual
 		else {
@@ -91,40 +129,76 @@ Class Film extends WebSystem {
 			$this->load->view('includes/footer');	
 		}
 	}
-
-	public function catalog($time){
-		// check if admin
-		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))) $data['is_admin'] = TRUE;
-		else $data['is_admin'] = FALSE;
+	
+	public function detailTweets(){
+		$data['film_id'] = $this->input->cookie('abcmovies_movie_id');
 		
-		// fetch user's name
-		if ($this->input->cookie('abcmovies')){
-			$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
-			$data['name'] = $user[0]['name'];
-		} else $data['name'] = null;
-		
-		// get information from database
-		if ($time == 'now'){
-			$data['movies'] = $this->model_film->getOnGoingMovies();
-			$data['title'] = 'Now Playing';
-		} else if ($time == 'soon'){
-			$data['movies'] = $this->model_film->getComingSoonMovies();
-			$data['title'] = 'Coming Soon';
-		} else if ($time == 'old'){
-			$data['movies'] = $this->model_film->getOldMovies();
-			$data['title'] = 'Not Playing Anymore';
-		}
-		
-		// detail button on click 
-		if ($this->input->post('detail') == TRUE){ 
-			$this->detail($this->input->post('id', TRUE));
-		} else { // load page as usual
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
+			
+			if ($this->input->post('pos')){ // mark a tweet as correct
+				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
+				$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), 1);
+				else // then old tweet
+					$this->model_tweets_old->updateTruthNaiveTweet($this->input->post('id', TRUE), 1);
+					
+				// update count post & neg tweet
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				redirect('film/detailTweets');
+			} else if ($this->input->post('neg')){ // negate a tweet's yes_positive
+				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
+				$this->model_tweets_new->updateTweetFinal($this->input->post('id', TRUE), 0);
+				else // then old tweet
+					$this->model_tweets_old->updateTruthNaiveTweet($this->input->post('id', TRUE), 0);
+				
+				// update count post & neg tweet
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				redirect('film/detailTweets');
+			} else if ($this->input->post('delete')){ // mark a tweet as a non-review
+				if ($this->input->post('ori_id', TRUE) != NULL) // then new tweet
+					$this->model_tweets_new->deleteTweetFinal($this->input->post('id', TRUE));
+				else // then old tweet
+				$this->model_tweets_old->updateStatusTweet($this->input->post('id', TRUE), !$this->input->post('yes_true', TRUE));
+				
+				// update count post & neg tweet
+				$this->model_film->updateTwitterFilm($data['film_id'], $this->model_tweets_old->getMovieCountNegTweet($data['film_id']), $this->model_tweets_old->getMovieCountPosTweet($data['film_id']));
+				redirect('film/detailTweets');
+			}
+			
+			// load page as usual
+			else {
+				//fetch user's name
+				if ($this->input->cookie('abcmovies')){
+					$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+					$data['name'] = $user[0]['name'];
+				} else $data['name'] = null;
+				
+				// get information from database
+				$data['tweets'] = $this->model_tweets_new->getAllTweetByMovieConfirmed($data['film_id']);
+				$data['movie'] = $this->model_film->getFilm($data['film_id']);
+				
+				$this->load->view('includes/header', $data);
+				$this->load->view('admin/detail_tweets', $data);
+			}
+			
+		} else {
+			$data['is_admin'] = FALSE;
+			
+			//fetch user's name
+			if ($this->input->cookie('abcmovies')){
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+				$data['name'] = $user[0]['name'];
+			} else $data['name'] = null;
+			
+			// get information from database
+			$data['tweets'] = $this->model_tweets_new->getAllTweetByMovieConfirmed($data['film_id']);
+			$data['movie'] = $this->model_film->getFilm($data['film_id']);
+			
 			$this->load->view('includes/header', $data);
-			$this->load->view('catalog', $data);
-			$this->load->view('includes/footer');
+			$this->load->view('admin/detail_tweets', $data);
 		}
 	}
-	
+
 	public function insertReview($id = NULL){
 		if ($this->input->cookie('abcmovies')){ // checks if user has logged in
 			if ($this->input->post('save')){ // button save on click

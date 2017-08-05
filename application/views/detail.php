@@ -5,6 +5,11 @@
 				<div class="row">
 					<div id="gallery" class="span3">
 						<img src="<?= $poster; ?>" style="width:100%"/>
+						<br/><br/>
+						<?= form_open('film/detail'); ?>
+				   			<?= form_hidden('id', $id); ?>
+							<button type="submit" name="tweets" value="Tweets" title="See Twitter Sentiment" class="btn btn-xs btn-info" style="width:100%"><span class="fa fa-twitter"></span> Lihat Sentiment Twitter</button>
+				   		<?=  form_close(); ?>
 					</div>
 					<div class="span9">
 						<h3><?= $title; ?></h3>
@@ -120,6 +125,7 @@
 								if ($reviews == NULL) echo '<p>Belum ada review untuk film ini</p>';
 								?>
 							</div>
+							
 						</div>
 						<!-- End of tab content =========================================================== -->
 					</div>

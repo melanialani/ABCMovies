@@ -5,6 +5,8 @@
    				<div class="row">
 					<div id="gallery" class="span3">
 						<img src="<?= $movie[0]['poster']; ?>" style="width:100%"/>
+						<br/><br/>
+						<a href="<?= site_url('film/detail/'.$movie[0]['id'].'-'.preg_replace('/[^A-Za-z0-9]/','',$movie[0]['title'])) ?>"><button class="btn btn-xs btn-info" style="width:100%">Kembali ke Detail Film</button></a>
 					</div>
 					<div class="span9">
 						<h3><?= $movie[0]['title']; ?></h3>
@@ -45,7 +47,8 @@
 		   		echo form_submit('calculate','Calculate Tweets','class="btn btn-primary btn-lg btn-block"');
 	   		echo form_close(); 
    		?-->
-   		<h4 style="text-align:center;" ><a href="<?= site_url('webSystem/getTweets/'.$film_id); ?>" class="btn btn-primary btn-lg btn-block">Get more Tweets</a></h4>
+   		<?php if ($is_admin) 
+   			echo '<h4 style="text-align:center;" ><a href="'.site_url('webSystem/getTweets/'.$film_id).'" class="btn btn-primary btn-lg btn-block">Get more Tweets</a></h4>'; ?>
 		
 		<br /><br />
    
@@ -55,14 +58,15 @@
 		            <!--th>Confirmed</th-->
 		            <th>Tweet</th>
 		            <th>Sentiment</th>
-		            <th>Action</th>
+		            <?php if ($is_admin) echo '<th>Action</th>'; ?>
 		        </tr>
 		    </thead>
 		   	<tbody>
 		   		<?php 
 		   		if (sizeof($tweets) > 1){
 					for($i=0; $i<sizeof($tweets); $i++) {
-				    	echo "<tr>";
+				    	if ($tweets[$i]['yes_positive'] == 1) echo "<tr class='success'>";
+				    	else echo "<tr class='warning'>";
 				    		/*echo "<td>";
 					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['confirmed'].'</span>';
 					        	if ($tweets[$i]['confirmed'] == 1) echo '<span title="Already checked" class="fa fa-check" style="margin-left:45%;"></span>';
@@ -70,11 +74,11 @@
 				    		echo "<td>" . $tweets[$i]['text'] . "</td>";
 					        echo "<td>";
 					        	echo '<span style="font-size: 0px;">'.$tweets[$i]['yes_positive'].'</span>';
-					        	if ($tweets[$i]['yes_positive'] == 1) echo '<div title="positive" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-plus"></span></div>';
-					        	else if ($tweets[$i]['yes_positive'] == 0) echo '<div title="negative" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-minus"></span></div>';
-					        echo "</td>";
-					        echo "<td>";
-				   				echo form_open('admin/detailTweets');
+					        	if ($tweets[$i]['yes_positive'] == 1) echo '<span class="fa fa-plus" style="margin-left:45px; margin-top:20px;" title="positive"></span>';
+					        	else if ($tweets[$i]['yes_positive'] == 0) echo '<span class="fa fa-minus" style="margin-left:45px; margin-top:20px;" title="negative"></span>';
+					        if ($is_admin){
+					        	echo "<td>";
+				   				echo form_open('film/detailTweets');
 				   					echo form_hidden('id', $tweets[$i]['id']);
 				   					echo form_hidden('ori_id', $tweets[$i]['ori_id']);
 				   					?>
@@ -83,7 +87,8 @@
 				   					<button type="submit" name="delete" value="Delete" title="Mark as non-review" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
 				   					<?php
 				   				echo form_close();
-			   				echo "</td>";
+			   					echo "</td>";
+			   				}
 				        echo "</tr>";
 				    }
 				}
@@ -98,12 +103,12 @@
 
 	<script type="text/javascript" language="javascript" class="init">
 	$(document).ready(function() {
-		$('#datatable').DataTable( { 
-			"columnDefs": [{ "width": "12%", "targets": 3 }]
+		$('#datatable').DataTable( {
+			"order": [[ 1, "desc" ]]
 		} );
 	} );
 	</script>
-
+	
 	<!-- Footer ================================================================== -->
 	<div  id="footerSection">
 	<div class="container" style="margin-bottom: -2%;">
