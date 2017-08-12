@@ -560,7 +560,7 @@ class WebSystem extends CI_Controller {
 		}
 		
 		if ($newMovie != NULL) $this->sendEmail($newMovie);			
-		echo 'DONE CHECKING';
+		redirect('admin/masterFilm');
 	}
 }
 ?>

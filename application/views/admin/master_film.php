@@ -2,7 +2,8 @@
  <div class="container">
   <div class="row">
    <div class="span12">
-		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn btn-primary btn-lg btn-block">Insert New Film</span></a>
+		<a href="<?php echo site_url('admin/insertFilm'); ?>" role="button"><span class="btn">Insert New Film</span></a>
+		<a href="<?php echo site_url('webSystem/automateJob'); ?>" role="button"><span class="btn">Check New Movies from Cinema 21</span></a>
 		<br /><br />
 		<table id="datatable" class="table table-striped table-bordered display">
 		    <thead>
@@ -27,13 +28,13 @@
 		            <!--th>Negatif review from Twitter</th-->
 		            <!--th>Rating</th-->
 		            <th>Status</th>
-		            <th>Action</th>
+		            <th width="110px">Action</th>
 		        </tr>
 		    </thead>
 		   	<tbody>
 		   		<?php 
 		   			for($i=0; $i<sizeof($movies); $i++) {
-				    	if ($movies[$i]['status'] == 3 || $movies[$i]['status'] == 4) echo "<tr class='info'>";
+				    	if ($movies[$i]['status'] == 3 || $movies[$i]['status'] == 4) echo "<tr class='warning'>";
 				    	else echo "<tr>";
 					        //echo "<td>" . $movies[$i]['id'] . "</td>";
 					        echo "<td>" . $movies[$i]['title'] . "</td>";
@@ -88,8 +89,7 @@
 	<script type="text/javascript" language="javascript" class="init">
 	$(document).ready(function() {
 		$('#datatable').DataTable( {
-			"order": [[ 6, "desc" ]],
-			"columnDefs": [{ "width": "15%", "targets": 7 }, { "width": "15%", "targets": 1 }]
+			"order": [[ 6, "desc" ]]
 		} );
 	} );
 	</script>
