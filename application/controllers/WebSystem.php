@@ -418,11 +418,12 @@ class WebSystem extends CI_Controller {
 			// replace bahasa bukan baku
 			$originalStr = NULL;
 			for ($j=0; $j<sizeof($singkatan); $j++){
-				//if (preg_match('/\b'.$singkatan[$j]['short'].'\b/', $result[$i]['text'])) { // if matched
-				if (strpos($result[$i]['text'], ' '.$singkatan[$j]['short'].' ') == TRUE || strpos($result[$i]['text'], ' '.$singkatan[$j]['short']) == TRUE || strpos($result[$i]['text'], $singkatan[$j]['short'].' ') == TRUE){
-					$result[$i]['text'] = preg_replace('/\b'.$singkatan[$j]['short'].'\b/', $singkatan[$j]['long'], $result[$i]['text']);
-					if ($originalStr == NULL) $originalStr = $singkatan[$j]['short'];
-					else $originalStr .= ',' . $singkatan[$j]['short'];
+				if (strpos($result[$i]['text'], $singkatan[$j]['short']) == TRUE){
+					if (preg_match('/\b'.$singkatan[$j]['short'].'\b/', $result[$i]['text'])) {
+						$result[$i]['text'] = preg_replace('/\b'.$singkatan[$j]['short'].'\b/', $singkatan[$j]['long'], $result[$i]['text']);
+						if ($originalStr == NULL) $originalStr = $singkatan[$j]['short'];
+						else $originalStr .= ',' . $singkatan[$j]['short'];
+					}
 				}
 			}
 			
@@ -438,31 +439,34 @@ class WebSystem extends CI_Controller {
 			
 			// compare with lexicon data
 			for ($j=0; $j<sizeof($lexicon); $j++){
-				//if (preg_match('/\b'.$lexicon[$j].'\b/', $result[$i]['text'])) { // if matched
-				if (strpos($result[$i]['text'], ' '.$lexicon[$j].' ') == TRUE || strpos($result[$i]['text'], ' '.$lexicon[$j]) == TRUE || strpos($result[$i]['text'], $lexicon[$j].' ') == TRUE){
-					$value++; // for every matched words, give 1
-					if ($intersectStr == NULL) $intersectStr = $lexicon[$j];
-					else $intersectStr .= ',' . $lexicon[$j];
+				if (strpos($result[$i]['text'], $lexicon[$j]) == TRUE){
+					if (preg_match('/\b'.$lexicon[$j].'\b/', $result[$i]['text'])) { 
+						$value++; // for every matched words, give 1
+						if ($intersectStr == NULL) $intersectStr = $lexicon[$j];
+						else $intersectStr .= ',' . $lexicon[$j];
+					}
+				}
+			}
+			
+			// compare with review common words data
+			for ($j=0; $j<sizeof($commonWords); $j++){
+				if (strpos($result[$i]['text'], $commonWords[$j]['text']) == TRUE){
+					if (preg_match('/\b'.$commonWords[$j]['text'].'\b/', $result[$i]['text'])) { 
+						$value += $commonWords[$j]['score'];
+						if ($intersectStr == NULL) $intersectStr = $commonWords[$j]['text'];
+						else $intersectStr .= ',' . $commonWords[$j]['text'];
+					}
 				}
 			}
 			
 			// compare with non-review common words data
 			for ($j=0; $j<sizeof($nonReview); $j++){
-				//if (preg_match('/\b'.$nonReview[$j]['text'].'\b/', $result[$i]['text'])) { // if matched
-				if (strpos($result[$i]['text'], ' '.$nonReview[$j]['text'].' ') == TRUE || strpos($result[$i]['text'], ' '.$nonReview[$j]['text']) == TRUE || strpos($result[$i]['text'], $nonReview[$j]['text'].' ') == TRUE){
-					$value += $nonReview[$j]['score'];
-					if ($intersectStr == NULL) $intersectStr = '-'.$nonReview[$j]['text'];
-					else $intersectStr .= ',-' . $nonReview[$j]['text'];
-				}
-			}
-			
-			// compare with common words data
-			for ($j=0; $j<sizeof($commonWords); $j++){
-				//if (preg_match('/\b'.$commonWords[$j]['text'].'\b/', $result[$i]['text'])) { // if matched
-				if (strpos($result[$i]['text'], ' '.$commonWords[$j]['text'].' ') == TRUE || strpos($result[$i]['text'], ' '.$commonWords[$j]['text']) == TRUE || strpos($result[$i]['text'], $commonWords[$j]['text'].' ') == TRUE){
-					$value += $commonWords[$j]['score'];
-					if ($intersectStr == NULL) $intersectStr = $commonWords[$j]['text'];
-					else $intersectStr .= ',' . $commonWords[$j]['text'];
+				if (strpos($result[$i]['text'], $nonReview[$j]['text']) == TRUE){
+					if (preg_match('/\b'.$nonReview[$j]['text'].'\b/', $result[$i]['text'])) {
+						$value += $nonReview[$j]['score'];
+						if ($intersectStr == NULL) $intersectStr = '-'.$nonReview[$j]['text'];
+						else $intersectStr .= ',-' . $nonReview[$j]['text'];
+					}
 				}
 			}
 			
@@ -476,12 +480,12 @@ class WebSystem extends CI_Controller {
 		for ($i=0; $i<sizeof($result); $i++){
 			if ($result[$i]['is_review'] == 1){
 				$sentimentAnalysisOfSentence = $sat->analyzeSentence($result[$i]['text']);
-				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
+				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment']; // "positive" or "negative"
 				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
 				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
 				
 				// set is_positive value
-				if ($resultofAnalyzingSentence == "positive" || $probabilityofSentenceBeingPositive > $probabilityofSentenceBeingNegative)
+				if ($probabilityofSentenceBeingPositive > $probabilityofSentenceBeingNegative)
 					$result[$i]['is_positive'] = 1;
 				else 
 					$result[$i]['is_positive'] = 0;
@@ -498,7 +502,7 @@ class WebSystem extends CI_Controller {
 		// update film
 		$this->model_film->updateTwitterFilm($film_id, $this->model_tweets_old->getMovieCountNegTweet($film_id), $this->model_tweets_old->getMovieCountPosTweet($film_id));	
 		
-		redirect('admin/detailTweets');
+		redirect('film/detailTweets');
 	}
 	
 	public function sendEmail($newMovie = NULL){

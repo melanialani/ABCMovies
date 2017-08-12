@@ -138,25 +138,34 @@
 			$negativity = $sentimentScores['negative'] / ($sentimentScores['positive'] + $sentimentScores['negative']);
 			
 			// compare with common words also	
-			$listPos = [];
+			$listPos = []; $idx = 0;
 			$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
 			while ($activeLine = fgets($fileLocation)){
-				array_push($listPos, trim($activeLine));	
+				$temp = explode(',', trim(strtolower($activeLine)));
+				$listPos[$idx]['text'] = $temp[0];
+				$listPos[$idx]['score'] = $temp[1];
+				$idx++;
 			}
-			$listNeg = [];
+			$listNeg = []; $idx = 0;
 			$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
 			while ($activeLine = fgets($fileLocation)){
-				array_push($listNeg, trim($activeLine));	
+				$temp = explode(',', trim(strtolower($activeLine)));
+				$listNeg[$idx]['text'] = $temp[0];
+				$listNeg[$idx]['score'] = $temp[1];
+				$idx++;
 			}
+			$intersectStr = NULL;
 			for ($j=0; $j<sizeof($listPos); $j++){
-				if (strpos($sentence, $listPos[$j]) == TRUE)
-					$positivity += 0.25;
-				
+				if (strpos($sentence, $listPos[$j]['text']) == TRUE){
+					$positivity += $listPos[$j]['score'];
+					$intersectStr .= $listPos[$j]['text'].',';
+				}
 			}
 			for ($j=0; $j<sizeof($listNeg); $j++){
-				if (strpos($sentence, $listNeg[$j]) == TRUE)
-					$negativity += 0.25;
-				
+				if (strpos($sentence, $listNeg[$j]['text']) == TRUE){
+					$negativity += $listNeg[$j]['score'];
+					$intersectStr .= '-'.$listNeg[$j]['text'].',';
+				}
 			}
 			
 			if (in_array(round($bayesDifference, 1), $this->arrBayesDifference))
@@ -168,7 +177,7 @@
 				$sentiment = key($sentimentScores);
 			}
 
-			return array('sentiment'=>$sentiment, 'accuracy'=>array('positivity'=>$positivity, 'negativity'=>$negativity));
+			return array('sentiment'=>$sentiment, 'accuracy'=>array('positivity'=>$positivity, 'negativity'=>$negativity), 'intersect'=>$intersectStr);
 			
 		}
 

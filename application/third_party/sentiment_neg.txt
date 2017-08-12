@@ -1,136 +1,149 @@
-﻿kasihan
-memilukan
-pilu
-malas
-2
-3
-4
-5
-ok
-lumayan
-biasa
-bodoh
-bosan
-buruk
-cuma
-dipaksa
-dipaksakan
-ditebak
-gila
-jangan
-jelek
-jijik
-kapok
-kebodohan
-buang waktu
-buang uang
-buang
-kekecewaan
-kecewa
-kejelekan
-kelemahan
-kesal
-ketiduran
-konyol
-kurang
-kusut
-lambat
-lemah
-mati
-melankolis
-memaksa
-membosankan
-mengadu
-mengantuk
-menyesal
-negatif
-negatifnya
-paksa
-payah
-ringan
-bingung
-rugi
-sadis
-sakit
-sudah biasa
-terpaksa
-tertidur
-tidak  menyeramkan
-tidak asyik
-tidak jelas
-tidak menarik
-tidur
-mudah ditebak
-mudah diprediksi
-mudah
-dapat ditebak
-bisa ditebak
-dapat diprediksi
-bisa diprediksi
-hancur
-menyeramkan
-seram
-capek
-tercengang
-kaget
-ngeri
-sayangnya
-heran
-mengerikan
-mengecewakan
-Memusingkan
-Menegangkan
-Membingungkan
-pusing
-Tegang
-kesalahan
-penyesalan
-gagal
-stres
-depresi
-berkhayal
-kelelahan
-menangis
-jahat
-sungguh jelek
-cukup jelek
-kurang bagus
-jelek parah
-sedikit jelek
-kurang jelek
-lumayan jelek
-setengah jelek
-paling jelek
-jelek sungguh
-jelek sangat
-terlalu jelek
-sangat jelek
-rugi dilihat
-jangan dilihat
-tidak patut dilihat
-tidak pantas dilihat
-tidak direkomendasikan
-tidak rekomendasi
-rugi lihat
-jangan lihat
-ratingnya rendah
-ratingnya sedikit
-rating rendah
-rating sedikit
-tidak suka
-tidak bisa dibandingkan
-ceritanya tertebak
-ceritanya ketebak
-terkesan maksa
-terkesan dipaksa
-terkesan memaksa
-jelek sumpah
-sumpah jelek
-parah jelek
-jelek gila
-gila jelek
-kapok nonton
-kapok lihat
-buang duit
-parah jeleknya
-gila jeleknya
+﻿jangan lihat,5
+ratingnya rendah,5
+ratingnya sedikit,5
+rating rendah,5
+rating sedikit,5
+tidak suka,5
+tidak bisa dibandingkan,5
+ceritanya tertebak,5
+ceritanya ketebak,5
+terkesan maksa,5
+terkesan dipaksa,5
+terkesan memaksa,5
+jelek sumpah,5
+sumpah jelek,5
+parah jelek,5
+jelek gila,5
+gila jelek,5
+kapok nonton,5
+kapok lihat,5
+buang duit,5
+parah jeleknya,5
+gila jeleknya,5
+tidak patut dilihat,5
+tidak pantas dilihat,5
+tidak direkomendasikan,5
+tidak rekomendasi,5
+rugi lihat,5
+sungguh jelek,5
+cukup jelek,5
+kurang bagus,5
+jelek parah,5
+sedikit jelek,5
+kurang jelek,5
+lumayan jelek,5
+setengah jelek,5
+paling jelek,5
+jelek sungguh,5
+jelek sangat,5
+terlalu jelek,5
+sangat jelek,5
+rugi dilihat,5
+jangan dilihat,5
+mengerikan,5
+mengecewakan,5
+Memusingkan,5
+Menegangkan,5
+Membingungkan,5
+memaksa,5
+membosankan,5
+mengantuk,5
+menyesal,5
+payah,5
+sudah biasa,5
+terpaksa,5
+tertidur,5
+tidak  menyeramkan,5
+tidak asyik,5
+tidak jelas,5
+tidak menarik,5
+mudah ditebak,5
+mudah diprediksi,5
+dapat ditebak,5
+bisa ditebak,5
+dapat diprediksi,5
+bisa diprediksi,5
+memilukan,5
+bosan,5
+dipaksa,5
+dipaksakan,5
+1 10,5
+1 5,5
+2 10,5
+2 5,5
+3 10,5
+4 10,5
+5 10,5
+6 10,5
+buang waktu,5
+buang uang,5
+ketiduran,5
+kecewa,5
+kejelekan,5
+kelemahan,5
+kesal,5
+konyol,5
+tidak menyeramkan,5
+tidak seram,5
+tidak bagus,5
+biasa saja,5
+sudah ditebak,5
+sudah tertebak,5
+aku tebak,5
+kurang menegangkan,5
+kurang seru,5
+pusing,4
+kesalahan,4
+penyesalan,4
+gagal,4
+stres,4
+depresi,4
+berkhayal,4
+kelelahan,4
+jahat,4
+negatif,4
+negatifnya,4
+ringan,4
+bingung,4
+rugi,4
+sadis,4
+sakit,4
+hancur,4
+tidur,4
+paksa,4
+mengadu,4
+kasihan,4
+bodoh,4
+pilu,4
+malas,4
+biasa sekali,4
+lumayan,4
+biasa banget,4
+buruk,4
+ditebak,4
+jelek,4
+jijik,4
+kapok,4
+kebodohan,4
+kekecewaan,4
+kaget,4
+kusut,4
+lambat,4
+lemah,4
+capek,4
+ngeri,4
+sangat biasa,4
+heran,3
+sayangnya,3
+Tegang,3
+menangis,3
+mati,3
+melankolis,3
+mudah,3
+gila,3
+cuma,3
+jangan,3
+buang,3
+kurang,3
+apa ini,3
+tercengang,3

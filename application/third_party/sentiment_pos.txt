@@ -1,146 +1,151 @@
-﻿lawak
-mengena
-cemerlang
-tampan
-8
-9
-7
-6
-kesimpulan
-imajinatif
-amanah
-bagus
-bangga
-cakep
-canda
-candaan
-cantik
-cinta
-ganteng
-ingin
-jenius
-kagum
-keren
-kesan
-ketawa
-kocak
-lelucon
-luar biasa
-lucu
-lumayan
-makna
-menghibur
-menyentuh
-pesan
-positif
-positifnya
-puas
-sedap
-suka
-sukses
-tawa
-terbagus
-baik
-terganteng
-tertampan
-terbaik
-tercantik
-terharu
-terindah
-tersentuh
-tertawa
-tidak menyesal
-tidak sia-sia
-totalitas
-totalitasnya
-menghayati
-menikmati
-nikmati
-dinikmati
-harus lihat
-harus dilihat
-patut lihat
-patut dilihat
-ok
-gemas
-menggemaskan
-imut
-apik
-memanjakan
-menyukai
-epik
-asyik
-seru
-kesayangan
-enak
-unik
-harus tonton
-favorit
-indah
-hebat
-menarik
-Terpesona
-Menakjubkan
-mempesona
-mengasyikan
-mengasyikkan
-fantastis
-Fenomenal
-juara
-sayang
-manis
-hangat
-edukatif
-keindahan
-mengagumkan
-mengejutkan
-tersenyum
-menyegarkan
-dilihat
-lihat
-menyenangkan
-harus ditonton
-patut ditonton
-layak ditonton
-pantas ditonton
-setengah bagus
-paling bagus
-cukup bagus
-terlalu bagus
-sangat bagus
-sungguh bagus
-lumayan bagus
-sedikit bagus
-bagus parah
-paling direkomendasikan
-pantas dilihat
-pantas lihat
-layak lihat
-layak dilihat
-menginspirasi
-direkomendasikan
-ratingnya besar
-ratingnya tinggi
-rating tinggi
-rating besar
-bagus banget
-asik
-buagus
-highly recomended
-tersentuh hati
-fun
-menyesal melewatkan film ini
-melebihi ekspektasi
-aku hargai
-melebihi ekspetasi
-bagus reviewnya
-suruh nonton
-suruh lihat
-recommended
-keren sumpah
-bagus sumpah
-keren parah
-sumpah keren
-sumpah bagus
-parah kerennya
-parah bagusnya
+﻿mengena,5
+suruh lihat,5
+recommended,5
+keren sumpah,5
+bagus sumpah,5
+keren parah,5
+sumpah keren,5
+sumpah bagus,5
+parah kerennya,5
+parah bagusnya,5
+highly recomended,5
+tersentuh hati,5
+fun,5
+menyesal melewatkan film,5
+melebihi ekspektasi,5
+aku hargai,5
+melebihi ekspetasi,5
+bagus reviewnya,5
+hatiku tersentuh,5
+aku tersentuh,5
+menyesal tidak lihat film,5
+paling direkomendasikan,5
+pantas dilihat,5
+pantas lihat,5
+layak lihat,5
+layak dilihat,5
+menginspirasi,5
+direkomendasikan,5
+ratingnya besar,5
+ratingnya tinggi,5
+rating tinggi,5
+rating besar,5
+bagus banget,5
+asik,5
+buagus,5
+menyenangkan,5
+harus ditonton,5
+patut ditonton,5
+layak ditonton,5
+pantas ditonton,5
+paling bagus,5
+terlalu bagus,5
+sangat bagus,5
+sungguh bagus,5
+bagus parah,5
+terbagus,5
+harus lihat,5
+harus dilihat,5
+patut lihat,5
+patut dilihat,5
+7 10,5
+8 10,5
+9 10,5
+10 10,5
+3 5,5
+4 5,5
+5 5,5
+kocak,5
+imajinatif,5
+kagum,5
+keren,5
+cemerlang,5
+bagus,5
+bangga,5
+suka,5
+menghayati,5
+totalitas,5
+totalitasnya,5
+tersentuh,5
+fantastis,5
+Fenomenal,5
+edukatif,5
+mengagumkan,5
+mengejutkan,5
+menyegarkan,5
+cinta,5
+menghibur,5
+menyentuh,5
+lucu,5
+luar biasa,5
+epik,5
+asyik,5
+seru,5
+jenius,5
+apik,5
+unik,5
+hebat,5
+menarik,5
+Terpesona,5
+Menakjubkan,5
+mempesona,5
+mengasyikan,5
+mengasyikkan,5
+setengah bagus,4
+cukup bagus,4
+lumayan bagus,4
+sedikit bagus,4
+menggemaskan,4
+bikin gemas,4
+membuat gemas,4
+tidak menyesal,4
+tidak sia-sia,4
+terbaik,4
+terharu,4
+terindah,4
+ketawa,4
+tertawa,4
+kesayangan,4
+sukses,4
+candaan,4
+menikmati,4
+nikmati,4
+dinikmati,4
+gemas,4
+imut,4
+enak,4
+lelucon,4
+lumayan,4
+memanjakan,4
+menyukai,4
+tercakep,4
+tercantik,4
+ganteng,4
+tampan,4
+cakep,4
+tersenyum,4
+puas,4
+terganteng,3
+tertampan,3
+baik,3
+juara,3
+sayang,3
+manis,3
+hangat,3
+lawak,3
+keindahan,3
+canda,3
+dilihat,3
+lihat,3
+tawa,3
+kesimpulan,3
+amanah,3
+ingin,3
+kesan,3
+ok,3
+makna,3
+suruh nonton,3
+pesan,3
+positif,3
+positifnya,3
+sedap,3
