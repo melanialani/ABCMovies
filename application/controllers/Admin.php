@@ -270,14 +270,14 @@ Class Admin extends CI_Controller {
 				$data['result']['input'] 		= $data['result'][0]['input'];
 				$data['result']['text'] 		= $data['result'][0]['text'];
 				$data['result']['replaced'] 	= $data['result'][0]['replaced'];
-				$data['result']['common'] 		= $data['result'][0]['common'];
 				$data['result']['regex'] 		= $data['result'][0]['regex'];
 				$data['result']['lexicon'] 		= $data['result'][0]['lexicon'];
 				$data['result']['score'] 		= $data['result'][0]['score'];
 				$data['result']['is_review'] 	= $data['result'][0]['is_review'];
 				$data['result']['is_positive'] 	= $data['result'][0]['is_positive'];
-				$data['result']['persen_pos'] 	= $data['result'][0]['persen_pos']*100;
-				$data['result']['persen_neg'] 	= $data['result'][0]['persen_neg']*100;
+				$data['result']['intersect'] 	= $data['result'][0]['intersect'];
+				$data['result']['positivity'] 	= $data['result'][0]['positivity'];
+				$data['result']['negativity'] 	= $data['result'][0]['negativity'];
 			} 
 			
 			else if ($this->input->post('true_pos')){

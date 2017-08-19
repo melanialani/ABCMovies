@@ -21,35 +21,33 @@
         <br /><br />
         <table class="table table-striped table-bordered display">
 		    <tr>
-		    	<td colspan="2"><h3 align="center">TEST STRING</h3></td>
+		    	<td colspan="3"><h3 align="center">TEST STRING</h3></td>
 		    </tr>
 		    <tr>
 		    	<?= form_open('admin/report'); ?>
-		   		<td colspan="2">
+		   		<td colspan="3">
 		   			<input type="text" id="input" name="input" placeholder="wow filmnya bagus banget gan gue kagum" required class="form-control" style="width:92%; margin-top: 1%;"/>
 		   			<?= form_submit('test','Test!','class="btn btn-info"'); ?></td>
 		   		<?= form_close(); ?>
 		   	</tr>
 		   	<?php 
 		   	if ($result != NULL){
-		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Input</p></td><td>'.$result['input'].'</td></tr>';
-		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Feature reduction</p></td><td>'.$result['regex'].'</td></tr>';
-		   		//echo '<tr><td><p style="text-align: right; font-weight: bold;">Mapping</p></td><td>'.$result['replaced'].'</td></tr>';
-		   		//echo '<tr><td><p style="text-align: right; font-weight: bold;">Rule-based Lexicon</p></td><td>'.$result['lexicon'].'</td></tr>';
-		   		//echo '<tr><td><p style="text-align: right; font-weight: bold;">Rule-based Common words</p></td><td>'.$result['common'].'</td></tr>';
-		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Final text</p></td><td>'.$result['text'].'</td></tr>';
+		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Input</p></td><td>'.$result['input'].'</td><td></td></tr>';
+		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Feature reduction</p></td><td>'.$result['regex'].'</td><td></td></tr>';
+		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Normalization</p></td><td>'.$result['text'].'</td><td>'.$result['replaced'].'</td></tr>';
+		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Rule-based</p></td><td>'.$result['text'].'</td><td>'.$result['lexicon'].' (Score:'.$result['score'].')</td></tr>';
+		   		echo '<tr><td><p style="text-align: right; font-weight: bold;">Final text</p></td><td>'.$result['text'].'</td><td></td></tr>';
+		   		//echo '<tr><td><p style="text-align: right; font-weight: bold;">Final text</p></td><td>'.$result['text'].'</td><td>Positive: '.$result['positivity'].' & Negative: '.$result['negativity'].'</td></tr>';
 		   		
 		   		echo '<tr><td width="35%"><p style="text-align: right; font-weight: bold;">Hasil test</p></td>';
-		   		echo '<td><b style="margin-left:5%;">Is Review : </b>';
-			        if ($result['is_review'] == 1) echo '<span title="Review" class="fa fa-check"></span>';
-			        else if ($result['is_review'] == 0) echo '<span title="Bukan review" class="fa fa-minus"></span>';
-
-				    echo "<span style='margin-left:30%;'><b>Is Positive : </b></span> ";
-				    if ($result['is_positive'] == 1) echo '<span title="Positive review" class="fa fa-check"></span>';
-				    else if ($result['is_positive'] == 0) echo '<span title="Negative review" class="fa fa-minus"></span>';
+		   		echo '<td colspan="2"><b style="margin-left:5%;">Is Review : </b>';
+			        if ($result['is_review'] == 1) {
+						echo '<b>Yes</b> / <strike>No</strike>';
+						echo "<span style='margin-left:30%;'><b>Sentiment : </b></span> ";
+					    if ($result['is_positive'] == 1) echo '<b>Positive</b> / <strike>Negative</strike>';
+					    else if ($result['is_positive'] == 0) echo '<strike>Positive</strike> / <b>Negative</b>';
+					} else if ($result['is_review'] == 0) echo '<strike>Yes</strike> / <b>No</b>';
 				echo '</td></tr>';
-				
-				//echo '<tr><td>Details</td><td>Score: '.$result['score'].' | Pos: '.round($result['persen_pos'],2).'% | Neg: '.round($result['persen_neg'],2).'%</td><tr>';
 			}
 		   	?>
 		</table>
