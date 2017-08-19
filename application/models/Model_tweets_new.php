@@ -47,13 +47,15 @@ Class Model_tweets_new extends CI_Model {
 	* Insert into table tweets_lexicon
 	* @param int $twitter_id
 	* @param string $intersect
+	* @param int $score
 	* 
 	* @return
 	*/
-	public function insertTweetLexicon($twitter_id, $intersect){
+	public function insertTweetLexicon($twitter_id, $intersect, $score){
         $myArr = array(
 			'ori_id' 		=> $twitter_id,
-			'intersect' 	=> $intersect
+			'intersect' 	=> $intersect,
+			'score' 		=> $score
 		);
 		$this->db->insert('tweets_lexicon', $myArr);
 		return $this->db->affected_rows();
@@ -79,24 +81,33 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Insert into table tweets_final
-	* @param int $twitter_id
+	* @param string $twitter_id
+	* @param int $film_id
 	* @param string $text
 	* @param boolean $is_review
 	* @param boolean $is_positive
+	* @param boolean $yes_review
+	* @param boolean $yes_positive
+	* @param boolean $confirmed
 	* @param boolean $duplicate
+	* @param float $persen_pos
+	* @param float $persen_neg
 	* 
 	* @return
 	*/
-	public function insertTweetFinal($twitter_id, $film_id, $text, $is_review, $is_positive, $duplicate){
+	public function insertTweetFinal($twitter_id, $film_id, $text, $is_review, $is_positive, $yes_review, $yes_positive, $confirmed, $duplicate, $persen_pos, $persen_neg){
         $myArr = array(
         	'ori_id' 		=> $twitter_id,
         	'film_id' 		=> $film_id,
         	'text' 			=> $text,
         	'is_review' 	=> $is_review,
         	'is_positive' 	=> $is_positive,
-        	'yes_positive' 	=> $is_positive,
-        	'confirmed' 	=> 0,
-        	'duplicate' 	=> $duplicate
+        	'yes_review' 	=> $yes_review,
+        	'yes_positive' 	=> $yes_positive,
+        	'confirmed' 	=> $confirmed,
+        	'duplicate' 	=> $duplicate,
+        	'persen_pos' 	=> $persen_pos,
+        	'persen_neg' 	=> $persen_neg
         );
         $this->db->insert('tweets_final', $myArr);
 		return $this->db->affected_rows();
@@ -461,7 +472,6 @@ Class Model_tweets_new extends CI_Model {
 		$returnArray[0]['confirmed'] = NULL;
 		
 		// get all unconfirmed tweets_final
-		//$this->db->limit(5);
 		$this->db->where('confirmed', 0);
 		$this->db->order_by('ori_id', 'desc');
 		$final = $this->db->get('tweets_final')->result_array();
@@ -474,6 +484,8 @@ Class Model_tweets_new extends CI_Model {
 			$returnArray[$i]['is_positive']  = $final[$i]['is_positive'];
 			$returnArray[$i]['yes_review']   = $final[$i]['yes_review'];
 			$returnArray[$i]['yes_positive'] = $final[$i]['yes_positive'];
+			$returnArray[$i]['persen_pos'] 	 = $final[$i]['persen_pos'];
+			$returnArray[$i]['persen_neg'] 	 = $final[$i]['persen_neg'];
 			$returnArray[$i]['confirmed']	 = $final[$i]['confirmed'];
 			
 			$this->db->where('id', $returnArray[$i]['film_id']);
@@ -484,6 +496,7 @@ Class Model_tweets_new extends CI_Model {
 			$returnArray[$i]['text'] = $hasil[0]['text'];
 			
 			$hasil = $this->getTweetByOri('tweets_lexicon', $returnArray[$i]['ori_id']);
+			$returnArray[$i]['score'] = $hasil[0]['score'];
 			if ($hasil) $returnArray[$i]['lexicon'] = $hasil[0]['intersect'];
 			else $returnArray[$i]['lexicon'] = ' - ';
 			

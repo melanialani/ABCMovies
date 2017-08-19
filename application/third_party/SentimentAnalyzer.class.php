@@ -157,18 +157,28 @@
 			$intersectStr = NULL;
 			for ($j=0; $j<sizeof($listPos); $j++){
 				if (strpos($sentence, $listPos[$j]['text']) == TRUE){
-					$positivity += $listPos[$j]['score'];
+					$positivity += ($listPos[$j]['score']/10);
+					$negativity -= ($listPos[$j]['score']/10);
 					$intersectStr .= $listPos[$j]['text'].',';
 				}
 			}
 			for ($j=0; $j<sizeof($listNeg); $j++){
 				if (strpos($sentence, $listNeg[$j]['text']) == TRUE){
-					$negativity += $listNeg[$j]['score'];
+					$negativity += ($listNeg[$j]['score']/10);
+					$positivity -= ($listNeg[$j]['score']/10);
 					$intersectStr .= '-'.$listNeg[$j]['text'].',';
 				}
 			}
 			
-			if (in_array(round($bayesDifference, 1), $this->arrBayesDifference))
+			if ($positivity > $negativity)
+			{
+				$sentiment = 'Positive';
+			}
+			else if ($negativity > $positivity)
+			{
+				$sentiment = 'Negative';
+			}
+			else if (in_array(round($bayesDifference, 1), $this->arrBayesDifference))
 			{
 				$sentiment = 'Neutral';
 			}
@@ -177,7 +187,7 @@
 				$sentiment = key($sentimentScores);
 			}
 
-			return array('sentiment'=>$sentiment, 'accuracy'=>array('positivity'=>$positivity, 'negativity'=>$negativity), 'intersect'=>$intersectStr);
+			return array('sentiment'=>$sentiment, 'accuracy'=>array('positivity'=>round($positivity,2), 'negativity'=>round($negativity,2)), 'intersect'=>$intersectStr);
 			
 		}
 
