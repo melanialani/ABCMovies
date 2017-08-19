@@ -1,151 +1,151 @@
-﻿mengena,5
-suruh lihat,5
-recommended,5
-keren sumpah,5
-bagus sumpah,5
-keren parah,5
-sumpah keren,5
-sumpah bagus,5
-parah kerennya,5
-parah bagusnya,5
-highly recomended,5
-tersentuh hati,5
-fun,5
-menyesal melewatkan film,5
-melebihi ekspektasi,5
-aku hargai,5
-melebihi ekspetasi,5
-bagus reviewnya,5
-hatiku tersentuh,5
-aku tersentuh,5
-menyesal tidak lihat film,5
-paling direkomendasikan,5
-pantas dilihat,5
-pantas lihat,5
-layak lihat,5
-layak dilihat,5
-menginspirasi,5
-direkomendasikan,5
-ratingnya besar,5
-ratingnya tinggi,5
-rating tinggi,5
-rating besar,5
-bagus banget,5
-asik,5
-buagus,5
-menyenangkan,5
-harus ditonton,5
-patut ditonton,5
-layak ditonton,5
-pantas ditonton,5
-paling bagus,5
-terlalu bagus,5
-sangat bagus,5
-sungguh bagus,5
-bagus parah,5
-terbagus,5
-harus lihat,5
-harus dilihat,5
-patut lihat,5
-patut dilihat,5
-7 10,5
-8 10,5
-9 10,5
-10 10,5
-3 5,5
-4 5,5
-5 5,5
-kocak,5
-imajinatif,5
-kagum,5
-keren,5
-cemerlang,5
-bagus,5
-bangga,5
-suka,5
-menghayati,5
-totalitas,5
-totalitasnya,5
-tersentuh,5
-fantastis,5
-Fenomenal,5
-edukatif,5
-mengagumkan,5
-mengejutkan,5
-menyegarkan,5
-cinta,5
-menghibur,5
-menyentuh,5
-lucu,5
-luar biasa,5
-epik,5
-asyik,5
-seru,5
-jenius,5
-apik,5
-unik,5
-hebat,5
-menarik,5
-Terpesona,5
-Menakjubkan,5
-mempesona,5
-mengasyikan,5
-mengasyikkan,5
-setengah bagus,4
-cukup bagus,4
-lumayan bagus,4
-sedikit bagus,4
-menggemaskan,4
-bikin gemas,4
-membuat gemas,4
-tidak menyesal,4
-tidak sia-sia,4
-terbaik,4
-terharu,4
-terindah,4
-ketawa,4
-tertawa,4
-kesayangan,4
-sukses,4
-candaan,4
-menikmati,4
-nikmati,4
-dinikmati,4
-gemas,4
-imut,4
-enak,4
-lelucon,4
-lumayan,4
-memanjakan,4
-menyukai,4
-tercakep,4
-tercantik,4
-ganteng,4
-tampan,4
-cakep,4
-tersenyum,4
-puas,4
-terganteng,3
-tertampan,3
-baik,3
-juara,3
-sayang,3
-manis,3
-hangat,3
-lawak,3
-keindahan,3
-canda,3
-dilihat,3
-lihat,3
-tawa,3
-kesimpulan,3
-amanah,3
-ingin,3
-kesan,3
-ok,3
-makna,3
-suruh nonton,3
-pesan,3
-positif,3
-positifnya,3
-sedap,3
+﻿mengena,3
+suruh lihat,3
+recommended,3
+keren sumpah,3
+bagus sumpah,3
+keren parah,3
+sumpah keren,3
+sumpah bagus,3
+parah kerennya,3
+parah bagusnya,3
+highly recomended,3
+tersentuh hati,3
+fun,3
+menyesal melewatkan film,3
+melebihi ekspektasi,3
+aku hargai,3
+melebihi ekspetasi,3
+bagus reviewnya,3
+hatiku tersentuh,3
+aku tersentuh,3
+menyesal tidak lihat film,3
+paling direkomendasikan,3
+pantas dilihat,3
+pantas lihat,3
+layak lihat,3
+layak dilihat,3
+menginspirasi,3
+direkomendasikan,3
+ratingnya besar,3
+ratingnya tinggi,3
+rating tinggi,3
+rating besar,3
+bagus banget,3
+asik,3
+buagus,3
+menyenangkan,3
+harus ditonton,3
+patut ditonton,3
+layak ditonton,3
+pantas ditonton,3
+paling bagus,3
+terlalu bagus,3
+sangat bagus,3
+sungguh bagus,3
+bagus parah,3
+terbagus,3
+harus lihat,3
+harus dilihat,3
+patut lihat,3
+patut dilihat,3
+7 10,3
+8 10,3
+9 10,3
+10 10,3
+3 5,3
+4 5,3
+5 5,3
+kocak,3
+imajinatif,3
+kagum,3
+keren,3
+cemerlang,3
+bagus,3
+bangga,3
+suka,3
+menghayati,3
+totalitas,3
+totalitasnya,3
+tersentuh,3
+fantastis,3
+Fenomenal,3
+edukatif,3
+mengagumkan,3
+mengejutkan,3
+menyegarkan,3
+cinta,3
+menghibur,3
+menyentuh,3
+lucu,3
+luar biasa,3
+epik,3
+asyik,3
+seru,3
+jenius,3
+apik,3
+unik,3
+hebat,3
+menarik,3
+Terpesona,3
+Menakjubkan,3
+mempesona,3
+mengasyikan,3
+mengasyikkan,3
+setengah bagus,2
+cukup bagus,2
+lumayan bagus,2
+sedikit bagus,2
+menggemaskan,2
+bikin gemas,2
+membuat gemas,2
+tidak menyesal,2
+tidak sia-sia,2
+terbaik,2
+terharu,2
+terindah,2
+ketawa,2
+tertawa,2
+kesayangan,2
+sukses,2
+candaan,2
+menikmati,2
+nikmati,2
+dinikmati,2
+gemas,2
+imut,2
+enak,2
+lelucon,2
+lumayan,2
+memanjakan,2
+menyukai,2
+tercakep,2
+tercantik,2
+ganteng,2
+tampan,2
+cakep,2
+tersenyum,2
+puas,2
+terganteng,1
+tertampan,1
+baik,1
+juara,1
+sayang,1
+manis,1
+hangat,1
+lawak,1
+keindahan,1
+canda,1
+dilihat,1
+lihat,1
+tawa,1
+kesimpulan,1
+amanah,1
+ingin,1
+kesan,1
+ok,1
+makna,1
+suruh nonton,1
+pesan,1
+positif,1
+positifnya,1
+sedap,1
