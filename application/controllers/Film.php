@@ -1,8 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-require_once (dirname(__FILE__) . "/WebSystem.php");
-
-Class Film extends WebSystem {
+Class Film extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();

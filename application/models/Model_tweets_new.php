@@ -496,9 +496,13 @@ Class Model_tweets_new extends CI_Model {
 			$returnArray[$i]['text'] = $hasil[0]['text'];
 			
 			$hasil = $this->getTweetByOri('tweets_lexicon', $returnArray[$i]['ori_id']);
-			$returnArray[$i]['score'] = $hasil[0]['score'];
-			if ($hasil) $returnArray[$i]['lexicon'] = $hasil[0]['intersect'];
-			else $returnArray[$i]['lexicon'] = ' - ';
+			if ($hasil){
+				$returnArray[$i]['lexicon'] = $hasil[0]['intersect'];
+				$returnArray[$i]['score'] = $hasil[0]['score'];
+			} else {
+				$returnArray[$i]['lexicon'] = ' - ';
+				$returnArray[$i]['score'] = 0;
+			}
 			
 			$hasil = $this->getTweetByOri('tweets_regex', $returnArray[$i]['ori_id']);
 			if ($hasil) $returnArray[$i]['regex'] = $hasil[0]['text'];

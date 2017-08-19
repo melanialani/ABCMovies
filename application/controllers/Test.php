@@ -270,6 +270,52 @@ class Test extends CI_Controller {
 		}
 	}
 	
+	public function calculation(){
+		$data['tp'] = sizeof($this->model_tweets_new->getBoth('tp'));
+		$data['tn'] = sizeof($this->model_tweets_new->getBoth('tn'));
+		$data['fp'] = sizeof($this->model_tweets_new->getBoth('fp'));
+		$data['fn'] = sizeof($this->model_tweets_new->getBoth('fn'));
+		$data['accuracy'] = (($data['tn']+$data['tp'])*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
+		$data['precision'] = $data['tp']*100/($data['tp']+$data['fp']);
+		$data['recall'] = $data['tn']*100/($data['tn']+$data['fn']);
+		$data['fmeasure'] = (2*$data['precision']*$data['recall'])/($data['precision']+$data['recall']);
+		
+		$data['review_tp'] = sizeof($this->model_tweets_new->getBoth('tr'));
+		$data['review_tn'] = sizeof($this->model_tweets_new->getBoth('tnr'));
+		$data['review_fp'] = sizeof($this->model_tweets_new->getBoth('fr'));
+		$data['review_fn'] = sizeof($this->model_tweets_new->getBoth('fnr'));
+		$data['review_accuracy'] = (($data['review_tn']+$data['review_tp'])*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
+		$data['review_precision'] = $data['review_tp']*100/($data['review_tp']+$data['review_fp']);
+		$data['review_recall'] = $data['review_tn']*100/($data['review_tn']+$data['review_fn']);
+		$data['review_fmeasure'] = (2*$data['review_precision']*$data['review_recall'])/($data['review_precision']+$data['review_recall']);
+		
+		echo '<h3>Positive/Negative</h3>';
+		echo 'TP: '.$data['tp'].'<br>';
+		echo 'TN: '.$data['tn'].'<br>';
+		echo 'FP: '.$data['fp'].'<br>';
+		echo 'FN: '.$data['fn'].'<br>';
+		echo 'Accuracy: '.$data['accuracy'].'<br>';
+		echo 'Precision: '.$data['precision'].'<br>';
+		echo 'Recall: '.$data['recall'].'<br>';
+		echo 'F-Measure: '.$data['fmeasure'].'<br>';
+		echo '<hr>';
+		echo '<h3>Review/Non-review</h3>';
+		echo 'TP: '.$data['review_tp'].'<br>';
+		echo 'TN: '.$data['review_tn'].'<br>';
+		echo 'FP: '.$data['review_fp'].'<br>';
+		echo 'FN: '.$data['review_fn'].'<br>';
+		echo 'Accuracy: '.$data['review_accuracy'].'<br>';
+		echo 'Precision: '.$data['review_precision'].'<br>';
+		echo 'Recall: '.$data['review_recall'].'<br>';
+		echo 'F-Measure: '.$data['review_fmeasure'].'<br>';
+		
+		/*echo '<hr><h1>FN</h1>';
+		$data['tweets'] = $this->model_tweets_new->getBoth('fn');
+		for($i=0; $i<sizeof($data['tweets']); $i++) {
+			echo $data['tweets'][$i]['text'].'<br/>';
+		}*/
+	}
+	
 	public function testEmail($newMovie = NULL){
 		$allAdmin = $this->model_user->getAdminEmail();
 	    
@@ -749,52 +795,6 @@ class Test extends CI_Controller {
 			 	echo '<b>Movie not found</b>: ' . $movies[$i]['title'].'<br>';
 		}
 		
-	}
-	
-	public function calculation(){
-		$data['tp'] = sizeof($this->model_tweets_new->getBoth('tp'));
-		$data['tn'] = sizeof($this->model_tweets_new->getBoth('tn'));
-		$data['fp'] = sizeof($this->model_tweets_new->getBoth('fp'));
-		$data['fn'] = sizeof($this->model_tweets_new->getBoth('fn'));
-		$data['accuracy'] = (($data['tn']+$data['tp'])*100) / ($data['tn']+$data['tp']+$data['fn']+$data['fp']);
-		$data['precision'] = $data['tp']*100/($data['tp']+$data['fp']);
-		$data['recall'] = $data['tn']*100/($data['tn']+$data['fn']);
-		$data['fmeasure'] = (2*$data['precision']*$data['recall'])/($data['precision']+$data['recall']);
-		
-		$data['review_tp'] = sizeof($this->model_tweets_new->getBoth('tr'));
-		$data['review_tn'] = sizeof($this->model_tweets_new->getBoth('tnr'));
-		$data['review_fp'] = sizeof($this->model_tweets_new->getBoth('fr'));
-		$data['review_fn'] = sizeof($this->model_tweets_new->getBoth('fnr'));
-		$data['review_accuracy'] = (($data['review_tn']+$data['review_tp'])*100) / ($data['review_tn']+$data['review_tp']+$data['review_fn']+$data['review_fp']);
-		$data['review_precision'] = $data['review_tp']*100/($data['review_tp']+$data['review_fp']);
-		$data['review_recall'] = $data['review_tn']*100/($data['review_tn']+$data['review_fn']);
-		$data['review_fmeasure'] = (2*$data['review_precision']*$data['review_recall'])/($data['review_precision']+$data['review_recall']);
-		
-		echo '<h3>Positive/Negative</h3>';
-		echo 'TP: '.$data['tp'].'<br>';
-		echo 'TN: '.$data['tn'].'<br>';
-		echo 'FP: '.$data['fp'].'<br>';
-		echo 'FN: '.$data['fn'].'<br>';
-		echo 'Accuracy: '.$data['accuracy'].'<br>';
-		echo 'Precision: '.$data['precision'].'<br>';
-		echo 'Recall: '.$data['recall'].'<br>';
-		echo 'F-Measure: '.$data['fmeasure'].'<br>';
-		echo '<hr>';
-		echo '<h3>Review/Non-review</h3>';
-		echo 'TP: '.$data['review_tp'].'<br>';
-		echo 'TN: '.$data['review_tn'].'<br>';
-		echo 'FP: '.$data['review_fp'].'<br>';
-		echo 'FN: '.$data['review_fn'].'<br>';
-		echo 'Accuracy: '.$data['review_accuracy'].'<br>';
-		echo 'Precision: '.$data['review_precision'].'<br>';
-		echo 'Recall: '.$data['review_recall'].'<br>';
-		echo 'F-Measure: '.$data['review_fmeasure'].'<br>';
-		
-		echo '<hr><h1>FN</h1>';
-		$data['tweets'] = $this->model_tweets_new->getBoth('fn');
-		for($i=0; $i<sizeof($data['tweets']); $i++) {
-			echo $data['tweets'][$i]['text'].'<br/>';
-		}
 	}
 	
 	public function testAllAbove70(){

@@ -25,10 +25,8 @@
 		            <th>Judul Film</th>
 		            <th>ID Twitter</th>
 		            <th>Detail</th>
+		            <th>Tambahan</th>
 		            <th>Aksi</th>
-		            <!--th>Keterangan</th>
-		            <th>Yes Review</th>
-		            <th>Yes Positive</th-->
 		        </tr>
 		    </thead>
 		   	<tbody>
@@ -49,6 +47,10 @@
 					        	else if ($tweets[$i]['is_positive'] == 0) echo "<b>Sentiment:</b> <strike>Positive</strike> / <b>Negative</b>";
 							} else if ($tweets[$i]['is_review'] == 0) echo "<b>Review:</b> <strike>Yes</strike> / <b>No</b>";
 						echo "</td>";
+						echo "<td>1. Original text<br/>2. Feature Reduction<br/>";
+					        echo '3. Normalization: '.$tweets[$i]['singkatan_intersect'] . "<br/>";
+					        echo '4. Rule-Based: '.$tweets[$i]['lexicon'].' (Score: '.$tweets[$i]['score'].')';
+					    echo "</td>";
 						echo "<td>";
 					        echo form_open('admin/unchecked');
 					        echo form_hidden('id', $tweets[$i]['id']);

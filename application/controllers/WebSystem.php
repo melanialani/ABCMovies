@@ -406,6 +406,7 @@ class WebSystem extends CI_Controller {
 		
 		// put into associative array
 		for ($i=0; $i<sizeof($tweets); $i++){
+			$result[$i]['film_id'] = $film_id;
 			$result[$i]['twitter_id'] = $tweets[$i]['twitter_id'];
 			$result[$i]['text'] = strtolower($tweets[$i]['text']);
 			$result[$i]['created_at'] = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
