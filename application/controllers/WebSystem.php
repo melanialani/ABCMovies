@@ -4,9 +4,9 @@ ini_set('memory_limit','2048M');
 
 if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include_once( dirname(dirname(__FILE__)) . '/third_party/TwitterAPIExchange.php' );
-include_once( dirname(dirname(__FILE__)) . '/third_party/SentimentAnalyzer.php' );
-require_once( dirname(dirname(__FILE__)) . '/third_party/imdb.class.php' );
+require_once( dirname(dirname(__FILE__)) . '/libraries/TwitterAPIExchange.php' );
+require_once( dirname(dirname(__FILE__)) . '/libraries/SentimentAnalyzer.php' );
+require_once( dirname(dirname(__FILE__)) . '/libraries/imdb.class.php' );
 
 class WebSystem extends CI_Controller {
 	
@@ -376,6 +376,24 @@ class WebSystem extends CI_Controller {
 			$idx++;
 		}
 		
+		$listPos = []; $idx = 0;
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_pos.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			$listPos[$idx]['text'] = $temp[0];
+			$listPos[$idx]['score'] = $temp[1];
+			$idx++;
+		}
+		
+		$listNeg = []; $idx = 0;
+		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/sentiment_neg.txt', "r");
+		while ($activeLine = fgets($fileLocation)){
+			$temp = explode(',', trim(strtolower($activeLine)));
+			$listNeg[$idx]['text'] = $temp[0];
+			$listNeg[$idx]['score'] = $temp[1];
+			$idx++;
+		}
+		
 		// train naive bayes classifier
 		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
 		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
@@ -393,6 +411,13 @@ class WebSystem extends CI_Controller {
 			$result[$i]['created_at'] = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
 			$result[$i]['is_review'] = 0;
 			$result[$i]['is_positive'] = 0; 
+			
+			$result[$i]['replaced'] = null; 
+			$result[$i]['lexicon'] = null; 
+			$result[$i]['score'] = 0; 
+			$result[$i]['intersect'] = null;
+			$result[$i]['positivity'] = 0;
+			$result[$i]['negativity'] = 0;
 		}
 		
 		// !!! === !!! === begin feature-reduction & mapping data
@@ -448,17 +473,6 @@ class WebSystem extends CI_Controller {
 				}
 			}
 			
-			// compare with review common words data
-			for ($j=0; $j<sizeof($commonWords); $j++){
-				if (strpos($result[$i]['text'], $commonWords[$j]['text']) == TRUE){
-					if (preg_match('/\b'.$commonWords[$j]['text'].'\b/', $result[$i]['text'])) { 
-						$value += $commonWords[$j]['score'];
-						if ($intersectStr == NULL) $intersectStr = $commonWords[$j]['text'];
-						else $intersectStr .= ',' . $commonWords[$j]['text'];
-					}
-				}
-			}
-			
 			// compare with non-review common words data
 			for ($j=0; $j<sizeof($nonReview); $j++){
 				if (strpos($result[$i]['text'], $nonReview[$j]['text']) == TRUE){
@@ -470,9 +484,42 @@ class WebSystem extends CI_Controller {
 				}
 			}
 			
+			// compare with review common words data
+			for ($j=0; $j<sizeof($commonWords); $j++){
+				if (strpos($result[$i]['text'], $commonWords[$j]['text']) == TRUE){
+					if (preg_match('/\b'.$commonWords[$j]['text'].'\b/', $result[$i]['text'])) { 
+						$value += $commonWords[$j]['score'];
+						if ($intersectStr == NULL) $intersectStr = $commonWords[$j]['text'];
+						else $intersectStr .= ',' . $commonWords[$j]['text'];
+					}
+				}
+			}
+			
 			if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id']) && $value >= 10){
 				$result[$i]['is_review'] = 1;
-				$this->model_tweets_new->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr);
+				$result[$i]['lexicon'] = $intersectStr; 
+				$result[$i]['score'] = $value; 
+				$this->model_tweets_new->insertTweetLexicon($result[$i]['twitter_id'], $intersectStr, $value);
+			}
+			
+			// set default value for positivity & negativity
+			for ($j=0; $j<sizeof($listPos); $j++){
+				if (strpos($result[$i]['text'], $listPos[$j]['text']) == TRUE){
+					if (preg_match('/\b'.$listPos[$j]['text'].'\b/', $result[$i]['text'])){
+						$result[$i]['positivity'] += $listPos[$j]['score']/10;
+						$result[$i]['negativity'] -= $listPos[$j]['score']/10;
+						$result[$i]['intersect'] .= $listPos[$j]['text'].',';
+					}
+				}
+			}
+			for ($j=0; $j<sizeof($listNeg); $j++){
+				if (strpos($result[$i]['text'], $listNeg[$j]['text']) == TRUE){
+					if (preg_match('/\b'.$listNeg[$j]['text'].'\b/', $result[$i]['text'])){
+						$result[$i]['negativity'] += $listNeg[$j]['score']/10;
+						$result[$i]['positivity'] -= $listNeg[$j]['score']/10;
+						$result[$i]['intersect'] .= '-'.$listNeg[$j]['text'].',';
+					}
+				}
 			}
 		}
 		
@@ -480,12 +527,12 @@ class WebSystem extends CI_Controller {
 		for ($i=0; $i<sizeof($result); $i++){
 			if ($result[$i]['is_review'] == 1){
 				$sentimentAnalysisOfSentence = $sat->analyzeSentence($result[$i]['text']);
-				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment']; // "positive" or "negative"
-				$probabilityofSentenceBeingPositive = $sentimentAnalysisOfSentence['accuracy']['positivity'];
-				$probabilityofSentenceBeingNegative = $sentimentAnalysisOfSentence['accuracy']['negativity'];
+				$resultofAnalyzingSentence = $sentimentAnalysisOfSentence['sentiment'];
+				$result[$i]['positivity'] += $sentimentAnalysisOfSentence['accuracy']['positivity'];
+				$result[$i]['negativity'] += $sentimentAnalysisOfSentence['accuracy']['negativity'];
 				
 				// set is_positive value
-				if ($probabilityofSentenceBeingPositive > $probabilityofSentenceBeingNegative)
+				if ($result[$i]['positivity'] > $result[$i]['negativity'])
 					$result[$i]['is_positive'] = 1;
 				else 
 					$result[$i]['is_positive'] = 0;
@@ -493,9 +540,9 @@ class WebSystem extends CI_Controller {
 			
 			if (!$this->model_tweets_new->getTweetByOri('tweets_final', $result[$i]['twitter_id'])){
 				if (!$this->model_tweets_new->getTweetByText('tweets_final', $result[$i]['text']))
-					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $film_id, $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 0);
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['film_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], NULL, NULL, 0, 0, $result[$i]['positivity'], $result[$i]['negativity']);
 				else 
-					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $film_id, $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], 1);
+					$this->model_tweets_new->insertTweetFinal($result[$i]['twitter_id'], $result[$i]['film_id'], $result[$i]['text'], $result[$i]['is_review'], $result[$i]['is_positive'], NULL, NULL, 0, 1, $result[$i]['positivity'], $result[$i]['negativity']);
 			}
 		}
 		
