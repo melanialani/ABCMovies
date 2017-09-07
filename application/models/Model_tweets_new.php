@@ -157,8 +157,7 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Get all data from a table
-	* Param $table_name accepts: tweets, tweets_ori, tweets_final, tweets_lexicon, tweets_regex, tweets_replaced
-	* @param string $table_name
+	* @param string $table_name - TWEETS, TWEETS_ORI, TWEETS_FINAL, TWEETS_LEXICON, TWEETS_REGEX, or TWEETS_REPLACED
 	* 
 	* @return
 	*/
@@ -179,8 +178,7 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Count how many data is in a table
-	* Param $table_name accepts: tweets, tweets_ori, tweets_final, tweets_lexicon, tweets_regex, tweets_replaced
-	* @param string $table_name
+	* @param string $table_name - TWEETS, TWEETS_ORI, TWEETS_FINAL, TWEETS_LEXICON, TWEETS_REGEX, or TWEETS_REPLACED
 	* 
 	* @return
 	*/
@@ -190,8 +188,7 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Get data from a table with pagination
-	* Param $table_name accepts: tweets, tweets_ori, tweets_final, tweets_lexicon, tweets_regex, tweets_replaced
-	* @param string $table_name
+	* @param string $table_name - TWEETS, TWEETS_ORI, TWEETS_FINAL, TWEETS_LEXICON, TWEETS_REGEX, or TWEETS_REPLACED
 	* @param int $limit
 	* @param int $start
 	* 
@@ -205,8 +202,7 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Get a certain tweet from 5 different tables (by id)
-	* with value of $table_name accepts: 'tweets_ori', tweets_replaced', 'tweets_regex', 'tweets_lexicon', and 'tweets_final'
-	* @param string $table_name
+	* @param string $table_name - TWEETS_ORI, TWEETS_FINAL, TWEETS_LEXICON, TWEETS_REGEX, or TWEETS_REPLACED
 	* @param int $id
 	* 
 	* @return
@@ -218,8 +214,7 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Get a certain tweet from 5 different tables (by twitter_id)
-	* with value of $table_name accepts: 'tweets_ori', tweets_replaced', 'tweets_regex', 'tweets_lexicon', and 'tweets_final'
-	* @param string $table_name
+	* @param string $table_name - TWEETS_ORI, TWEETS_FINAL, TWEETS_LEXICON, TWEETS_REGEX, or TWEETS_REPLACED
 	* @param int $twitter_id
 	* 
 	* @return
@@ -234,8 +229,7 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Check if a text is already exist in a table
-	* with value of $table_name accepts: 'tweets_ori', tweets_replaced', 'tweets_regex', 'tweets_lexicon', and 'tweets_final'
-	* @param string $table_name
+	* @param string $table_name - TWEETS_ORI, TWEETS_FINAL, TWEETS_LEXICON, TWEETS_REGEX, or TWEETS_REPLACED
 	* @param string $text
 	* 
 	* @return
@@ -633,8 +627,7 @@ Class Model_tweets_new extends CI_Model {
 	
 	/**
 	* Get both tp, tn, fp, fn from both old & new tweet
-	* with param $type only accepts: tp, tn, fp, fn, tr, tnr, fr, fnr
-	* @param String $type
+	* @param String $type - TP, TN, FP, FN, TR, TNR, FR, or FNR
 	* 
 	* @return
 	*/

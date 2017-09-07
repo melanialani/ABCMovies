@@ -31,7 +31,7 @@ Class Model_function extends CI_Model {
 		$lexicon = [];
 		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon-minus-common_words_review.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
-			array_push($lexicon, trim($activeLine));	
+			array_push($lexicon, trim(strtolower($activeLine)));	
 		}
 		
 		$singkatan = []; $idx = 0;
@@ -84,7 +84,7 @@ Class Model_function extends CI_Model {
 		// !!! === !!! === begin feature-reduction & mapping data
 		for ($i=0; $i<sizeof($result); $i++){
 			// decode html characters
-			$result[$i]['text'] = html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+			$result[$i]['text'] = strtolower(html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8'));
 			
 			$result[$i]['text'] = preg_replace('%\b(([\w-]+://?|www[.])[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/)))%s', 'URL', $result[$i]['text']);
 			$result[$i]['text'] = preg_replace('/#([\p{Pc}\p{N}\p{L}\p{Mn}]+)/u', 'HASHTAG', $result[$i]['text']);
@@ -141,10 +141,8 @@ Class Model_function extends CI_Model {
 				}
 			}
 			
-			if (!$this->model_tweets_new->getTweetByOri('tweets_lexicon', $result[$i]['twitter_id']) && $value >= 10){
+			if ($result[$i]['score'] >= 8){
 				$result[$i]['is_review'] = 1;
-				$result[$i]['lexicon'] = $intersectStr; 
-				$result[$i]['score'] = $value; 
 			}
 			
 			// set default value for positivity & negativity

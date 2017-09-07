@@ -9,13 +9,14 @@
 	        <?= form_submit('true_neg','True Negative','class="btn btn-default"'); ?>
 	        <?= form_submit('false_pos','False Positive','class="btn btn-default"'); ?>
 	        <?= form_submit('false_neg','False Negative','class="btn btn-default"'); ?>
-	        
+	        |
 	        <?= form_submit('true_review','True Review','class="btn btn-default"'); ?>
 	        <?= form_submit('true_non','True Non-review','class="btn btn-default"'); ?>
 	        <?= form_submit('false_review','False Review','class="btn btn-default"'); ?>
 	        <?= form_submit('false_non','False Non-review','class="btn btn-default"'); ?>
-	        
-	        <?= form_submit('unchecked','Unchecked Steps','class="btn btn-default"'); ?>
+	        |
+	        <?= form_submit('unchecked','Unchecked','class="btn btn-default"'); ?>
+	        <?= form_submit('dataset','Dataset','class="btn btn-default"'); ?>
 	        <?= form_close(); ?>
         </div>
         <br /><br />

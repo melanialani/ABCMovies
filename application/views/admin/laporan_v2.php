@@ -9,13 +9,14 @@
 	        <?= form_submit('true_neg','True Negative','class="btn btn-default"'); ?>
 	        <?= form_submit('false_pos','False Positive','class="btn btn-default"'); ?>
 	        <?= form_submit('false_neg','False Negative','class="btn btn-default"'); ?>
-	        
+	        |
 	        <?= form_submit('true_review','True Review','class="btn btn-default"'); ?>
 	        <?= form_submit('true_non','True Non-review','class="btn btn-default"'); ?>
 	        <?= form_submit('false_review','False Review','class="btn btn-default"'); ?>
 	        <?= form_submit('false_non','False Non-review','class="btn btn-default"'); ?>
-	        
-	        <?= form_submit('unchecked','Unchecked Steps','class="btn btn-default"'); ?>
+	        |
+	        <?= form_submit('unchecked','Unchecked','class="btn btn-default"'); ?>
+	        <?= form_submit('dataset','Dataset','class="btn btn-default"'); ?>
 	        <?= form_close(); ?>
         </div>
         <br /><br />
@@ -81,8 +82,8 @@
 		        <tr>
 		            <th>Title</th>
 		            <th>Tweet</th>
-		            <th><?= 'Is '.$type; ?></th>
-		            <th><?= 'Yes '.$type; ?></th>
+		            <th><?= 'Merupakan '.$type; ?></th>
+		            <th><?= 'Benar '.$type; ?></th>
 		            <th>Action</th>
 		        </tr>
 		    </thead>
@@ -94,23 +95,28 @@
 					        echo "<td>" . $tweets[$i]['text'] . "</td>";
 					        echo "<td>";
 					        	//echo '<span style="font-size: 0px;">'.$tweets[$i]['is_true'].'</span>';
-					        	if ($tweets[$i]['is_true'] == 0) echo '<div title="Bukan '.$type.'" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-minus"></span></div>';
-					        	else echo '<div title="'.$type.'" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-plus"></span></div>';
+					        	if ($tweets[$i]['is_true'] == 0) echo 'No';
+					        	else echo 'Yes';
 					        echo "</td>";
 					        echo "<td>";
 					        	//echo '<span style="font-size: 0px;">'.$tweets[$i]['yes_true'].'</span>';
-					        	if ($tweets[$i]['yes_true'] == 1) echo '<div title="true" class="btn btn-xs btn-success" style="margin-left:10px;"><span class="fa fa-check"></span></div>';
-					        	else if ($tweets[$i]['yes_true'] == 0) echo '<div title="false" class="btn btn-xs btn-warning" style="margin-left:10px;"><span class="fa fa-times"></span></div>';
+					        	if ($tweets[$i]['yes_true'] == 1) echo 'Yes';
+					        	else if ($tweets[$i]['yes_true'] == 0) echo 'No';
 					        echo "</td>";
 					        echo "<td>";
 				   				echo form_open('admin/report');
 				   					echo form_hidden('id', $tweets[$i]['id']);
 				   					echo form_hidden('ori_id', $tweets[$i]['ori_id']);
 				   					echo form_hidden('yes_true', $tweets[$i]['yes_true']);
-				   					?>
-				   					<button type="submit" name="update" value="Update" title="Negate Sentiment" class="btn btn-xs btn-info"><span class="fa fa-edit"></span></button>
-				   					<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>
-				   					<?php
+				   					echo form_hidden('text', $tweets[$i]['text']);
+				   					echo '
+				   					<button type="submit" name="update" value="Update" title="Negate True Sentiment" class="btn btn-xs btn-info"><span class="fa fa-refresh"></span></button>
+				   					<button type="submit" name="delete" value="Delete" title="Delete" class="btn btn-xs btn-danger"><span class="fa fa-trash-o"></span></button>';
+				   					if ($type == "Positive"){
+										echo '
+										<button type="submit" name="pos" value="Positive" title="Insert as positive dataset" class="btn btn-xs btn-success" style="margin-top:10px;"><span class="fa fa-plus"></span></button>
+				   						<button type="submit" name="neg" value="Negative" title="Insert as negative dataset" class="btn btn-xs btn-warning" style="margin-top:10px;"><span class="fa fa-minus"></span></button>';
+									}
 				   				echo form_close();
 			   				echo "</td>";
 				        echo "</tr>";

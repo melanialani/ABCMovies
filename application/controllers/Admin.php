@@ -280,6 +280,24 @@ Class Admin extends CI_Controller {
 				$data['result']['negativity'] 	= $data['result'][0]['negativity'];
 			} 
 			
+			else if ($this->input->post('pos')){
+				$isExist = $this->model_dataset->getDatasetWithText($this->input->post('text', TRUE));
+				if ($isExist){
+					echo '<script language="javascript">alert("Dataset with the same texts already existed");</script>';
+				} else {
+					$this->model_dataset->insertDataset($this->input->post('text', TRUE), NULL, 'pos', 0);
+					redirect('admin/dataset');
+				}
+			} else if ($this->input->post('neg')){
+				$isExist = $this->model_dataset->getDatasetWithText($this->input->post('text', TRUE));
+				if ($isExist){
+					echo '<script language="javascript">alert("Dataset with the same texts already existed");</script>';
+				} else {
+					$this->model_dataset->insertDataset($this->input->post('text', TRUE), NULL, 'neg', 0);
+					redirect('admin/dataset');
+				}
+			}
+			
 			else if ($this->input->post('true_pos')){
 				$data['title'] .= 'True Positive';
 				$data['tweets'] = $this->model_tweets_new->getBoth('tp');
@@ -292,28 +310,26 @@ Class Admin extends CI_Controller {
 			} else if ($this->input->post('false_neg')){
 				$data['title'] .= 'False Negative';
 				$data['tweets'] = $this->model_tweets_new->getBoth('fn');
-			} 
-			
-			else if ($this->input->post('true_review')){
+			} else if ($this->input->post('true_review')){
 				$data['type'] = 'Review';
 				$data['title'] .= 'True Review';
-				$data['tweets'] = $this->model_tweets_old->getTrueReview(); //$this->model_tweets_new->getBoth('tr');
+				$data['tweets'] = $this->model_tweets_new->getBoth('tr');
 			} else if ($this->input->post('true_non')){
 				$data['type'] = 'Review';
 				$data['title'] .= 'True Non-Review';
-				$data['tweets'] = $this->model_tweets_old->getTrueNonReview(); //$this->model_tweets_new->getBoth('tnr');
+				$data['tweets'] = $this->model_tweets_new->getBoth('tnr');
 			} else if ($this->input->post('false_review')){
 				$data['type'] = 'Review';
 				$data['title'] .= 'False Review';
-				$data['tweets'] = $this->model_tweets_old->getFalseReview(); //$this->model_tweets_new->getBoth('fr');
+				$data['tweets'] = $this->model_tweets_new->getBoth('fr');
 			} else if ($this->input->post('false_non')){
 				$data['type'] = 'Review';
 				$data['title'] .= 'False Non-Review';
-				$data['tweets'] = $this->model_tweets_old->getFalseNonReview(); //$this->model_tweets_new->getBoth('fnr');
-			} 
-			
-			else if ($this->input->post('unchecked') == TRUE){ 
+				$data['tweets'] = $this->model_tweets_new->getBoth('fnr');
+			} else if ($this->input->post('unchecked') == TRUE){ 
 				redirect('admin/unchecked');
+			} else if ($this->input->post('dataset') == TRUE){ 
+				redirect('admin/dataset');
 			}
 			
 			//fetch user's name
@@ -374,6 +390,30 @@ Class Admin extends CI_Controller {
 			
 			$this->load->view('includes/header', $data);
 			$this->load->view('admin/steps', $data);			
+		} else { // not admin, go back to login page
+			redirect('user/login');
+		}
+	}
+	
+	public function dataset(){
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
+			$data['title'] = 'Dataset';
+			$data['dataset'] = $this->model_dataset->getAllDataset();
+			
+			if ($this->input->post('delete')){
+				$this->model_dataset->deleteDataset($this->input->post('id', TRUE), 1);
+				redirect('admin/dataset');
+			}
+			
+			//fetch user's name
+			if ($this->input->cookie('abcmovies')){
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+				$data['name'] = $user[0]['name'];
+			} else $data['name'] = null;
+			
+			$this->load->view('includes/header', $data);
+			$this->load->view('admin/dataset', $data);			
 		} else { // not admin, go back to login page
 			redirect('user/login');
 		}

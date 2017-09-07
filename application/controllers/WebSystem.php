@@ -104,7 +104,7 @@ class WebSystem extends CI_Controller {
 						}
 						
 						if (!$isExist){ // add it to db
-							$getdata = $this->getMovieInfo($getdata['title'], $getdata['poster'], 4);						echo '<pre>'; print_r($getdata); echo '</pre>';
+							$getdata = $this->getMovieInfo($getdata['title'], $getdata['poster'], 4);						//echo '<pre>'; print_r($getdata); echo '</pre>';
 							$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['param'],$getdata['status']);
 						}
 						
@@ -198,7 +198,7 @@ class WebSystem extends CI_Controller {
 						}
 						
 						if (!$isExist){ // add it to db
-							$getdata = $this->getMovieInfo($getdata['title'], $getdata['poster'], 3); 					echo '<pre>'; print_r($getdata); echo '</pre>';
+							$getdata = $this->getMovieInfo($getdata['title'], $getdata['poster'], 3); 					//echo '<pre>'; print_r($getdata); echo '</pre>';
 							$this->model_film->insertFilm($getdata['title'],$getdata['summary'],$getdata['genre'],$getdata['year'],$getdata['playing_date'],$getdata['length'],$getdata['director'],$getdata['writer'],$getdata['actors'],$getdata['poster'],$getdata['trailer'],$getdata['imdb_id'],$getdata['imdb_rating'],$getdata['metascore'],$getdata['param'],$getdata['status']);
 						}
 						
@@ -248,7 +248,7 @@ class WebSystem extends CI_Controller {
 		        else if ($aItem['name'] == 'Trailer'){
 		    	   	// <iframe width="854" height="480" src="https://www.youtube.com/embed/G4VmJcZR0Yg" frameborder="0" allowfullscreen></iframe>
 			     	$getdata['trailer'] = htmlspecialchars_decode('<iframe width="894" height="520" src="'.$aItem['value'].'imdb/embed?autoplay=false&width=854" frameborder="0" allowfullscreen></iframe>');
-				} else if ($aItem['name'] == 'Url' && strpos($aItem['name'], 'imdb') == TRUE){
+				} else if ($aItem['name'] == 'Url' && strpos($aItem['value'], 'imdb') == TRUE){
 				   	// ex: http://www.imdb.com/title/tt4981636/
 					$temp = explode('/', $aItem['value']);
 					$getdata['imdb_id'] = $temp[4];
@@ -364,7 +364,7 @@ class WebSystem extends CI_Controller {
 		$lexicon = [];
 		$fileLocation = fopen(dirname(dirname(__FILE__)).'/third_party/lexicon-minus-common_words_review.txt', "r");
 		while ($activeLine = fgets($fileLocation)){
-			array_push($lexicon, trim($activeLine));	
+			array_push($lexicon, trim(strtolower($activeLine)));	
 		}
 		
 		$singkatan = []; $idx = 0;
@@ -408,7 +408,7 @@ class WebSystem extends CI_Controller {
 		for ($i=0; $i<sizeof($tweets); $i++){
 			$result[$i]['film_id'] = $film_id;
 			$result[$i]['twitter_id'] = $tweets[$i]['twitter_id'];
-			$result[$i]['text'] = strtolower($tweets[$i]['text']);
+			$result[$i]['text'] = $tweets[$i]['text'];
 			$result[$i]['created_at'] = date("Y-m-d H:i:s", strtotime($tweets[$i]['created_at']));
 			$result[$i]['is_review'] = 0;
 			$result[$i]['is_positive'] = 0; 
@@ -424,7 +424,7 @@ class WebSystem extends CI_Controller {
 		// !!! === !!! === begin feature-reduction & mapping data
 		for ($i=0; $i<sizeof($result); $i++){
 			// decode html characters
-			$result[$i]['text'] = html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8');
+			$result[$i]['text'] = strtolower(html_entity_decode($result[$i]['text'], ENT_QUOTES | ENT_XML1, 'UTF-8'));
 			
 			// feature reduction --> delete username, url, hashtag, punctuations
 			$movie = $this->model_film->getFilm($film_id);
@@ -559,10 +559,14 @@ class WebSystem extends CI_Controller {
 	    for ($j=0; $j<sizeof($allAdmin); $j++){
 			$email = $allAdmin[$j]['email'];
 		    if (valid_email($email)){  // check is email addrress valid or no
+		    	$config['useragent'] = "CodeIgniter";
 				$config['protocol'] = "smtp";
 				$config['smtp_host'] = "ssl://smtp.gmail.com";
+				//$config['smtp_host'] = "ssl://srv33.niagahoster.com";
 				$config['smtp_port'] = "465";
+				$config['smtp_timeout'] = "30";
 				$config['smtp_user'] = "adm.abcmovies@gmail.com"; 
+				//$config['smtp_user'] = "admin@show.web.id"; 
 				$config['smtp_pass'] = "adminadminadmin";
 				$config['charset'] = "utf-8";
 				$config['mailtype'] = "html";
@@ -570,7 +574,7 @@ class WebSystem extends CI_Controller {
 				
 				$this->email->initialize($config);
 				
-				$this->email->from('adm.abcmovies@gmail.com', 'Admin of ABC Movies');
+				$this->email->from($config['smtp_user'], 'Admin of ABC Movies');
 				$this->email->to($email);
 				$this->email->subject('Film baru ditemukan');
 				
@@ -584,10 +588,10 @@ class WebSystem extends CI_Controller {
 				
 		      	// try send mail ant if not able print debug
 		      	if ( ! $this->email->send()){
-		        	echo "<hr>Email not sent <br/>".$this->email->print_debugger().'<hr>';
-		      	} else echo "Email successfully sent to ($email) <br/>";
-		    } else echo "Email address ($email) not correct <br/>";
-		}   
+		        	//echo "<hr>Email not sent <br/>".$this->email->print_debugger().'<hr>';
+		      	} //else echo "Email successfully sent to ($email) <br/>";
+		    } //else echo "Email address ($email) not correct <br/>";
+		}
 	}
 	
 	public function automateJob(){
@@ -596,19 +600,37 @@ class WebSystem extends CI_Controller {
 		$check = $this->checkNowPlaying();
 		for ($i=0; $i<sizeof($check); $i++){
 			$newMovie[$idx]['title'] = $check[$i];		
-			$newMovie[$idx]['status'] = 'Now Playing';				echo $idx.'. '.$newMovie[$idx]['title'].' - '.$newMovie[$idx]['status'].'<br/>';
+			$newMovie[$idx]['status'] = 'Now Playing';				//echo $idx.'. '.$newMovie[$idx]['title'].' - '.$newMovie[$idx]['status'].'<br/>';
 			$idx++;
 		}
 		
 		$check = $this->checkComingSoon();
 		for ($i=0; $i<sizeof($check); $i++){
 			$newMovie[$idx]['title'] = $check[$i];
-			$newMovie[$idx]['status'] = 'Coming Soon';				echo $idx.'. '.$newMovie[$idx]['title'].' - '.$newMovie[$idx]['status'].'<br/>';
+			$newMovie[$idx]['status'] = 'Coming Soon';				//echo $idx.'. '.$newMovie[$idx]['title'].' - '.$newMovie[$idx]['status'].'<br/>';
 			$idx++;
 		}
 		
 		if ($newMovie != NULL) $this->sendEmail($newMovie);			
-		redirect('admin/masterFilm');
+		
+		//redirect('admin/masterFilm');
+		if ($this->model_user->is_admin($this->input->cookie('abcmovies'))){
+			$data['is_admin'] = TRUE;
+			
+			//fetch user's name
+			if ($this->input->cookie('abcmovies')){
+				$user = $this->model_user->getUser($this->input->cookie('abcmovies'));
+				$data['name'] = $user[0]['name'];
+			} else $data['name'] = null;
+			
+			// get information from database
+			$data['movies'] = $this->model_film->getAllFilm();
+			
+			// loads views
+			$this->load->view('includes/header', $data);
+			$this->load->view('admin/master_film', $data);
+		} 
+		else redirect('user/login');
 	}
 }
 ?>

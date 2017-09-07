@@ -318,14 +318,23 @@ class Test extends CI_Controller {
 	
 	public function testEmail($newMovie = NULL){
 		$allAdmin = $this->model_user->getAdminEmail();
+		
+		$newMovie[0]['title'] = 'Title 1';
+		$newMovie[0]['status'] = 'Now Playing';
+	    $newMovie[1]['title'] = 'Title 2';
+		$newMovie[1]['status'] = 'Coming Soon';
 	    
 	    for ($j=0; $j<sizeof($allAdmin); $j++){
 			$email = $allAdmin[$j]['email'];
 		    if (valid_email($email)){  // check is email addrress valid or no
+		    	$config['useragent'] = "CodeIgniter";
 				$config['protocol'] = "smtp";
-				$config['smtp_host'] = "ssl://smtp.gmail.com";
+				//$config['smtp_host'] = "ssl://smtp.gmail.com";
+				$config['smtp_host'] = "ssl://srv33.niagahoster.com";
 				$config['smtp_port'] = "465";
-				$config['smtp_user'] = "adm.abcmovies@gmail.com"; 
+				$config['smtp_timeout'] = "30";
+				//$config['smtp_user'] = "adm.abcmovies@gmail.com"; 
+				$config['smtp_user'] = "admin@show.web.id"; 
 				$config['smtp_pass'] = "adminadminadmin";
 				$config['charset'] = "utf-8";
 				$config['mailtype'] = "html";
@@ -333,7 +342,7 @@ class Test extends CI_Controller {
 				
 				$this->email->initialize($config);
 				
-				$this->email->from('adm.abcmovies@gmail.com', 'Admin of ABC Movies');
+				$this->email->from($config['smtp_user'], 'Admin of ABC Movies');
 				$this->email->to($email);
 				$this->email->subject('Film baru ditemukan');
 				
@@ -350,7 +359,7 @@ class Test extends CI_Controller {
 		        	echo "<hr>Email not sent <br/>".$this->email->print_debugger().'<hr>';
 		      	} else echo "Email successfully sent to ($email) <br/>";
 		    } else echo "Email address ($email) not correct <br/>";
-		}    
+		}   
 	}
 	
 	public function checkNewMovies(){

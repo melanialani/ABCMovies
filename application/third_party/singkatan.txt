@@ -1,4 +1,5 @@
-﻿zmz,pesan
+﻿zombi,zombie
+zmz,pesan
 YW,bersama-sama
 Yuyu,Kepiting
 yuqz,ayo
@@ -6,10 +7,16 @@ yuq,ayo
 yupz,iya
 yukz,ayo
 you're welcome,sama-sama
+your,kamu
+younger,lebih muda
 you welcome,sama-sama
 you,kamu
+yok,ayo
 yha,ya
 yg,yang
+yet,juga
+yes,ya
+ye,ya
 yayune,kakak
 Yayu,kakak
 yawla,ya
@@ -17,34 +24,60 @@ yanv,yang
 Yalsi,sial
 yak,ya
 yaisi,sial
+yahut,bagus
 yah,ya
+yaelah,ya ampun
+ya elah,ya ampun
+xtengok,lihat
+xsyok,kaget
+xpe,sampai
 xmx,pesan
 xixixi,tertawa
+xbestnya,bagus sekali
 x,nya
 wu,aku
 WTH,apa maksudnya
+worth it,sangat pantas
+worth,pantas
+worst,paling buruk
+worse,lebih buruk
+won,memenangkan
 Woles,santai saja
-Who,Berbuah
 wkwkwk,tertawa
 wkwk,haha
+wktu,waktu
 wkowkowkwo,tertawa
+wkend,akhir pekan
 wkawkawkwa,tertawa
 with,dengan
 Wis Gutul Ngendi,Sudah sampai mana
 Wis,Sudah
+wingi,kemarin
+Who,Berbuah
+weyh,wah
 wey,wow
 well done,bagus sekali
 wel done,sangat bagus hasilnya
+wel,ya
+wekend,malam minggu
 Wei,Beri
 weh,wow
 Weduh,Melihat
 Wedi,Takut
 Wates,Batas
+watched,lihat
 watch,lihat
+watak,sifat
 wat,buat
+wasn t that bad,tidak terlalu jelek
+warbyasak,luar biasa
 warbiasah,luar biasa
 warbiasa,luar biasa
+waras,sehat
+wanita2,wanita wanita
+walopun,walaupun
 Waléh,mengaku
+wae,saja
 Wadon,wanita
 wad,buat
 wa,saya
@@ -57,16 +90,22 @@ usil,bertingkah
 urang,orang
 ur welcome,sama-sama
 Uput-uput,sangat pagi
+unyuan,lebih manis
 unyu,manis
 Umeb,Mendidih
+ulasan,review
+ujung2,akhir
 Ujug-ujug,Tiba-tiba
 Ujarku,menurutku
 Ujar,berkata
 ui,hai
+uhukx,ya
 Udu Inyong Ka,bukan saya
 udh,sudah
 udeh,sudah
 Udah,sudah
+uda,sudah
+ud,sudah
 Ucul,lucu
 uchul,lucu
 Ubay,Kamu berlebihan
@@ -78,11 +117,13 @@ ty,terima kasih
 twice,dua kali
 tw,tahu
 tuwh,itu
+turns out,ternyata
 tungu-tungu,tunggu
 tungu2,tunggu
 tungu",tunggu
 tungu,tunggu
 tuk,untuk
+tujuanya,tujuannya
 tuh,itu
 tuch,itu
 tu pun,itu pun
@@ -92,35 +133,52 @@ ttiba,Tiba-tiba
 ttg,tentang
 trz,terus
 trutama,terutama
+trus,terus
 trs,terus
+trnyata,ternyata
 trksn,terkesan
+trksan,terkesan
 trims,terima kasih
 trimakasih,terima kasih
 traveling,bepergian
 Trataban,Hati berdebar kencang
+translatenya,subtitle nya
+tpi,tapi
 tp,tapi
 touching,menyentuh
 touchin,menyentuh
 touched,tersentuh
 tok,hanya
+toching,menyentuh
+tntonan,tontonan
 tnp,tanpa
 tngok,lihat
+tngk,lihat
+tmpat,tempat
 tmn,teman
 tlaten,tekun
 tl,timeline
 tk,tidak
+tingi2,tinggi
+tingi,tinggi
+time,waktu
 tilp,telepon
 Tidokna,ditunjukkan
 tido,tidur
+tida,tidak
 tiba2,Tiba-tiba
 thx,terima kasih
+thriler,thriller
+thought,berpikir
 thok,saja
+thn,tahun
 this year,tahun ini
 the type,tipe yang
 the film,film ini
 the best,bagus
 the, 
 thanks,terima kasih
+tgu,tunggu
 tgok,lihat
 tgk,lihat
 tggu,tunggu
@@ -132,50 +190,72 @@ tetep,tetap
 tetengah,bagian tengah
 tesih,Masih
 Terus Gue Harus Bilang Wow Gitu,saya tidak peduli
+teruks,terus
+tertidur2,tertidur
 tertebak,ditebak
 Terong Terongan,anak nakal
 tergokil,paling keren
 terdevelop,tersusun
+terbangke,paling jelek
 terang2an,dengan jujur
 terang2,terang
 ter develop,tersusun
 tengok,lihat
 tengil,sombong
+tengelamnya,tenggelamnya
+tengelam,tenggelam
+tengah2,tengah
 tenan,sungguh
 Temenan,benar
 temen2,teman
 Temen,sangat
 tembeke,baru saja
 tembe,baru saja
+teman2,teman-teman
 Tela Iya Koh,Memang iya kok
 Tela,Memang
 Tekan,sampai
 tek,saya
 Tegel,Tega
+tebas2,aksi
+tdk,tidak
+tdi,tadi
 td,tadi
+tawuran,pertengkaran remaja
 tawh,tahu
 taw,tahu
 tau,tahu
 tasih,Masih
+takpayah,tidak payah
 Takon,Tanya
 tak,tidak
 tady,tadi
 t4,tempat
+syukak,suka
 syarat2,syarat
 syarat",syarat
 sy,aku
 Suteralah,biarkan
+suposely,harusnya
+suport,dukung
+super,sangat
 sumpah,sungguh
 Sumeng,demam
 Sumed,Menyalakan api 
+sukak,suka
 suk,masuk
 Sue,kesialan
 styp,setiap
 STW,cari di internet
 stupidity,kebodohan
 stupid,bodoh
+students,murid
+strong,kuat
 stressed,depresi
+story,cerita
 stngah,setengah
+stlh,setelah
+starting,mulai awal
 Sripilan,bonus
 Spupet,sepupu
 spt,seperti
@@ -183,16 +263,22 @@ sprti,seperti
 sppa,siapa
 spooky,menakutkan
 spoky,menakutkan
+spanjang,sepanjang
 spa,siapa
 sowry,maaf
+soundtracknya,soundtrack
+sotoy,sok tahu
 sothing,membuat hati tenang
+sory,maaf
 sorang,sendiri
 soothing,menenangkan
+sontreknya,soundtrack dari
 solve,memecahkan
 Sokil Gob,keren
 sok2an,
 sok sokan,bersikap sombong
 sobat,sahabat
+sob,sahabat
 so so,biasa
 so,jadi
 sngt,sangat
@@ -200,17 +286,24 @@ smuanya,semuanya
 SMS,pesan
 smpe,sampai
 smp,sampai
+smlm,semalam
 smart,pintar
 sm,dengan
 slow,lambat
 slh,salah
 slepas,setelah
+slama,selama
+slalu,selalu
 skit,sakit
+sj,saja
 siyan,kasihan
+sis,sahabat
 simple,sederhana
 sila,silahkan
 sikit,sedikit
 Siki,Sekarang
+sik,sih
+sig,sih
 sieyh,sih
 siech,sih
 sick,sakit
@@ -218,16 +311,29 @@ sia2,sia-sia
 sia",sia-sia
 sia sia,sia-sia
 si,sih
+shock,kaget
+shit,wow
 shbs,setelah
+shape,bentuk
+sgt,sangat
 sgd,dengan
+sexy,seksi
 Sewise,Sesudah
 seuwise,sesudah
+setres,depresi
 seseru,terlalu seru
+sesederhana,sederhana seperti yang digambarkan
+seruan,lebih seru
 seru,bagus
+serious,serius
 sering2,sering
+series,serial
+seremnya,seramnya
 serem,menakutkan
 sequelnya,cerita berikutnya
 sequel,cerita berikut
+sequalnya, sequel dari filmnya
+seprti,seperti
 Sepetil,sedikit
 sepethil,sedikit
 sependapat,memiliki pendapat yang sama
@@ -235,28 +341,41 @@ Senthong,Kamar Tidur
 sensasinya,sensasi
 seneng,senang
 Semriwing,sejuk
+sempet,sempat
+sempatin,sempatkan
 Semblothongan,asal-asalan
 semalem,semalam
+selucu,yang lucu
 Selon,santai
 Seliyane,Selainnya
+sekeren,yang keren
 Sekem,tertipu
 Sekang,Dari
 sek,tunggu
 Sejen,Lain
+seheboh,heboh seperti
 sehari2,sehari-hari
 sehari",sehari-hari
 segitu,itu
+seger,segar
 sedy,sedih
 Sedela,Sebentar
 sedap betul,sangat bagus
+sebutin,sebutkan
 sebodo,bodoh
 sebnrnya,sebenarnya
+sebenernya,sebenarnya
+sebelom,sebelum
 sebel,sebal
 sebaya,orang
 sebatangkara,sendirian
 se,terlalu
+sdr,sendiri
+scriptnya,jalan ceritanya
+script,jalan cerita
 screning,screening
 scenex,adegan
+scenes,adegan
 scenenya,adegan
 scene nya,adegan
 scene,adegan
@@ -266,15 +385,20 @@ sblm,sebelum
 sbg,sebagai
 sbb,sebab
 sb,karena
+satnya,saatnya
 sat,saat
+sape,siapa
 Sapa,Siapa
+sangup,sanggup
 Sanga,Sembilan
 Sanding,Sebelah
+sampek,sampai
 sampe,sampai
 sambungan,yang berikutnya
 sama2,bersama
 sama",bersama
 sal,asal
+saking,karena
 saiko,sakit jiwa
 said,berkata
 saiank,sayang
@@ -285,14 +409,19 @@ s4,sempat
 rus,terus
 Runtah,Sampah
 Rumangsa,Merasa
+rugilah,sangat rugi
 Ruag,Rusak
 ru,baru
 Rosa,memiliki tenaga yang kuat
 Rogol,jatuh
+rmhnya,rumahnya
+riweuh,ribet
 Risban,Kursi panjang
+rip,istirahatlah dengan tenang
 Rikala,sewaktu
 Rika,kamu
 reviewnya,review filmnya
+resensi,review
 resek,kesal
 repp,balasan
 Rempong,ribet
@@ -300,15 +429,23 @@ rekomen,anjurkan
 Rekasa,Sengsara
 Rega,Harga
 refreshing,menyegarkan diri
+recreate,membuat ulang
 recommended,dianjurkan untuk dilihat
 recomended,sangat direkomendasi
 Reang,Ramai
+realy,sangat
+realized,sadar
 real,nyata
+rata2,rata-rata
+rasanya,sepertinya
+rasane,sepertinya
 rasain,merasakan
 rasa,merasa
 Randa,Janda
+rame,ramai
 Rama,Bapak
 Raine Ora Mitayani,wajahnya jelek
+ra,tidak
 qsuka,aku suka
 qmu,kamu
 q suka,aku suka
@@ -321,31 +458,45 @@ Pungkasan,Terakhir
 Pundung,kesal
 pulaunya,pulau yang dituju
 pulak,juga
+pukpuk,menghibur
 puashati,sangat puas
 psycho,sakit jiwa
+psl,pasal
 prsahabatan'a,persahabatannya
 prsahabatan a,persahabatannya
+proud of,bangga pada
+proud,bangga
+project,proyek
 priwe,bagaimana
 primen,bagaimana
 Prikitiew,cie
 prikitew,cie
 priben,bagaimana
+prefer,lebih memilih
+predictable,mudah ditebak
 Prasmul,perasaan saja
+prasan,perasaan
 ppi,tapi
 ppa,apa
 poran,biarkan
 porah,biarkan
+por,kasihan
 plink,paling
 p'ling,paling
+please,tolong
 Playon,Berlarian
+play,main
+pkiran,pikiran
 PJ,traktiran
 piye,bagaimana
 Pitik,Anak Ayam
 Pitakon,Pertanyaan
 Pira,Berapa
+pinternya,pintarnya
 pinter,pintar
 pingin,ingin
 pilm,film
+pilemnya,filmnya
 pilem,film
 pie,bagaimana
 pidek,injak
@@ -355,16 +506,31 @@ Pethakilan,nakal
 Petha,Umum
 Peso,Pisau
 Pertamax,komentar pertama
+personality,personalitas
 persahabatanya,persahabatannya
 perform,performa
 Peres,bohong
+perempuan2,wanita wanita
 pereg,dekat
+percintan,percintaan
+perasan,perasaan
 perangnya,perang
+penyampaianya,cara penyampainnya
 penontonya,penontonnya
 Penjorangan,candaan
 pengin,ingin
+penghargan,penghargaan
 pengen,ingin
+pendiem,pendiam
+penayanganya,tayangnya
 pen sangat,sangat ingin
+pen,ingin
+pemeranya,aktornya
+pemandanganya,pemandangannya
+pemainya,pemerannya
+pelm,film
+pegel,kesal
+pede,percaya diri
 Pecicilan,melihat kesana kemari
 Pecah,heboh
 pdhl,padahal
@@ -380,12 +546,17 @@ Paribasan,Ibarat
 Paper,emosi
 panutanq,panutanku
 pantesnya,pantas
+pantes,pantas
 paling,sangat
 Palbis,paling bisa
 pake,pakai
 Pahal,Kerja
 pada,semua
+pace,alur
 pa,apa
+oya,oh ya
+overal,sebagian besar
+over,selesai
 OTW,sedang dalam perjalanan
 Otre,oke
 ostnya,soundtrack dari
@@ -395,36 +566,54 @@ org,orang
 Oretz,oke
 Ora Petha,Tidak wajar
 Ora Nguja,Tidak sengaja
+ora,tidak
 or,atau
+omg,astaga
+omagah,astaga
 Olih-Olih,Oleh-oleh
 Olih,Boleh
+ohiya,oh ya
 ogah,malas
 of the year,tahun ini
+obsesnya,obsesinya
+nyumbang,menyumbang
 nyong,saya
+nyoblos,pemilu
 nyoba,coba
+nykp,ibu
 nyh,ini
 nyesel,menyesal
 nyesal,menyesal
+nyesai,menyesal
 nyeletuk,bicara tanpa pikir
 nyelekit,membuat sakit hati
+nyelamtin,menyelamatkan
 nyebut-nyebut,menyebut
 nyebut2,menyebut
 nyebut",menyebut
 nyebut nyebut,menyebut
 nyebut,menyebut
+nyebar,menyebar
 nyanyi2,nyanyian
 nyanyi",nyanyian
 nyanyi,menyanyi
 nyangka,sangka
+nyampe,sampai
+ny,nya
 NW,sekarang sedang tayang
 nungu,menunggu
 nunggu,menunggu
+nunda,menunda
+numpang,ikut
+ntu,itu
+nton,lihat
 ntn,lihat
 nti,nanti
 ntar,nanti
 ntap,bagus
 ntah,entah
 NP,sekarang sedang tayang
+not,tidak
 nontonya,melihatnya
 nontonin,memperlihatkan
 nontona,lihatnya
@@ -445,56 +634,97 @@ njagong,duduk
 niyh,nih
 Ningen,Tetapi
 nikmat,bagus
+nikahan,pernikahan
 nikah,menikah
+night,malam
 nieyh,nih
+nieh,ini
 niech,nih
 nie,ini
 Nidokna,memperlihatkan
+nice,bagus
 ni,ini
 ngundang,memanggil
 Nguja,Sengaja
 Ngudang,memanggil
+ngubah,mengubah
 Ngonoh,Kesitu
 ngomongin,membicarakan
 ngomong,bicara
 Ngode,Kerja
+ngn,dengan
 Nglombo,Berbohong
 Nglokro,lemas
 Nglogog,melamun
+nglebihin,melebihi
+ngko,nanti
+ngitung,menghitung
+ngira,mengira
+ngilu,aneh
+ngikutin,mengikuti
 nggak,tidak
 ngga,tidak
 ngevote,memilih
 ngets,sekali
 ngerti-ngertiin,mengerti
+ngertin,mengerti
 ngerti2in,mengerti
 ngerti,mengerti
 ngerasa,terlihat
 ngengkrek,bergegas
+ngenganjel,mengganjal
 Ngeneh,Ke sini
 ngena,menyentuh hati
 ngeluarin,mengeluarkan
+ngelihat,melihat
 ngeledekin,menghina
+ngelarin,menyelesaikan
+ngelanjutin,melanjutkan
 ngelamunin,membayangkan
 ngelamun,melamun
+ngelakuin,melakukan
+ngekek2,tertawa
+ngekek,tertawa
 ngejar,mengejar
 ngehargain,menghargai
 ngehargai,menghargai
+ngeh,mengerti
+ngegemesin,membuat orang merasa gemas
+ngeganjel,menggantung dan tidak sesuai harapan
+ngedidik,mendidik
+ngecewain,mengecewakan
 ngebut,cepat
+ngebosenin,membuat bosan
+ngebahas,membahas
 nge vote,memilih
+nge,mau
+ngarepin,harap
 ngapain,sedang apa
 ngapa,mengapa
+ngantuk,ingin tidur
 ngantri,antri
 ngantok,mengantuk
+ngangep,menganggap
 Ngandel,percaya
 Nganah,Kesana
+ngambil,mengambil
+ngalahin,mengalahkan
+ngakunya,mengaku
 ngakak,tertawa
 ngak,tidak
 Ngajog,Menyesal
+ngajak,mengajak
+ngabisin,menghabiskan
 nga,tidak
 next,lanjut
+neng,kak
 nendang,menendang
+nemu,menemukan
+nempeleng,memukul
 nembe,Baru
+nekat,berani mati
 Nek,Kalau
+neh,ini
 Ndopok,membicarakan gosip
 Ndilalah,Kebetulan
 ndikep,menangkap
@@ -502,72 +732,122 @@ Ndeyan,Mungkin
 Ndeplak,Asal bicara
 ndak,tidak
 nc,ini
+nayangin,menayangkan
 nax,anak
 Narsis,cinta diri sendiri
+narik,tarik
 nari2,menari
 naq,anak
+napas,nafas
 napadah,mengapa ya
+nanya,tanya
 nangis,menangis
+nambahin,menambahkan
 nal,kenal
+nakutin,menakutkan
 nak,tidak
+na,nya
 n,dan
 mzuk,masuk
 mzugg,masuk
 mzug,masuk
 mz,pesan
 mystery,misteri
+my,saya
+mw,mau
 mu'uv,maaf
 muuv,maaf
 muupz,maaf
 mutz,imut
+muter,berputar
+must,harus
 Mure,murah
 mumz,makan
+mumpung,selagi
+mumet,pusing
 mulu,setiap saat
 mudun,turun
+mskpn,meskipun
 msh,masih
 movie2,film-film
+movie of year,film bagus tahun ini
+movie of the year,film bagus tahun ini
+movie of the month,film bagus bulan ini
+movie of  month,film bagus bulan ini
 movie,film
+moveon,melupakan
+move on,melupakan
 motivated,termotivasi
 motivate,motivasi
 mosok,masa
+more,lebih
 Modus,memiliki niat lain
 mnyntuh,menyentuh hati
 mnungu,menunggu
 mngkin,mungkin
 mmg,memang
 Mitaya,Lumrah
+miripmirip,mirip
+minit,menit
 mingu,minggu
 Ming,Ke
 mindfuck,luar biasa
 mindblowing,luar biasa
 mind fuck,luar biasa
 mind blowing,luar biasa
+milih,memilih
 mikir,berpikir
 Miki,belum lama
 Midun,Turun
+mid,tengah
 MIAPAH,untuk apa
 MHO,menurutku
 mgkn,mungkin
+mgkin,mungkin
+mewek,menangis
 Metyaw,Selamat Ya
 mestinya,seharusnya
+merindukanya,merindukan dia
 Meriang,Sakit
 Merad,Pergi
 menyentil,tepat sasaran
+menyelengarakan,menyelenggarakan
+menurutq,menurutku
+mentok,paling
+mentang2,memang sih
 mensyukuri,tetap bersyukur
+menonton,melihat
+mengurui,seperti guru
+mengunakan,menggunakan
+Mengugah,Menggugah
+mengoda,menggoda
 Mengko dingin,Nanti dulu
+mengerakkan,menggerakkan
+mengena,jelas
+mengemaskan,membuat orang merasa gemas
+mengelitik,menggelitik
+mengelitik,menggelitik
+mengelisahkan,menggelisahkan
 mengapresiasi,mengagumi
+Menganggu,Mengganggu
 mengangap,menganggap
+mengambarkan,menggambarkan
+mengairahkan,menggairahkan
+mengabungkan,menggabungkan
 Menel,centil
 Meneketehe,saya tidak tahu
+mendingan,lebih baik
 mending,lebih baik
 Menangi,mengalami
 men,main
 mempan,cukup
 memfasilitasi,memberi fasilitas
 memerhatikanmu,mengamati kamu
+melu,ikut
 melow,melankolis
 mellow,melankolis
 meh,mau
+me,aku
 mcm,seperti
 mbuka,membuka
 mbrebes,senang
@@ -578,14 +858,20 @@ mbene,Baru
 Mbekayu,kakak
 Mbejut,Nakal
 Mbejujag,tidak sopan
+mbe,bersama
 Mbandreng,Ingin sekali
+mbak,kak
 Mbajug,Nakal
 mbah,orang yang sudah tua
+mba,kak
 mayuh,ayo
 Mayeng,Pergi
 mayan,lumayan
 Mathak,Melempar
 matek,mati
+mate,sahabat
+masukan,masukkan
+mas,kak
 Marakna,Menyebabkan
 marai,membuat
 mantep,bagus
@@ -599,17 +885,23 @@ Mangslup,Masuk
 Mangsan,Musim
 Mangga,silahkan
 Manga,Membuka mulut
+mang,memang
 mandan,agak
 Mancep,Mantap
 mamz,makan
 mampus,mati
 Mambrah-mambrah,berantakan
 mama,ibu
+males2an,bermalas-malas
+malem,malam
 Malay,malas
 malak,minta uang
+maksa,memaksa
+makek,memakai
 makasih,terimakasih
 Mainstream,sangat umum
 mainin,memainkan
+main2,main-main
 Maho,homoseksual
 mah,sih
 Mager,malas
@@ -620,11 +912,13 @@ Madhang,Makan
 Madéih,menyebalkan
 Madani,dimarahi
 Madan,Agak
+macem,macam
 MaCAPAH,dengan Siapa
 MACAMA,Sama-Sama
 maaflah,maaf
 Maaciw,Terima Kasih
 MAACIH,Terima Kasih
+m8,sahabat
 lw,kamu
 luwucu,lucu
 luthu,lucu
@@ -634,6 +928,7 @@ Lunga,Pergi
 lum,belum
 luff,cinta
 lucuk,lucu
+lucuan,lebih lucu
 luchuw,lucu
 lu,kamu
 lps,lepas
@@ -643,7 +938,9 @@ loupz,cinta
 louphh,cinta
 look like,terlihat seperti
 Longan,bawah tempat tidur
+long,panjang
 Londhog,Jalannya pelan
+loncat2,lompat-lompat
 Lombo,Bohong
 lom,belum
 LOL,tertawa terbahak-bahak
@@ -662,14 +959,22 @@ lindhig,jalannya pelan
 lihatna,lihat itu
 liat,lihat
 lht,lihat
+lhoh,lho
+lha,lho
+lgsung,langsung
 lg,lagi
 Lereng,sangat
+leptop,komputer
 lepasni,setelah ini
 lepas lihat,selesai lihat
 Lenjeh,Centil
 Lengob,Bodoh
 Lempogen,lelah
+lempeng,lambat
+lemot,lambat
 Lelli,sangat lelah
+lelet,lambat
+lek,kalau
 Lejeg,rusak
 Lejed,sangat
 leh,boleh
@@ -677,19 +982,25 @@ Leg,Telan
 Lebu,Debu
 Lebeh,berlebihan
 Lebay,berlebihan
+ldran,hubungan jarak jauhnya
 LDR,hubungan jarak jauh
+lbh,lebih
 layan,lumayan
 lawakan,kelakar yang berlebihan
 Laut,Selesai kerja
+last night,kemarin malam
+last,akhir
 Lara,Sakit
 Langka,Tidak ada
 Lamreta Bingit,lama sekali
 Lamreta,lama
 lam,salam
+lakik,cakep
 laki,laki-laki
 LAHACIA,Rahasia
 lah,ya
 lagu2,lagu
+lagik,lagi
 laa,ya
 kzl,kesal
 kyk,seperti
@@ -708,6 +1019,7 @@ Kucluk,Bodoh
 kubanga,aku bangga
 ku suka,aku suka
 ku,aku
+kta,kita
 krya,karya
 krn,karena
 krg,kurang
@@ -715,6 +1027,7 @@ krenz,keren
 krent,keren
 krank,kurang
 krang,kurang
+koyo,seperti
 Kowe,kamu
 koq,kok
 KOPLAK,Lucu Dan Gokil
@@ -727,13 +1040,17 @@ Koh,Kok
 kog,kok
 Ko,kamu
 knp,mengapa
+kmu,kamu
 kmrn,kemarin
+kmarin,kemarin
 kmaren,kemarin
 km,kamu
 klw,kalau
 klo,kalau
 klianz,kalian
+klian,kalian
 Kleleb,Tenggelam
+klau,kalau
 kl,kalau
 KIYIM,Kirim
 Kiye,Ini
@@ -749,14 +1066,21 @@ kezel,sebal
 Keyen,Keren
 kewren,bagus
 keton,terlihat
+ketolongan,tertolong
 Ketilem,Tenggelam
+ketiduran,sampai tertidur
 ketemu,bertemu
 Ketempuhan,Harus mengganti
 ketebak,sudah ditebak
+ketawanya,tertawanya
 ketawa2,tertawa
 ketawa,tertawa
+ketangkep,tertangkap
 ketagihan,suka
 Kesuh,Marah
+kesihir,tersihir
+kesian,kasihan
+keseluruhanya,keseluruhannya
 kesel,sebal
 kesampean,terwujud
 keri2ne,ending
@@ -765,6 +1089,8 @@ keri2,ending
 keri"ne,ending
 keri" ne,ending
 keri",ending
+kerenya,keren pada
+kerenlah,keren juga
 keren habis,sangat keren
 keputer,terpasang
 kepriwe,bagaimana
@@ -772,14 +1098,20 @@ keprimen,bagaimana
 kepriben,bagaimana
 kepo,selalu ingin tahu
 Keplak,Pukul
+kepingin,ingin
+kepikiran,memikirkan
 Kepethuk,Bertemu
 Kendhat,Bunuh diri
+kendaran,kendaraan
 Kencot,Lapar
 Kenaps,mengapa
+kenak,kena
 Kemrewek,banyak bicara
 Kemlithak,bertingkah
 Kemayu,Sok cantik
+kemarin2,kemarin
 kemaren,kemarin
+kemanusian,kemanusiaan
 kemana2,kemana-mana
 Kemal,sangat ingin tahu
 Kemaki,Sombong
@@ -794,18 +1126,24 @@ Keles,Kali
 keleleb,Tenggelam
 Keleg,Tertelan
 kelas teri,suruhan
+kelar,selesai
 kelamaan,terlalu lama
 Kelalen,Lupa
+kek,seperti
 keje,kerja
 kejap,mengantuk
 kegantengan,ganteng
 Keduman,Dapat bagian
+kedepanya,di masa depan
 keceh,cakep
 kece badai,luar biasa sekali
 kece,keren
+kebwa,terbawa
 keburu,terlanjur
 kebayang,teringat
+kebangetan,keterlaluan
 ke mana2,kemana-mana
+ke abisan,kehabisan
 Kayonge,sepertinya
 kayanya,sepertinya
 kayaknya,sepertinya
@@ -814,8 +1152,12 @@ Kaya kiye,Seperti ini
 Kaya,Seperti
 Kawus,Jera
 kawit,Sejak
+kau,kamu
 Katon,terlihat
 Katisen,Kedinginan
+kata2,kata-kata
+kasian,kasihan
+kasi,beri
 Karus,Terlanjur
 karna,karena
 karakter2nya,karakternya
@@ -839,33 +1181,49 @@ Kamseupay,tidak mengikuti tren zaman
 KamSeUdIN,tidak mengikuti tren zaman
 Kampleng,Pukul
 Kampil,Bantal
+kampanyekan,mengadakan kampanye
 KAMESEUPAY,tidak mengikuti tren zaman sekali
 Kambi,Dengan
 Kam Se U Pay,tidak mengikuti tren zaman
 kaluw,kalau
 kalo,kalau
+kale,juga
 Kaki-Kaki,Kakek
 kakang,kakak
 kakagg,kakak
+kaka,kakak
 kajog,menyesal
+kagak,tidak
+kaga,tidak ada
 Ka,Kok
 jwb,jawab
 Jutek,tidak ramah
 just me,hanya aku
+just,hanya
 Jungkat,Sisir
 jujugna,mengantar
 jujug,antar
 jugak,juga
 judes,tidak ramah
+jualan,jual
+jt,juta
 Jotos,Memukul dengan menggunakan kepalan tangan
 jorogna,mendorong
 Jorog,dorong
 jorna,biarkan
 Jor,Biarkan
 jomblo,tanpa pasangan
+jokesnya,komedinya
+jokes,candaan
+joke,lelucon
+joget2,menari
+joget,menari
+job,kerja
+jleb,menyakitkan hati
 JK,hanya bercanda
 JJM,Jalan-jalan di Malam hari
 jiyot,mengambil
+jinga,jingga
 jimot,mengambil
 jgn,jangan
 jga,juga
@@ -891,7 +1249,10 @@ jalan2,jalan-jalan
 jalan",jalan-jalan
 Jaki,Jalan kaki
 jagong,Duduk
+jagoan,jago
+jadin,jadikan
 jadian,jadi pasangan
+ja,saja
 Iwak,lauk pauk
 iupz,iya
 isn't over yet,belum selesai
@@ -904,18 +1265,27 @@ Inyong thok sing ora bisa,Saya sendiri yang tidak bisa
 Inyong Dhewek,Saya sendiri
 Inyong Agi Dhewekan,Saya sedang sendirian
 inyong,saya
+intine,intinya
+inspiring,menginspirasi
+inspired,terinspirasi
 iniyh,ini
 inie,ini
 ingtkn,ingatkan
+inginya,ingin
 inget,ingat
 indo,indonesia
+inded,memang
 imoetz,imut
 im in love,aku suka
 Ilmune Inyong Esih Cupet,Ilmu saya masih sedikit
 Ilfeel,menjadi tidak suka
+ilang,hilang
+ikutan,ikut
 Ikih,Ini
+iki,ini
 Ijig-ijig,Tiba-tiba
 IDK,saya tidak tahu
+idiotz,bodoh
 Idek,Injak
 Iank,sayang
 iang,sayang
@@ -927,19 +1297,30 @@ I love,aku suka
 I cried,aku menangis
 i,aku
 humz,rumah
+hukhuk,menangis
 Hugel,hubungan gelap
 hufft,mengeluh
 HTH,semoga membantu
+hrs,harus
 hozz,rumah
+honestly,jujur
+holywod,luar negeri
 Hoax,berita bohong
 heuh,ha
+hero,pahlawan
 Heri,Heboh Sendiri
+hepi,senang
+hensem,ganteng
+help,tolong
 head to head,berhadapan
 hbs,habis
 haritu,hari itu
+harini,hari ini
 hard to enjoy,susah dinikmati
 handsome,ganteng
+hal2,hal-hal
 haghaghag,tertawa
+hadeh,aduh
 hadam,paham
 Hacep,pesta
 habis lihat,selesai melihat
@@ -958,10 +1339,13 @@ gue,saya
 Gudnyus,kabar gembira
 gua,saya
 gtw,tidak tahu
+gtu,begitu
 gtg,ganteng
 gtau,tidak tahu
 gt,begitu
+gros,jijik
 Gretongan,gratis
+greget,sesuai dengan harapanku
 Grajih,Gergaji
 Grabag-Grubug,terburu-buru
 GPL,jangan terlalu lama
@@ -975,6 +1359,8 @@ gokilz,bagus
 gokil habis,sangat bagus
 gokil,bagus
 god,bagus
+goblok,bodoh
+gni,begini
 gmna,bagaimana
 gmn,bagaimana
 Gludug,petir
@@ -986,7 +1372,9 @@ gitulah,seperti itu
 Gitu,begitu
 Githir,terburu-buru
 gitchu,begitu
+ginian,ini
 gini,seperti ini
+gimana,bagaimana
 Gili,Jalan
 gile,gila
 gilak,gila
@@ -997,6 +1385,7 @@ ghiey,sedang
 gga,tidak
 Gething,Tidak suka
 Gering,Kurus
+geregetan,membuat orang merasa gemas
 gentayangan,berkeliaran
 genit,centil
 Gengges,mengganggu
@@ -1020,16 +1409,25 @@ Garing,tidak lucu
 Gari,tersisa
 gara2,karena
 gara",karena
+gapapa,tidak apa-apa
 Ganu,dulu
+ganonton, tidak lihat
+gangerti,tidak mengerti
+gan,sahabat
+gampang,mudah
+gamau,tidak mau
 Galau,bimbang
+gakngerti,tidak mengerti
 gak,tidak
 Gajebo,tidak jelas
 Gaje,tidak jelas
 gageyan,segera
 gagean,segera
 gag,tidak
+gaes,teman
 gada,tidak ada
 Gabut,menerima gaji dengan tidak bekerja
+gaboleh,tidak boleh
 gabisa,tidak bisa
 gaada,tidak ada
 ga,tidak
@@ -1041,46 +1439,63 @@ fun,bagus
 ful,penuh
 Fudul,selalu ingin tahu
 Friendzone,hanya menyukai sebagai teman
+fre,gratis
 forced,dipaksakan
+for us,untuk kita
 for the first time,untuk pertama kali ini
+for,untuk
+folow,ikuti
+follow,ikuti
 FLU,jatuh cinta padamu
 flashback,teringat
 Fix,sudah pasti
 first,pertama
 filem,film
 felnya,perasaannya
+fel,perasaan
+fantastic,luar biasa
 fantasinya,fantasi yang
 family,keluarga
+fal,jatuh
 failed,jelek
+fail,gagal
 faham,paham
 even,walaupun
+euy,ya
 ETDAAH,Sudah
 etapi,tapi
+especialy,terutama
 esih,Masih
 Eri,Duri
 Ereg,Dekat
+eps,episode
+epic,keren
 Entong,Habis
 Engkrek,bergegas
 enggane Kowe Neng Kene,Andaikan kamu disini
 enggane,Andaikan
 enggal,Sebentar lagi
 enggak,tidak
+engak,tidak
 ENELAN,Beneran
 enek,mual
 endingnya,bagian akhirnya
 ending,bagian akhir
 EMPRIT,sebal
 empet,sebal
+emng,memang
 emg,memang
 Ember,memang
 emang,memang
 Elo gue End,hubungan kita berakhir
 ekspektasi,ekspetasi
+eksaitit,menegangkan
 eh,hai
 Egin,Masih
 edan,gila
 eank,sayang
 eang,sayang
+dy,dia
 dunk,kan
 dumz,dong
 dum,dong
@@ -1091,18 +1506,26 @@ duitx,uangnya
 duitnya,uangnya
 duit,uang
 duh,aduh
+dua2,keduanya
 dtungu2,ditunggu
 dtungu",ditunggu
 dtungu,ditunggu
+dtang,datang
 drpd,daripada
 dramanya,drama
 dr pd,daripada
 dr pada,daripada
 dr,dari
+dpt,dapat
+dpn,depan
 doyan,suka
 Dopokan,bicara gosip
 Dopok,Gosip
+donlot,download
+done,selesai
+doktor2,dokter
 doi,dia
+doank,saja
 doang,saja
 dlm,dalam
 dl,dulu
@@ -1116,37 +1539,58 @@ Diwadani,dimarahi
 ditungu2,ditunggu
 ditungu",ditunggu
 ditungu,ditunggu
+ditonton,dilihat
+ditingal,ditinggal
 ditawarin,disuruh pilih
+distract,ganggu
 disit,Dulu
+disangka2,disangka
+disamain,disamakan
 dir,kelereng
 dipit,Dulu
+diparkiran,ada di tempat parkir
 diomeli,dimarahi
+dinikmatin,dinikmati
 Dingklik,Kursi kecil
 Dina,Hari
 dimin,Dulu
 Dimans,Dimana
 Dileg,Ditelan
+dikuti,diikuti
 Dikongkon,Disuruh
 dikon,Disuruh
+dikit2,sedikit sedikit
+dikit,sedikit
 dikep,menangkap
 dikejar2,dikejar
 dikejar",dikejar
+dikasih,diberi
+digebuk,dipukul
+digantin,digantikan
+difilm,di film
+dibioskop,di teater
+dibikin,dibuat
 dibandingin,dibandingkan
 dibanding,dibandingkan
 dibalut,dilengkapi
+diantara,di antara
 di korbankan,dikorbankan
 di bandingkan,dibandingkan
 di bandingin,dibandingkan
 Dhupak,Tendang
 Dhewek,Sendiri
+dh,sudah
+dgr,dengar
 dgn,dengan
 dgan,dengan
 dg ,dengan
 dg,dengan
 deyh,deh
 dewe,sendiri
+depreasy,depresi
 Dengklang,Pincang
 dengka,kok
+dengerin,mendengarkan
 denger,dengar
 Deneng Neng Kono,Kok di situ
 Deneng,Kok
@@ -1154,11 +1598,13 @@ Dempa,untuk apa
 demn,wow
 Deleng,Lihat
 deket,dekat
+dek,adik
 deh,saja
 deg-degan,berdebar keras
 deg-deg an,berdebar keras
 deg2an,berdebar keras
 deg"an,berdebar keras
+deg,berdebar
 dedek,adik
 dech,deh
 debes,bagus
@@ -1166,10 +1612,13 @@ d'bandingkan,bagus
 d'bandingin,dibandingkan
 dbandingin,dibandingkan
 Dayoh,Tamu
+dating,kencan
+dasyat,luar biasa
 dapet,dapat
 Danta,jelas
 danserem,dan menakutkan
 Damat,saya tidak peduli
+dalem,dalam
 dah,sudah
 Dafuq,aduh
 Dablongan,lelucon yang berlebihan
@@ -1184,6 +1633,7 @@ cwe,wanita
 cvrht,cerita dari hati ke hati
 cuy,saudara
 cuxin,tidak dipedulikan
+cute,bikin gemas
 curhat,cerita dari hati ke hati
 Curcol,cerita dari hati ke hati
 Cupet,sedikit ilmu
@@ -1200,6 +1650,9 @@ cucu"x,cucu
 cucu"nya,cucu
 Cuco,keren
 cte,cerita
+critanya,ceritanya
+crita,cerita
+cried,menangis
 creepy,menjijikkan
 cppe,capek
 cppa,siapa
@@ -1213,13 +1666,19 @@ Couldi,pikiran kacau
 cotba,banyak bicara
 congress,kongres
 congrats,selamat
+confused,bingung
 complete,lengkap
 compeleted,lengkap
+comelnya,banyak bicara sekali
+comel,banyak bicara
 comedy,komedi
+col,keren
 Cocot,Mulut
 cmn,hanya
 Cmiiw,benarkan saya jika saya salah
+cliché,klise
 Clebek,Kopi
+clean,bersih
 ckup,cukup
 ckp,cukup
 ckepp,cakep
@@ -1228,13 +1687,17 @@ ciyus,serius
 ciyh,sih
 Cius Miapah,untuk apa
 cius,serius
+citer,cerita
 cite,cerita
 ciptain,ciptakan
 Cipp,Sip
+cinematografi,sinematografi
+cina2,orang cina
 Cilaka,Celaka
 Ciblon,bermain air
 cewek,wanita
 cewe,wanita
+cepet,cepat
 Cepe deh,ya ampun
 Cengkli,Botol Kecil
 Cengis,Cabe rawit
@@ -1265,10 +1728,14 @@ bunuh bunuhan,pembunuhan
 Bungah,Senang
 bunda,ibu
 bun,saudara
+buat2,buat
 buagus,bagus
 btw,oh ya
 BT,tidak dalam mood
+bsa,bisa
+bs,bisa
 Brug,Jembatan
+brosis,sahabat
 Brengkolang,Lempar
 BRB,segera kembali
 br,baru
@@ -1276,10 +1743,14 @@ both,semuanya
 BOT,Kembali ke pokok masalah
 bosen2,bosan
 bosen,bosan
+bos,boss
+boring,membosankan
 boong,bohong
 Bonyok,ayah dan ibu
 Bondan,anak gila
+bolom,belum
 Boléng,kekurangan
+bolehlah,boleh juga
 bolehla,boleh juga
 Boléd,Singkong
 BOKIS,Bohong
@@ -1287,16 +1758,23 @@ Bokep,film porno
 bokebb,film porno
 bokap nyokap,ayah dan ibu
 Boil,mobil
+body,tubuh
 Bodol,Rusak
 bodo,bodoh
+bocah,anak kecil
+bobok,tidur
+bobo,tidur
 boaring,bosan
 Boam,saya tidak peduli
+bnyk,banyak
 bnrnya,benarnya
 bnr2,sungguh
 bnr",sungguh
 bnr,benar
+bneran,memang benar
 Blusukan,Masuk-masuk ke pelosok
 Blusuk,Pelosok
+blunder,kejelekan
 blm,belum
 bljr,belajar
 Blijing,Telanjang bulat
@@ -1306,33 +1784,46 @@ bleg,Kaléng
 Blas,Sama sekali
 Blakasuta,Terus terang
 bkn,bukan
+bkin,buat
+bkan,bukan
 bk,bimbingan dan konseling
 biz,habis
 Biyung,ibu
+biography,biografi
 BINUN,Bingung
 Bingits,sangat
 Bingit,sangat
 Binggo,sangat
 bile,bila
 bikin,membuat
+bijakny,bijaknya
 biarin,biarkan
 bhkn,bahkan
+bgtu,begitu
 bgt,sangat
 bgitu,begitu
+bgini,seperti ini
 bff,sahabat
 BF,pacar
 beut,sekali
 beud,sangat
+betol,betul
+betoi,betul
+beter,lebih baik
 bete,tidak memiliki niat
 best,bagus
 Besengut,Cemberut
 berkaca2,ingin menangis
 berjamaah,bersama
 beres,setelah
+berbondong2,berbondong-bondong
+berbarengan,bersama-sama
+bentar,sebentar
 bengkolang,lempar
 beneran,sungguh
 bener2,sungguh
 bener",sungguh
+bener bener,benar-benar
 bener,benar
 bene,Baru
 bencong,banci
@@ -1345,6 +1836,8 @@ Belok,Kotor
 Belik,Sumber mata air
 Belet,Lumpur
 belagu,bertingkah
+bego,bodoh
+beginian,seperti ini
 begajulan,nakal
 Bebeh,malas
 bcs,karena
@@ -1352,13 +1845,16 @@ bayangin,bayangkan
 bay,selamat tinggal
 Bawon,Bagian
 Batur,Pembantu
+batle,perang
 Batir,Teman
 Basbang,sudah tidak jaman
 BARYAW,Sabar dulu
+baru2,baru
 baru aja,baru saja
 bareng,bersama
 Bapuk,rusak
 Baper,mudah tersinggung
+bangwt,sekali
 banget,sangat
 bangedh,sangat
 bang,kak
@@ -1371,23 +1867,31 @@ Baks,rokok
 bakalan,akan membuat
 bakal,akan
 Bais,habis
+bahagian,bagian
 bagusan,lebih bagus
+bagus2,bagus bagus
 bagus habis,sangat bagus
+bagos,bagus
 Baget,sangat keras kepala
 Bagel,Lempar
 baen,Saja
 Badhogan,makanan
 Badhog,Makan
 Badai,luar biasa
+bad,jelek
 Bacin,Bau yang tidak sedap
+babynya,bayinya
+baby,bayi
 Babaran,Melahirkan
 Babar pisan,Sama sekali
 babar blas,Sama sekali
+babang,kak
 ayuh,ayo
 awit,Sejak
 awesome,luar biasa
 Awéhan,Suka memberi
 Awéh,Memberi
+award,penghargaan
 Awan,Siang
 awal2,awal
 Awake Pada Lara,Badan sakit semua
@@ -1406,19 +1910,28 @@ are good,bagus
 are, 
 Arang,Jarang
 Aran,Nama
+apreciate,menghargai
 appreciate,menghargai
+aply,aplikasi
+apik,bagus
+apasal,apa daya
 apape,apa pun
+apan,apa
+apalg,apalagi
 anx,anak
 Antob,Sendawa
 Anjog,Sampai
 Anjir,saya kagum
 Angger,Kalau
+angat2,sangat
+angat,sangat
 aneh2,aneh
 aneh",aneh
 Andi Lau,Antara Dilema dan pikiran kacau
 and,dan
 Ana,Ada
 ampe,sampai
+amp,dan
 Amleng,sunyi
 ambik,ambigu
 Ambén,Tempat tidur
@@ -1428,6 +1941,7 @@ amatd,sangat
 amat,sangat
 Amaca cihh,Ah Masa Sih
 Amaca Cih,Ah Masa Sih
+ama,sama
 alow,halo
 Alay,berlebihan
 Alas,Hutan
@@ -1441,474 +1955,37 @@ akku,saya
 Akika,saya
 Akéh,Banyak
 aka,alias
+ak,aku
 Ajib,enak
 aje,saja
 ajalah,saja ya
+ajala,saja lah
+ajah,saja
 Aja kaya kuwé,Jangan seperti itu
 Aja,saja
+agak,lumayan
+again,lagi
+after,setelah
 Afgan,sadis
 ae,saja
 adlh,adalah
 adl,adalah
 adem,tenang
+adek,adik
 ade,ada
+actualy,sebenarnya
 action2,aksi
 action",aksi
 action,aksi
+acting,akting
 Acan,belum sama sekali
 Absurd,aneh
+abisan,habisnya
 abis,habis
+abies,habis
 abang2,orang
 Ababil,temperamental dan kekanakan
 A.k.a,alias
-critanya,ceritanya
-apan,apa
-not,tidak
-terbangke,paling jelek
-intine,intinya
-ra,tidak
-muter,berputar
-thought,berpikir
-honestly,jujur
-rugilah,sangat rugi
-sape,siapa
-xtengok,lihat
-nglebihin,melebihi
-bego,bodoh
-betol,betul
-kesian,kasihan
-lhoh,lho
-wae,saja
-boring,membosankan
-nton,lihat
-sebelom,sebelum
-penayanganya,tayangnya
-setres,depresi
-personality,personalitas
-ngenganjel,mengganjal
-seprti,seperti
-dinikmatin,dinikmati
-ngantuk,ingin tidur
-tngk,lihat
-mengena,jelas
-lha,lho
-hadeh,aduh
-kaka,kakak
-bobok,tidur
-ngekek2,tertawa
-wel,ya
-kasian,kasihan
-nunda,menunda
-bentar,sebentar
-klian,kalian
-kasi,beri
-fel,perasaan
-nakutin,menakutkan
-buat2,buat
-dikit2,sedikit sedikit
-doktor2,dokter
-apasal,apa daya
-pendiem,pendiam
-trnyata,ternyata
-ja,saja
-jleb,menyakitkan hati
-sig,sih
-thriler,thriller
-beginian,seperti ini
-gros,jijik
-harini,hari ini
-holywod,luar negeri
-rata2,rata-rata
-tebas2,aksi
-pkiran,pikiran
-prasan,perasaan
-amp,dan
-ajah,saja
-predictable,mudah ditebak
-jokes,candaan
-jokesnya,komedinya
-ngn,dengan
-xsyok,kaget
-miripmirip,mirip
-ldran,hubungan jarak jauhnya
-pantes,pantas
-nikahan,pernikahan
-cepet,cepat
-mgkin,mungkin
-baru2,baru
-dua2,keduanya
-kale,juga
-jinga,jingga
-dikit,sedikit
-greget,sesuai dengan harapanku
-narik,tarik
-younger,lebih muda
-ngikutin,mengikuti
-fail,gagal
-please,tolong
-ny,nya
-ye,ya
-ama,sama
-gapapa,tidak apa-apa
-wasn t that bad,tidak terlalu jelek
-mengelitik,menggelitik
-sik,sih
-mid,tengah
-mba,kak
-mas,kak
-after,setelah
-watched,lihat
-just,hanya
-realized,sadar
-ilang,hilang
-crita,cerita
-ngeganjel,menggantung dan tidak sesuai harapan
-uhukx,ya
-again,lagi
-prefer,lebih memilih
-ikutan,ikut
-betoi,betul
-ngko,nanti
-koyo,seperti
-inspiring,menginspirasi
-for us,untuk kita
-kta,kita
-bs,bisa
-kemarin2,kemarin
-comel,banyak bicara
-epic,keren
-batle,perang
-fal,jatuh
-idiotz,bodoh
-malem,malam
-mumet,pusing
-mewek,menangis
-sotoy,sok tahu
-last night,kemarin malam
-night,malam
-riweuh,ribet
-cina2,orang cina
-berbondong2,berbondong-bondong
-dtang,datang
-mbak,kak
-mengemaskan,membuat orang merasa gemas
-job,kerja
-kedepanya,di masa depan
-inspired,terinspirasi
-proud of,bangga pada
-proud,bangga
-shit,wow
-sampek,sampai
-ntu,itu
-nyoblos,pemilu
-hukhuk,menangis
-pukpuk,menghibur
-sekeren,yang keren
-selucu,yang lucu
-kerenya, keren pada
-ngekek,tertawa
-spanjang,sepanjang
-dengerin,mendengarkan
-sontreknya, soundtrack dari
-kendaran,kendaraan
-pilemnya,filmnya
-bagos,bagus
-oya, oh ya
-omg,astaga
-omagah,astaga
-ohiya,oh ya
-yes,ya
-teruks,terus
-ketolongan,tertolong
-sory,maaf
-perempuan2,wanita wanita
-project,proyek
-must,harus
-cliché,klise
-gamau,tidak mau
-hrs,harus
-syukak,suka
-ngarepin,harap
-realy,sangat
-difilm,di film
-euy,ya
-especialy,terutama
-acting,akting
-pemainya,pemerannya
-ganonton, tidak lihat
-gaboleh,tidak boleh
-lakik,cakep
-ujung2,akhir
-nanya,tanya
-nyelamtin,menyelamatkan
-jadin,jadikan
-fantastic,luar biasa
-nemu,menemukan
-eps,episode
-macem,macam
-abies,habis
-suport,dukung
-digantin,digantikan
-ngangep,menganggap
-tengah2,tengah
-pelm,film
-story,cerita
-donlot,download
-iki,ini
-ngecewain,mengecewakan
-digebuk,dipukul
-kebangetan,keterlaluan
-bkin,buat
-pegel,kesal
-waras,sehat
-seger,segar
-slama,selama
-dibioskop,di teater
-kesihir,tersihir
-gakngerti,tidak mengerti
-gangerti,tidak mengerti
-bangwt,sekali
-thn,tahun
-apalg,apalagi
-tingi2,tinggi
-tingi,tinggi
-geregetan,membuat orang merasa gemas
-trus,terus
-warbyasak,luar biasa
-neng,kak
-xpe,sampai
-sangup,sanggup
-wekend,malam minggu
-wingi,kemarin
-satnya,saatnya
-melu,ikut
-ora,tidak
-sebenernya,sebenarnya
-soundtracknya,soundtrack
-shock,kaget
-minit,menit
-last,akhir
-percintan,percintaan
-pemeranya,aktornya
-blunder,kejelekan
-disangka2,disangka
-suposely,harusnya
-kagak,tidak
-overal,sebagian besar
-more,lebih
-ngelakuin,melakukan
-nekat,berani mati
-ngubah,mengubah
-nambahin,menambahkan
-maksa,memaksa
-mentok,paling
-pede,percaya diri
-nayangin,menayangkan
-tpi,tapi
-yahut,bagus
-kenak,kena
-mskpn,meskipun
-sequalnya, sequel dari filmnya
-bsa,bisa
-bkan,bukan
-milih,memilih
-kek,seperti
-eksaitit,menegangkan
-seruan,lebih seru
-starting,mulai awal
-dh,sudah
-confused,bingung
-ngelarin,menyelesaikan
-kelar,selesai
-bos,boss
-serious,serius
-lek,kalau
-tertidur2,tertidur
-deg,berdebar
-klau,kalau
-disamain,disamakan
-worth,pantas
-my,saya
-time,waktu
-your,kamu
-sebutin,sebutkan
-sgt,sangat
-penghargan,penghargaan
-resensi,review
-ulasan,review
-jualan,jual
-ditingal,ditinggal
-menonton,melihat
-berbarengan,bersama-sama
-done,selesai
-sesederhana,sederhana seperti yang digambarkan
-psl,pasal
-students,murid
-for,untuk
-me,aku
-dibikin,dibuat
-series,serial
-dikasih,diberi
-napas,nafas
-lempeng,lambat
-pace,alur
-inded,memang
-translatenya,subtitle nya
-ngertin,mengerti
-mentang2,memang sih
-bocah,anak kecil
-bgtu,begitu
-takpayah,tidak payah
-recreate,membuat ulang
-fre,gratis
-nyesai,menyesal
-rasanya,sepertinya
-rasane,sepertinya
-numpang,ikut
-bobo,tidur
-doank,saja
-sj,saja
-tdk,tidak
-cried,menangis
-over,selesai
-yet,juga
-sexy,seksi
-strong,kuat
-help,tolong
-ditonton,dilihat
-dikuti,diikuti
-jagoan,jago
-ngambil,mengambil
-apreciate,menghargai
-mengurui,seperti guru
-biography,biografi
-inginya,ingin
-diantara,di antara
-weyh,wah
-play,main
-clean,bersih
-wanita2,wanita wanita
-rame,ramai
-tdi,tadi
-perasan,perasaan
-pinternya,pintarnya
-saking,karena
-kepingin,ingin
-tujuanya,tujuannya
-ngegemesin,membuat orang merasa gemas
-nge,mau
-kau,kamu
-bolom,belum
-aply,aplikasi
-kampanyekan,mengadakan kampanye
-tawuran,pertengkaran remaja
-mw,mau
-dgr,dengar
-wktu,waktu
-kebwa,terbawa
-kmu,kamu
-mang,memang
-agak,lumayan
-sob,sahabat
-m8,sahabat
-mate,sahabat
-gan,sahabat
-sis,sahabat
-ngebahas,membahas
-diparkiran,ada di tempat parkir
-rmhnya,rumahnya
-watak,sifat
-mbe,bersama
-dy,dia
-dalem,dalam
-pen,ingin
-ajala,saja lah
-leptop,komputer
-dating,kencan
-bgini,seperti ini
-dasyat,luar biasa
-menyelengarakan,menyelenggarakan
-seheboh,heboh seperti
-tida,tidak
-mendingan,lebih baik
-tengelamnya,tenggelamnya
-brosis,sahabat
-tgu,tunggu
-scenes,adegan
-bnyk,banyak
-hal2,hal-hal
-kerenlah,keren juga
-masukan,masukkan
-nyebar,menyebar
-babang,kak
-por,kasihan
-rip,istirahatlah dengan tenang
-xbestnya,bagus sekali
-ngebosenin,membuat bosan
-sukak,suka
-ngilu,aneh
-ngelihat,melihat
-joget2,menari
-joget,menari
-obsesnya,obsesinya
-ngeh,mengerti
-ngitung,menghitung
-ak,aku
-cute,bikin gemas
-ngelanjutin,melanjutkan
-merindukanya,merindukan dia
-lagik,lagi
-makek,memakai
-moveon,melupakan
-move on,melupakan
-nice,bagus
-adek,adik
-comelnya,banyak bicara sekali
-citer,cerita
-angat2,sangat
-angat,sangat
-bolehlah,boleh juga
-gimana,bagaimana
-engak,tidak
-col,keren
-body,tubuh
-shape,bentuk
-distract,ganggu
-gampang,mudah
-kepikiran,memikirkan
-hero,pahlawan
-beter,lebih baik
-worse,lebih buruk
-worst,paling buruk
-tengelam,tenggelam
-ketiduran,sampai tertidur
-joke,lelucon
-goblok,bodoh
-ngalahin,mengalahkan
-apik,bagus
-award,penghargaan
-won,memenangkan
-mengairahkan,menggairahkan
-mengambarkan,menggambarkan
-Menganggu,Mengganggu
-mengelisahkan,menggelisahkan
-mengelitik,menggelitik
-mengerakkan,menggerakkan
-mengoda,menggoda
-Mengugah,Menggugah
-lbh,lebih
-hepi,senang
-dpt,dapat
-smlm,semalam
-ud,sudah
-nykp,ibu
-ngajak,mengajak
-jt,juta
-hensem,ganteng
-slalu,selalu
-lgsung,langsung
-ngira,mengira
-kemanusian,kemanusiaan
-stlh,setelah
-nempeleng,memukul
-trksan,terkesan
+nemenin,menemani
+bangkek,bajingan
+hayuk,ayo

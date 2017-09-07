@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'abcmovies',
+	'hostname' => 'localhost', // mysql.hostinger.co.id
+	'username' => 'root', // u862672046_admin
+	'password' => '', //adminABCMovies
+	'database' => 'abcmovies', //u862672046_db
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

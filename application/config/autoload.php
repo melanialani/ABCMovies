@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('form','url','array','cookie','date','html','security','string','text','email');
+$autoload['helper'] = array('form','url','array','cookie','date','html','security','string','text','email','file');
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('model_banner','model_film','model_review','model_user','model_tweets_old','model_tweets_new','model_function');
+$autoload['model'] = array('model_banner','model_film','model_review','model_user','model_tweets_old','model_tweets_new','model_function','model_dataset');
