@@ -38,23 +38,7 @@ Class Model_dataset extends CI_Model {
 	* @return
 	*/
 	public function insertDataset($text, $ori_id, $status, $score){
-		// insert to textfile
-		if ($status == 'neg'){
-			$file_path = dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_neg.txt'; // APPPATH . "/assets/login/log_.txt";
-			if(file_exists($file_path)) {
-			   $file_path = dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_neg.txt'; // APPPATH . "/assets/login/log_.txt";
-				write_file($file_path, $text . "\r\n", 'a+');
-			} else {
-			    write_file($file_path, $text);
-			}
-		} else if ($status == 'pos'){
-			$file_path = FCPATH . "/application/third_party/data_training_twitter_pos.txt";
-			if ( ! write_file($file_path, $text."\r\n", 'a+')) echo 'Unable to write the file';
-			else echo 'File written!';
-		}
-		
-		// insert to database
-        $myArr = array(
+		$myArr = array(
 			'text' 		=> $text,
 			'ori_id'	=> $ori_id,
         	'status' 	=> $status,
@@ -75,6 +59,37 @@ Class Model_dataset extends CI_Model {
 		$this->db->where('id', $id);
 		$this->db->delete('dataset');
 		return $this->db->affected_rows();
+	}
+	
+	/**
+	* Write dataset into text file
+	* @param string $status - POS or NEG
+	* 
+	* @return
+	*/
+	public function writeDataset($status){
+		$dataset = $this->getAllDatasetWithStatus($status);
+		if ($status == 'neg'){
+			$file_path = FCPATH . "/application/third_party/data_training_twitter_neg.txt";
+			
+			// overwrite file with first line
+			write_file($file_path, $dataset[0]['text']."\r\n");
+			
+			// append the rest
+			for ($i=1; $i<sizeof($dataset); $i++){
+				write_file($file_path, $dataset[$i]['text']."\r\n", 'a+');
+			}
+		} else if ($status == 'pos'){
+			$file_path = FCPATH . "/application/third_party/data_training_twitter_pos.txt";
+			
+			// overwrite file with first line
+			write_file($file_path, $dataset[0]['text']."\r\n");
+			
+			// append the rest
+			for ($i=1; $i<sizeof($dataset); $i++){
+				write_file($file_path, $dataset[$i]['text']."\r\n", 'a+');
+			}
+		}
 	}
 	
 }

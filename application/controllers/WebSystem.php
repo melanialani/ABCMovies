@@ -398,6 +398,10 @@ class WebSystem extends CI_Controller {
 		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
 		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
 		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.pos', 'positive', 1000); //training with positive data	
+		
+		$this->model_dataset->writeDataset('neg'); 
+		$this->model_dataset->writeDataset('pos');
+		
 		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_neg.txt', 'negative', 200); //training with negative data
 		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data_training_twitter_pos.txt', 'positive', 200); //training with positive data	
 		
