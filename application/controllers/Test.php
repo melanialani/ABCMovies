@@ -4,6 +4,7 @@ ini_set('memory_limit','2048M');
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require 'vendor/autoload.php';
 include_once( dirname(dirname(__FILE__)) . '/libraries/TwitterAPIExchange.php' );
 include_once( dirname(dirname(__FILE__)) . '/libraries/SentimentAnalyzer.php' );
 require_once( dirname(dirname(__FILE__)) . '/libraries/imdb.class.php' );
@@ -12,6 +13,18 @@ class Test extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
+	}
+	
+	public function test(){
+		// load Sastrawi library
+		$stemmerFactory = new \Sastrawi\Stemmer\StemmerFactory();
+		$stemmer  = $stemmerFactory->createStemmer();
+		
+		// stemming
+		$sentence = 'Perekonomian Indonesia sedang dalam pertumbuhan yang membanggakan';
+		$output   = $stemmer->stem($sentence);
+		
+		echo $output . "\n"; // show output
 	}
 	
 	public function testOld(){
@@ -66,6 +79,14 @@ class Test extends CI_Controller {
 			$listNeg[$idx]['score'] = $temp[1];
 			$idx++;
 		}
+		
+		// for stemming
+		$stemmerFactory = new \Sastrawi\Stemmer\StemmerFactory();
+		$stemmer  = $stemmerFactory->createStemmer();
+		
+		// for stopwords removal
+		$stopwordRemoverFactory = new \Sastrawi\StopWordRemover\StopWordRemoverFactory();
+		$stopwordRemover = $stopwordRemoverFactory->createStopWordRemover();
 		
 		// train naive bayes classifier
 		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
@@ -168,6 +189,13 @@ class Test extends CI_Controller {
 			/*if (!$this->model_tweets_new->getTweetByOri('tweets_replaced', $result[$i]['twitter_id']) && $originalStr != NULL){
 				$this->model_tweets_new->insertTweetReplaced($result[$i]['twitter_id'], $result[$i]['text'], $originalStr);
 			}*/
+			
+			
+			// do stemming
+			//$result[$i]['text'] = $stemmer->stem($result[$i]['text']);
+			
+			// remove stopword
+			$result[$i]['text'] = $stopwordRemover->remove($result[$i]['text']);
 		}
 		
 		// !!! === !!! === begin rule-based
@@ -327,6 +355,14 @@ class Test extends CI_Controller {
 			$idx++;
 		}
 		
+		// for stemming
+		$stemmerFactory = new \Sastrawi\Stemmer\StemmerFactory();
+		$stemmer  = $stemmerFactory->createStemmer();
+		
+		// for stopwords removal
+		$stopwordRemoverFactory = new \Sastrawi\StopWordRemover\StopWordRemoverFactory();
+		$stopwordRemover = $stopwordRemoverFactory->createStopWordRemover();
+		
 		// train naive bayes classifier
 		$sat = new SentimentAnalyzerTest(new SentimentAnalyzer());
 		$sat->trainAnalyzer(dirname(dirname(__FILE__)) . '/third_party/data.neg', 'negative', 1000); //training with negative data
@@ -428,6 +464,12 @@ class Test extends CI_Controller {
 			if (!$this->model_tweets_new->getTweetByOri('tweets_replaced', $result[$i]['twitter_id']) && $originalStr != NULL){
 				$this->model_tweets_new->insertTweetReplaced($result[$i]['twitter_id'], $result[$i]['text'], $originalStr);
 			}
+			
+			// do stemming
+			//$result[$i]['text'] = $stemmer->stem($result[$i]['text']);
+			
+			// remove stopword
+			$result[$i]['text'] = $stopwordRemover->remove($result[$i]['text']);
 		}
 		
 		// !!! === !!! === begin rule-based
