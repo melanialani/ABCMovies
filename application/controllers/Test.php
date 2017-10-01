@@ -1,18 +1,20 @@
 <?php
-ini_set('max_execution_time', 0); 
-ini_set('memory_limit','2048M');
-
-defined('BASEPATH') OR exit('No direct script access allowed');
-
-require 'vendor/autoload.php';
-include_once( dirname(dirname(__FILE__)) . '/libraries/TwitterAPIExchange.php' );
-include_once( dirname(dirname(__FILE__)) . '/libraries/SentimentAnalyzer.php' );
-require_once( dirname(dirname(__FILE__)) . '/libraries/imdb.class.php' );
 
 class Test extends CI_Controller {
 	
 	public function __construct(){
 		parent::__construct();
+		
+		$_SERVER['SERVER_NAME'] = 'localhost';
+		defined('BASEPATH') OR exit('No direct script access allowed');
+		
+		ini_set('max_execution_time', 0); 
+		ini_set('memory_limit','2048M');
+
+		require 'vendor/autoload.php';
+		include_once( dirname(dirname(__FILE__)) . '/libraries/TwitterAPIExchange.php' );
+		include_once( dirname(dirname(__FILE__)) . '/libraries/SentimentAnalyzer.php' );
+		require_once( dirname(dirname(__FILE__)) . '/libraries/imdb.class.php' );
 	}
 	
 	public function test(){
@@ -192,7 +194,7 @@ class Test extends CI_Controller {
 			
 			
 			// do stemming
-			//$result[$i]['text'] = $stemmer->stem($result[$i]['text']);
+			$result[$i]['text'] = $stemmer->stem($result[$i]['text']);
 			
 			// remove stopword
 			$result[$i]['text'] = $stopwordRemover->remove($result[$i]['text']);
@@ -466,7 +468,7 @@ class Test extends CI_Controller {
 			}
 			
 			// do stemming
-			//$result[$i]['text'] = $stemmer->stem($result[$i]['text']);
+			$result[$i]['text'] = $stemmer->stem($result[$i]['text']);
 			
 			// remove stopword
 			$result[$i]['text'] = $stopwordRemover->remove($result[$i]['text']);
